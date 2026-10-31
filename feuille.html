@@ -1,0 +1,718 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feuille chauffeur A4</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#20527d"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e9edf2;font:11px Arial,sans-serif;color:#182636}
+.actions{padding:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.actions button{padding:10px;background:#20527d;color:white;border:0;border-radius:5px}.actions small{font-size:12px}
+.stage{overflow:auto;padding:8px}.sheet{width:289mm;height:202mm;background:white;margin:auto;padding:3mm 4mm;box-shadow:0 1px 9px #aaa;display:flex;flex-direction:column;gap:2mm}
+h1{font-size:13px;text-align:center;margin:0;color:#20527d}.meta{display:flex;justify-content:space-between;gap:8px;font-size:9px;align-items:center}.meta label{display:flex;align-items:center;gap:3px}.meta input{width:70px;border:0;border-bottom:1px solid #777;font-size:10px}.meta input.name{width:140px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #557895;text-align:center;padding:1px;overflow-wrap:anywhere}th{background:#20527d;color:white;font-size:8px;height:15mm}td{height:12mm;font-size:9px}td input{width:100%;height:100%;border:0;background:transparent;font:9px Arial;text-align:center;min-width:0;padding:1px}td input[type=checkbox]{width:13px;height:13px;accent-color:#20527d}.tot td{background:#e0edf7;font-weight:bold;height:8mm}
+.bar{background:#20527d;color:white;text-align:center;padding:3px;font-weight:bold;font-size:10px}
+#transport th{height:12mm}#transport td{height:8mm}#transport td input{text-align:left;padding-left:3px}#transport td.day{font-weight:bold;background:#f1f6fa}#transport td.train-day{background:#f8fbfd}#transport .train-check{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:7px;font-weight:bold}#transport .train-check input{width:13px;height:13px;accent-color:#20527d}
+.foot{display:flex;justify-content:space-between;gap:4px;font-size:10px;border-top:1px solid #9db3c5;padding-top:4px}.foot strong{color:#20527d}.foot label{white-space:nowrap}
+@page{size:A4 landscape;margin:5mm}
+@media print{#transport td{height:5.5mm!important;padding:0!important}#transport th{padding:1px!important}
+ html,body{margin:0!important;padding:0!important;width:auto!important;height:auto!important;background:white!important}
+ .actions{display:none!important}
+ .stage{overflow:visible!important;padding:0!important}
+ .sheet{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;gap:2mm!important;box-shadow:none!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ h1{font-size:12px!important;margin:0!important;line-height:1.1!important}
+ .meta{font-size:7.5px!important;gap:3px!important;min-height:4mm!important}
+ .meta input{font-size:7.5px!important}
+ #hours{width:100%!important;min-width:0!important;margin:0!important}
+ #hours th{height:9mm!important;font-size:7px!important;padding:1px!important}
+ #hours td{height:7mm!important;font-size:7.5px!important;padding:1px!important}
+ #hours td input{font-size:7.5px!important;height:6mm!important}
+ #hours td input[type=checkbox]{width:3.5mm!important;height:3.5mm!important}
+ .bar{font-size:9px!important;padding:1.5mm!important;margin:0!important}
+ #transport{width:100%!important;min-width:0!important;margin:0!important}
+ #transport th{height:9mm!important;font-size:7px!important;padding:1px!important}
+ #transport td{height:8mm!important;font-size:7.5px!important;padding:1px!important}
+ #transport td input{font-size:7.5px!important;height:7mm!important}#transport .train-check{font-size:6.5px!important}#transport .train-check input{width:3.5mm!important;height:3.5mm!important}
+ .foot{font-size:8px!important;padding-top:1.5mm!important;gap:3mm!important;line-height:1.1!important}
+ .foot input{font-size:8px!important}
+}
+/* Saisie propre : contenu centré et contrôles contenus dans leurs cases */
+td input, td select, td textarea {
+  font-size: 10px !important;
+  box-sizing: border-box !important;
+  width: calc(100% - 6px) !important;
+  max-width: calc(100% - 6px) !important;
+  margin: 0 3px !important;
+  text-align: center !important;
+}
+td input[list], td input[type="text"], td input[type="number"], td input[type="time"] {
+  font-size: 10px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+@media screen {
+  #transport td input, #transport td select { font-size: 11px !important; }
+}
+
+/* Ajustement des colonnes : Taille compacte, plus de place pour Plomb et remorque */
+#transport th:nth-last-child(3), #transport td:nth-last-child(3) { width: 5% !important; }
+#transport th:nth-last-child(4), #transport td:nth-last-child(4) { width: 12% !important; }
+#transport th:nth-last-child(2), #transport td:nth-last-child(2) { width: 9% !important; }
+#transport th:last-child, #transport td:last-child { width: 14% !important; }
+
+/* Donner plus de place au numéro de conteneur en la prenant sur Plomb */
+
+
+/* Final adjustment: wider container-number field, narrower plomb field */
+#transport th:nth-child(6), #transport td:nth-child(6) { width: 21% !important; }
+#transport th:nth-child(7), #transport td:nth-child(7) { width: 9% !important; }
+
+/* Quand Train est coché, encadrer ensemble les deux lignes de conteneurs de la journée */
+#transport tr.train-selected td {
+  border-top: 1px solid #6b8797 !important;
+  border-bottom: 1px solid #6b8797 !important;
+}
+#transport tr.train-selected-top td {
+  border-top: 2px solid #163f60 !important;
+}
+#transport tr.train-selected-bottom td {
+  border-bottom: 2px solid #163f60 !important;
+}
+/* Le jour et la case Train occupent deux lignes : garder leur contour vertical continu */
+#transport td.day[rowspan="2"] {
+  border-left: 1px solid #6b8797;
+}
+#transport td.train-day[rowspan="2"] {
+  border-right: 1px solid #6b8797;
+}
+#transport tr.train-selected td.day[rowspan="2"] {
+  border-left: 2px solid #163f60 !important;
+}
+#transport tr.train-selected td.train-day[rowspan="2"] {
+  border-right: 2px solid #163f60 !important;
+}
+/* Les cellules Jour et Train fusionnées couvrent les deux lignes : leur bord inférieur doit aussi être renforcé */
+#transport tr.train-selected-top td.day[rowspan="2"],
+#transport tr.train-selected-top td.train-day[rowspan="2"] {
+  border-bottom: 2px solid #163f60 !important;
+}
+#transport tr.train-selected td:last-child {
+  border-right: 2px solid #163f60 !important;
+}
+#transport tr.train-selected-top td {
+  border-top: 2px solid #163f60 !important;
+}
+#transport tr.train-selected-bottom td {
+  border-bottom: 2px solid #163f60 !important;
+}
+#transport tr.train-selected .train-check {
+  font-weight: 800 !important;
+}
+
+#transport .day-choice {
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: center;
+  text-align-last: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+@media print {
+  #transport .day-choice {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+  }
+}
+
+/* Texte saisi plus lisible sans modifier la taille des cases */
+input, select, textarea {
+  font-size: 12px !important;
+}
+#transport td input, #transport td select,
+#hb td input, #hb td select {
+  font-size: 12px !important;
+  line-height: 1.15 !important;
+}
+@media screen {
+  #transport td input, #transport td select,
+  #hb td input, #hb td select {
+    font-size: 15px !important;
+  }
+}
+@media print {
+  input, select, textarea {
+    font-size: 9px !important;
+  }
+}
+
+
+/* Rééquilibrage : Taille plus large, Import/Export un peu plus étroite */
+#transport { table-layout: fixed !important; }
+#transport th:nth-child(8), #transport td:nth-child(8) { width: 8% !important; }
+#transport th:nth-child(9), #transport td:nth-child(9) { width: 7% !important; }
+#transport th:nth-child(10), #transport td:nth-child(10) { width: 12% !important; }
+#transport th:nth-child(11), #transport td:nth-child(11) { width: 8% !important; }
+
+
+/* Largeur fixe et rééquilibrée : Taille plus large, Import/Export plus étroite */
+#transport { table-layout: fixed !important; }
+#transport th:nth-child(8), #transport td:nth-child(8) { width: 8% !important; }
+#transport th:nth-child(9), #transport td:nth-child(9) { width: 7% !important; }
+#transport th:nth-child(10), #transport td:nth-child(10) { width: 12% !important; }
+#transport th:nth-child(11), #transport td:nth-child(11) { width: 8% !important; }
+#transport td input[list="taille-list"] { min-width: 0 !important; width: 100% !important; }
+
+/* Ajustement automatique du texte à la largeur de chaque colonne */
+#transport td input,
+#transport td select,
+#transport td textarea {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  text-align: center !important;
+  font-size: clamp(8px, 1.05vw, 15px) !important;
+}
+#transport td input[list],
+#transport td input[type="text"] {
+  overflow: hidden;
+  text-overflow: clip;
+}
+@media screen {
+  #transport td input,
+  #transport td select,
+  #transport td textarea {
+    font-size: clamp(10px, 3.2vw, 16px) !important;
+  }
+}
+@media print {
+  #transport td input,
+  #transport td select,
+  #transport td textarea {
+    font-size: 8px !important;
+  }
+}
+
+
+/* Uniformiser la taille du texte saisi sur tous les champs, comme Heure début journée */
+#hb input, #hb select, #hb textarea,
+#transport input, #transport select, #transport textarea {
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.15 !important;
+}
+@media screen {
+  #hb input, #hb select, #hb textarea,
+  #transport input, #transport select, #transport textarea {
+    font-size: 15px !important;
+  }
+}
+@media print {
+  #hb input, #hb select, #hb textarea,
+  #transport input, #transport select, #transport textarea {
+    font-size: 9px !important;
+  }
+}
+
+
+/* Dernier ajustement de lisibilité : champs KM et tableau transports */
+#hb input, #hb select, #hb textarea,
+#transport input, #transport select, #transport textarea {
+  font-size: 15px !important;
+  -webkit-text-size-adjust: 100%;
+}
+#hb td input.km, #hb td .km,
+#hb input[name*="km"], #hb input[id*="km"] {
+  font-size: 15px !important;
+}
+#transport td input, #transport td select {
+  font-size: 15px !important;
+  padding: 2px 3px !important;
+}
+@media print {
+  #hb input, #hb select, #hb textarea,
+  #transport input, #transport select, #transport textarea {
+    font-size: 9px !important;
+  }
+}
+
+
+/* Agrandir aussi les résultats calculés : amplitude journée et total KM */
+#hb td, #transport td {
+  -webkit-text-size-adjust: 100%;
+}
+#hb td:nth-child(4),
+#hb td.amplitude,
+#hb td:nth-last-child(1),
+#hb td.total-km,
+#hb .calculated,
+#transport .calculated {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+@media screen {
+  #hb td:nth-child(4),
+  #hb td.amplitude,
+  #hb td:nth-last-child(1),
+  #hb td.total-km,
+  #hb .calculated,
+  #transport .calculated {
+    font-size: 17px !important;
+  }
+}
+@media print {
+  #hb td:nth-child(4),
+  #hb td.amplitude,
+  #hb td:nth-last-child(1),
+  #hb td.total-km,
+  #hb .calculated,
+  #transport .calculated {
+    font-size: 10px !important;
+  }
+}
+
+/* Le total des heures de conduite doit rester aussi lisible que les autres totaux */
+#drivesum, #ampsum { font-size: 17px !important; font-weight: 700 !important; color: #173f5d !important; }
+@media print { #drivesum, #ampsum { font-size: 12px !important; font-weight: 700 !important; } }
+
+
+/* Titre du suivi hebdomadaire harmonisé avec la barre bleue des transports */
+h1 {
+  display: block;
+  background: #24577d !important;
+  color: #ffffff !important;
+  padding: 5px 8px !important;
+  margin: 0 0 6px 0 !important;
+  border: 0 !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+}
+
+
+/* Le choix SAMEDI/DIMANCHE reprend exactement le style des libellés des autres jours */
+#transport .day-choice {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+  padding: 0 2px !important;
+  margin: 0 !important;
+  appearance: none;
+  -webkit-appearance: none;
+}
+@media screen {
+  #transport .day-choice { font-size: 12px !important; }
+}
+@media print {
+  #transport .day-choice { font-size: 8px !important; }
+}
+
+
+.save-status { display:block; margin-top:4px; color:#24577d; font-weight:600; }
+@media print { .save-status { display:none !important; } }
+
+#restore-file { display:none !important; }
+@media print {
+  button, #restore-file { display:none !important; }
+}
+
+
+/* Version impression améliorée : identité, dates, conduite et primes lisibles */
+@media print {
+  .meta { font-size: 10px !important; gap: 5px !important; min-height: 6mm !important; }
+  .meta label { gap: 4px !important; }
+  .meta input, .meta input.name, .meta input[type="date"] {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    height: 6mm !important;
+  }
+  .meta input.name { width: 42mm !important; }
+  .meta input[type="date"] { width: 29mm !important; }
+  #hb td:nth-child(10), #hb #drivesum {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #173f5d !important;
+  }
+  #hb td:nth-child(10) input { font-size: 11px !important; }
+  .foot { font-size: 10px !important; gap: 5mm !important; padding-top: 2mm !important; }
+  .foot strong { font-size: 13px !important; font-weight: 800 !important; }
+  /* Ne pas imprimer les textes indicatifs des champs de transport vides */
+  #transport input::placeholder { color: transparent !important; opacity: 0 !important; }
+  #transport input::-webkit-input-placeholder { color: transparent !important; opacity: 0 !important; }
+  #transport input:-ms-input-placeholder { color: transparent !important; }
+}
+
+
+/* V3.1 - Totaux amplitude et conduite strictement identiques à l'écran et à l'impression */
+#hours tbody#hb tr.tot td#ampsum,
+#hours tbody#hb tr.tot td#drivesum {
+  font-family: Arial, sans-serif !important;
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  color: #173f5d !important;
+  vertical-align: middle !important;
+}
+@media print {
+  #hours tbody#hb tr.tot td#ampsum,
+  #hours tbody#hb tr.tot td#drivesum {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+}
+
+
+/* V3.2 - Supprime les traits/contours natifs des champs horaires à l'impression et en PDF */
+#hours td input[type="time"] {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  border-radius: 0 !important;
+}
+#hours td input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+#hours td input[type="time"]::-webkit-clear-button,
+#hours td input[type="time"]::-webkit-inner-spin-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+@media print {
+  #hours td input[type="time"],
+  #hours td input[type="time"]:focus {
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    color: #182636 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+
+/* Le samedi du tableau des horaires devient un choix samedi/dimanche, comme dans les transports */
+#hours .work-day-choice {
+  display:block; width:100%; max-width:100%; min-width:0; height:100%;
+  border:0; outline:0; background:transparent; color:inherit;
+  font-family:Arial,sans-serif !important;
+  font-size:9px !important; font-weight:400 !important; line-height:normal !important;
+  text-align:center; text-align-last:center;
+  padding:0 2px; margin:0; appearance:none; -webkit-appearance:none;
+}
+@media print { #hours .work-day-choice { font-size:7.5px !important; font-weight:400 !important; appearance:none; -webkit-appearance:none; background:transparent; } }
+
+
+/* Titres de colonnes : gras renforcé, écran et impression */
+table th { font-weight: 800 !important; }
+@media print { table th { font-weight: 800 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+
+/* Impression : conserver la feuille entière sans réduire sa largeur ni ajouter de texte parasite */
+@media print {
+  html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
+  .stage { padding: 0 !important; overflow: visible !important; }
+  .sheet { width: 100% !important; height: auto !important; min-height: 0 !important; max-height: none !important; margin: 0 !important; padding: 0 !important; gap: 1.5mm !important; overflow: visible !important; box-shadow: none !important; break-inside: avoid !important; page-break-inside: avoid !important; }
+  table, thead, tbody, tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+  table th { font-weight: 800 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  #hours .work-day-choice { font-size: 7.5px !important; font-weight: 400 !important; }
+}
+
+/* Lisibilité des intitulés : renforcement du contraste sans modifier la mise en page */
+#hours thead th, #transport thead th {
+  color: #102f48 !important;
+  background: #d9e8f3 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 0.35px currentColor !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+@media screen {
+  #hours thead th, #transport thead th { font-size: 9px !important; }
+}
+@media print {
+  #hours thead th, #transport thead th {
+    font-size: 8px !important;
+    font-weight: 900 !important;
+    color: #102f48 !important;
+    background: #d9e8f3 !important;
+    line-height: 1.05 !important;
+  }
+}
+
+</style></head><body>
+<div class="actions"><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
+<button type="button" onclick="exportWeek()">Sauvegarder ma semaine</button>
+<button type="button" onclick="document.getElementById('restore-file').click()">Restaurer ma semaine</button>
+<input id="restore-file" type="file" accept=".json,application/json" style="display:none" onchange="importWeek(event)"><small>Sur téléphone, fais glisser le tableau horizontalement pour voir les colonnes.</small><small id="save-status" class="save-status">Enregistrement automatique prêt</small></div>
+<div class="stage"><main class="sheet">
+<h1>SUIVI HEBDOMADAIRE DU CHAUFFEUR</h1>
+<div class="meta"><label>Nom du chauffeur : <input class="name" value="MATHIAS Jeremy" readonly></label><label>Semaine du : <input type="date"></label><label>au : <input type="date"></label><label>Immat. tracteur : <input value="FN-769-YY" placeholder="Immatriculation"></label></div>
+<table id="hours"><colgroup><col style="width:7%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:12%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:10%"></colgroup>
+<thead><tr><th>JOURS</th><th>HEURES DÉBUT JOURNÉE</th><th>HEURES FIN JOURNÉE</th><th>AMPLITUDE JOURNÉE</th><th>PT DÉJ.</th><th>DÉJ.</th><th>DÎNER</th><th>NUIT</th><th>LIEU DE CONDUITE FIN DE JOURNÉE</th><th>TPS CONDUITE TOTAL</th><th>KM DÉBUT JOURNÉE</th><th>KM FIN JOURNÉE</th><th>TOTAL KM</th></tr></thead><tbody id="hb"></tbody></table>
+<div class="bar">SUIVI DES TRANSPORTS</div>
+<table id="transport"><colgroup><col style="width:7%"><col style="width:6%"><col style="width:12%"><col style="width:10%"><col style="width:12%"><col style="width:16%"><col style="width:10%"><col style="width:6%"><col style="width:10%"><col style="width:11%"></colgroup><thead><tr><th>JOURS</th><th>TRAIN</th><th>DONNEUR D’ORDRE – TRANSITAIRE</th><th>NOM DU CLIENT LIVRÉ OU CHARGÉ</th><th>VILLE DE CHARGEMENT OU DÉCHARGEMENT</th><th>N° CONTENEURS</th><th>PLOMB</th><th>TAILLE</th><th>N° CHÂSSIS / REMORQUE</th><th>IMPORT / EXPORT</th></tr></thead><tbody id="tb"></tbody></table>
+<datalist id="chassis-list"><option value="EQ 531 FL"></option><option value="EQ 647 FL"></option><option value="FR 653 SE"></option></datalist>
+<div class="foot"><label>Petit-déjeuner : <strong id="b">0</strong></label><label>Déjeuner : <strong id="l">0</strong></label><label>Dîner : <strong id="d">0</strong></label><label>Nuit : <strong id="n">0</strong></label><label>Train : <strong id="trainsum">0</strong></label></div>
+</main></div>
+<script>
+const days=['LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];const hb=document.getElementById('hb'),tb=document.getElementById('tb');
+days.forEach((day,i)=>{let tr=document.createElement('tr');tr.className='work';const dayLabel=(day==='SAMEDI'?'<select class="work-day-choice" aria-label="Jour du week-end"><option value="" selected></option><option value="SAMEDI">SAMEDI</option><option value="DIMANCHE">DIMANCHE</option></select>':day);tr.innerHTML='<td>'+dayLabel+'</td><td><input type="time" class="start"></td><td><input type="time" class="end"></td><td class="amp">—</td>'+['breakfast','lunch','dinner','night'].map(c=>'<td><input type="checkbox" class="'+c+'"></td>').join('')+'<td><input></td><td><input type="time" class="drive"></td><td><input type="number" class="ks"></td><td><input type="number" class="ke"></td><td class="km">—</td>';hb.appendChild(tr);
+for(let j=0;j<2;j++){let row=document.createElement('tr');const shownDay=(day==='SAMEDI'?'<select class="day-choice" aria-label="Jour du week-end"><option value="" selected></option><option value="SAMEDI">SAMEDI</option><option value="DIMANCHE">DIMANCHE</option></select>':day);row.innerHTML=(j===0?'<td rowspan="2" class="day">'+shownDay+'</td><td rowspan="2" class="train-day"><label class="train-check"><input type="checkbox" aria-label="Transport en train le '+day+'"><span>Train</span></label></td>':'')+Array.from({length:6},(_,i)=>'<td><input '+(i===0?'list="donneurs-list" placeholder="Choisir ou saisir"':i===1?'list="clients-list" placeholder="Choisir ou saisir"':i===4?'placeholder="N° plomb"':i===5?'list="taille-list" placeholder="Choisir ou saisir"':'')+'></td>').join('')+'<td><input list="chassis-list" placeholder="Choisir ou saisir"></td><td><input list="import-export-list" placeholder="Choisir"></td>';tb.appendChild(row)}});
+
+function updateTrainRows(){
+  const rows = Array.from(document.querySelectorAll('#transport tbody tr'));
+  for(let i=0;i<rows.length;){
+    const first = rows[i];
+    const check = first.querySelector('.train-check input[type="checkbox"]');
+    if(check){
+      const second = rows[i+1];
+      first.classList.toggle('train-selected', check.checked); first.classList.toggle('train-selected-top', check.checked);
+      if(second) { second.classList.toggle('train-selected', check.checked); second.classList.toggle('train-selected-bottom', check.checked); }
+      check.onchange = updateTrainRows;
+      i += 2;
+    } else {
+      i++;
+    }
+  }
+}
+updateTrainRows();
+
+let sum=document.createElement('tr');sum.className='tot';sum.innerHTML='<td>TOTAL</td><td></td><td></td><td id="ampsum">00:00</td><td id="bsum">0</td><td id="lsum">0</td><td id="dsum">0</td><td id="nsum">0</td><td></td><td id="drivesum">00:00</td><td></td><td></td><td id="kmsum">0</td>';hb.appendChild(sum);
+function mins(v){if(!v)return null;let [h,m]=v.split(':').map(Number);return h*60+m}
+function fmt(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+function calc(){let a=0,drive=0,km=0;let count=[0,0,0,0],trainCount=0;document.querySelectorAll('#transport .train-check input[type=checkbox]').forEach(ch=>{if(ch.checked)trainCount++});document.querySelectorAll('tr.work').forEach(tr=>{let st=mins(tr.querySelector('.start').value),en=mins(tr.querySelector('.end').value);if(st!==null&&en!==null){let delta=(en-st+1440)%1440;tr.querySelector('.amp').textContent=fmt(delta);a+=delta}else tr.querySelector('.amp').textContent='—';let d=mins(tr.querySelector('.drive').value);if(d!==null)drive+=d;let s=tr.querySelector('.ks').value,e=tr.querySelector('.ke').value;if(s!==''&&e!==''&&Number(e)>=Number(s)){let diff=Number(e)-Number(s);km+=diff;tr.querySelector('.km').textContent=diff+' km'}else tr.querySelector('.km').textContent='—';['breakfast','lunch','dinner','night'].forEach((c,i)=>{if(tr.querySelector('.'+c).checked)count[i]++})});document.getElementById('ampsum').textContent=fmt(a);document.getElementById('drivesum').textContent=fmt(drive);document.getElementById('kmsum').textContent=km+' km';['b','l','d','n'].forEach((id,i)=>document.getElementById(id).textContent=count[i]);['bsum','lsum','dsum','nsum'].forEach((id,i)=>document.getElementById(id).textContent=count[i]);document.getElementById('trainsum').textContent=trainCount;}
+/* Reporter automatiquement le KM fin d'une journée au KM début de la suivante */
+document.querySelectorAll('#hb tr.work').forEach((tr, index, rows) => {
+  const endKm = tr.querySelector('.ke');
+  endKm.addEventListener('input', () => {
+    const nextRow = rows[index + 1];
+    if (nextRow && endKm.value !== '') {
+      nextRow.querySelector('.ks').value = endKm.value;
+      calc();
+    }
+  });
+  endKm.addEventListener('change', () => {
+    const nextRow = rows[index + 1];
+    if (nextRow && endKm.value !== '') {
+      nextRow.querySelector('.ks').value = endKm.value;
+      calc();
+    }
+  });
+});
+// Coche automatiquement les repas selon les horaires saisis.
+// La coche automatique est retirée si l'horaire ne correspond plus ; une coche manuelle reste libre.
+function updateAutoMeals(row){
+  const start = row.querySelector('.start').value;
+  const end = row.querySelector('.end').value;
+  const breakfast = row.querySelector('.breakfast');
+  const lunch = row.querySelector('.lunch');
+  const autoSet = (checkbox, condition) => {
+    if (condition && !checkbox.checked) { checkbox.checked = true; checkbox.dataset.autoMeal = 'true'; }
+    else if (!condition && checkbox.dataset.autoMeal === 'true') { checkbox.checked = false; delete checkbox.dataset.autoMeal; }
+  };
+  autoSet(breakfast, !!start && mins(start) < 5 * 60);
+  autoSet(lunch, !!end && mins(end) > 14 * 60);
+}
+document.querySelectorAll('#hb tr.work').forEach(row => {
+  row.querySelector('.start').addEventListener('input', () => { updateAutoMeals(row); calc(); saveForm(); });
+  row.querySelector('.start').addEventListener('change', () => { updateAutoMeals(row); calc(); saveForm(); });
+  row.querySelector('.end').addEventListener('input', () => { updateAutoMeals(row); calc(); saveForm(); });
+  row.querySelector('.end').addEventListener('change', () => { updateAutoMeals(row); calc(); saveForm(); });
+  ['.breakfast','.lunch'].forEach(selector => row.querySelector(selector).addEventListener('change', event => { delete event.target.dataset.autoMeal; calc(); saveForm(); }));
+});
+document.addEventListener('input',calc);document.addEventListener('change',calc);
+const SAVE_KEY = 'suivi_chauffeur_hebdo_v1';
+function formFields(){ return Array.from(document.querySelectorAll('input, select, textarea')).filter(el => !el.classList.contains('name') && el.type !== 'file'); }
+function saveForm(){
+  try {
+    const data = formFields().map(el => ({value: el.value, checked: el.type === 'checkbox' ? el.checked : undefined}));
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    const status = document.getElementById('save-status');
+    if (status) status.textContent = 'Enregistré automatiquement ✓';
+  } catch(e) {
+    const status = document.getElementById('save-status');
+    if (status) status.textContent = 'Enregistrement local indisponible — imprime ou sauvegarde une copie';
+  }
+}
+function restoreForm(){
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    const fields = formFields();
+    data.forEach((item, i) => {
+      const el = fields[i];
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = !!item.checked;
+      else el.value = item.value || '';
+    });
+    updateTrainRows();
+    const status = document.getElementById('save-status');
+    if (status) status.textContent = 'Dernières saisies restaurées ✓';
+  } catch(e) {}
+}
+document.addEventListener('input', saveForm);
+document.addEventListener('change', saveForm);
+
+function exportWeek(){
+  try {
+    const fields = formFields();
+    const backup = {
+      format: 'suivi-chauffeur-backup-v1',
+      createdAt: new Date().toISOString(),
+      fields: fields.map(el => ({
+        value: el.value,
+        checked: el.type === 'checkbox' ? el.checked : undefined
+      }))
+    };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sauvegarde-suivi-chauffeur.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    const status = document.getElementById('save-status');
+    if (status) status.textContent = 'Copie de secours téléchargée ✓';
+  } catch(e) {
+    alert('La sauvegarde n’a pas pu être téléchargée. Essaie depuis Chrome.');
+  }
+}
+function importWeek(event){
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const backup = JSON.parse(reader.result);
+      if (backup.format !== 'suivi-chauffeur-backup-v1' || !Array.isArray(backup.fields)) {
+        throw new Error('Format invalide');
+      }
+      if (!confirm('Restaurer cette sauvegarde ? Les saisies actuelles seront remplacées.')) {
+        event.target.value = '';
+        return;
+      }
+      const fields = formFields();
+      // Anciennes sauvegardes : le menu SAMEDI/DIMANCHE du tableau des horaires
+      // n'existait pas encore. On le saute pendant l'import pour ne pas décaler
+      // toutes les cases suivantes. Les champs fichier ne sont jamais sauvegardés.
+      const legacyWithoutHoursDayChoice = backup.fields.length < fields.length;
+      let sourceIndex = 0;
+      fields.forEach(el => {
+        if (legacyWithoutHoursDayChoice && (el.classList.contains('work-day-choice') || el.classList.contains('day-choice'))) {
+          el.value = '';
+          return;
+        }
+        const item = backup.fields[sourceIndex++];
+        if (!item) return;
+        if (el.type === 'checkbox') el.checked = !!item.checked;
+        else el.value = item.value || '';
+      });
+      if (typeof updateTrainRows === 'function') updateTrainRows();
+      calc();
+      saveForm();
+      const status = document.getElementById('save-status');
+      if (status) status.textContent = 'Sauvegarde restaurée ✓';
+      alert('Ta semaine a été restaurée.');
+    } catch(e) {
+      alert('Impossible de lire cette sauvegarde. Sélectionne un fichier JSON créé avec « Sauvegarder ma semaine ».');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function clearAll(){
+  if(confirm('Effacer toutes les saisies enregistrées pour cette semaine ?')){
+    formFields().forEach(el => { if(el.type==='checkbox') el.checked=false; else el.value=''; });
+    try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+    updateTrainRows();
+    calc();
+    saveForm();
+  }
+}
+restoreForm();
+document.querySelectorAll('#hb tr.work').forEach(updateAutoMeals);
+calc();
+</script><datalist id="donneurs-list"><option value="LPO Sogena"></option><option value="TFS France"></option><option value="TBI"></option><option value="Seyris"></option><option value="Tps Louis"></option><option value="Atlas Transit"></option></datalist>
+<datalist id="clients-list"><option value="Tang Frères"></option><option value="BARIAU"></option><option value="LAD"></option></datalist>
+<datalist id="import-export-list"><option value="Import"></option><option value="Export"></option></datalist>
+<datalist id="taille-list"><option value="20 D"></option><option value="20 HC"></option><option value="20 RE"></option><option value="20 OT"></option><option value="40 D"></option><option value="40 HC"></option><option value="40 RE"></option><option value="40 OT"></option></datalist>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+}
+</script>
+
+<style id="print-column-heading-readability">
+/* Titres de colonnes plus lisibles à l'impression A4 paysage */
+@media print {
+  #hours thead th, #transport thead th {
+    font-size: 8.8px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    padding: 1.4mm 1mm !important;
+    height: 11mm !important;
+    vertical-align: middle !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+}
+
+/* Titres de colonnes : gras renforcé, écran et impression */
+table th { font-weight: 800 !important; }
+@media print { table th { font-weight: 800 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+
+/* Lisibilité des intitulés : renforcement du contraste sans modifier la mise en page */
+#hours thead th, #transport thead th {
+  color: #102f48 !important;
+  background: #d9e8f3 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 0.35px currentColor !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+@media screen {
+  #hours thead th, #transport thead th { font-size: 9px !important; }
+}
+@media print {
+  #hours thead th, #transport thead th {
+    font-size: 8px !important;
+    font-weight: 900 !important;
+    color: #102f48 !important;
+    background: #d9e8f3 !important;
+    line-height: 1.05 !important;
+  }
+}
+
+</style>
+
+</body></html>
