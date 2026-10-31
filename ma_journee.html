@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102b46"><title>TruckPilote — Ma journée</title>
+<style>
+:root{--navy:#102b46;--blue:#1769aa;--pale:#edf3f8;--ink:#172536;--muted:#66788a;--line:#dce5ed}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:15px system-ui,Arial}.top{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:22px 18px;border-radius:0 0 22px 22px}.top a{color:#dcecff}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}.title{font-weight:800;font-size:17px;margin:4px 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:650;margin:0 0 5px}.field input,.field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}.field{min-width:0;margin-bottom:11px}.checks{display:flex;flex-wrap:wrap;gap:15px}.checks label{display:flex;align-items:center;gap:6px;font-weight:600}.transport{border:1px solid var(--line);border-radius:13px;padding:13px;margin:12px 0;background:#fbfdff}.transport h3{font-size:14px;margin:0 0 10px}.btn{border:0;border-radius:11px;background:var(--blue);color:#fff;padding:13px 16px;font:700 15px system-ui;cursor:pointer}.btn.alt{background:#e8eef4;color:var(--navy)}.actions{display:flex;gap:9px;flex-wrap:wrap}.status{font-size:13px;color:#187044;margin-top:10px;min-height:18px}.note{font-size:12px;color:var(--muted);line-height:1.5}@media(max-width:480px){.grid{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<header class="top"><h2 style="margin:0 0 5px">TruckPilote · Ma journée</h2><div>Renseignez votre activité du jour, puis enregistrez.</div><p style="margin:10px 0 0"><a href="index.html">← Retour à l'accueil</a>　·　<a href="feuille.html">Voir ma feuille de semaine</a></p></header>
+<main class="wrap">
+<section class="card"><div class="title">Ma journée</div><div class="grid">
+<div class="field"><label for="date">Date de travail</label><input id="date" type="date" required></div>
+<div class="field"><label for="tractor">Immatriculation tracteur</label><input id="tractor" placeholder="Ex. FN-769-YY"></div>
+<div class="field"><label for="start">Heure début journée</label><input id="start" type="time"></div>
+<div class="field"><label for="end">Heure fin journée</label><input id="end" type="time"></div>
+<div class="field"><label for="drive">Temps de conduite total</label><input id="drive" type="time"></div>
+<div class="field"><label for="place">Lieu de conduite fin de journée</label><input id="place"></div>
+<div class="field"><label for="kmstart">Kilomètres début</label><input id="kmstart" type="number" inputmode="numeric"></div>
+<div class="field"><label for="kmend">Kilomètres fin</label><input id="kmend" type="number" inputmode="numeric"></div>
+</div><div class="title" style="font-size:14px">Repas et nuit</div><div class="checks">
+<label><input id="breakfast" type="checkbox"> Petit-déjeuner</label><label><input id="lunch" type="checkbox"> Déjeuner</label><label><input id="dinner" type="checkbox"> Dîner</label><label><input id="night" type="checkbox"> Nuit</label>
+</div></section>
+<section class="card"><div class="title">Transports de la journée</div><div class="checks" style="margin-bottom:12px"><label><input id="train" type="checkbox"> Journée avec train</label></div><div id="transports"></div>
+<div class="actions"><button class="btn alt" id="addTransport" type="button">＋ Ajouter un transport</button></div>
+<p class="note">Deux transports sont proposés au départ. Vous pouvez en ajouter autant que nécessaire.</p></section>
+<section class="card"><div class="actions"><button class="btn" id="save" type="button">Enregistrer ma journée</button><button class="btn alt" id="clear" type="button">Effacer le formulaire</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil. Elles sont ensuite reprises dans la feuille hebdomadaire ouverte sur le même navigateur. La synchronisation en ligne sera ajoutée dans une prochaine étape.</p></section>
+</main>
+<script>
+const KEY='truckpilote_daily_entries_v1';
+const fields=['donor','client','city','container','seal','size','chassis','io'];
+const days=['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];
+const $=id=>document.getElementById(id);
+function makeTransport(data={}) {
+ const n=document.querySelectorAll('.transport').length+1;
+ const box=document.createElement('div');box.className='transport';
+ box.innerHTML='<h3>Transport '+n+'</h3><div class="grid">'+
+ '<div class="field"><label>Donneur d’ordre – transitaire</label><input data-f="donor" list="donors" placeholder="Choisir ou saisir"></div>'+
+ '<div class="field"><label>Client livré ou chargé</label><input data-f="client" list="clients" placeholder="Choisir ou saisir"></div>'+
+ '<div class="field"><label>Ville chargement / déchargement</label><input data-f="city"></div>'+
+ '<div class="field"><label>N° conteneur</label><input data-f="container"></div>'+
+ '<div class="field"><label>Plomb</label><input data-f="seal"></div>'+
+ '<div class="field"><label>Taille</label><input data-f="size" list="sizes" placeholder="Choisir ou saisir"></div>'+
+ '<div class="field"><label>N° châssis / remorque</label><input data-f="chassis" list="chassis"></div>'+
+ '<div class="field"><label>Import / Export</label><select data-f="io"><option value="">Choisir</option><option>Import</option><option>Export</option></select></div></div>'+
+ '<button type="button" class="btn alt remove">Supprimer ce transport</button>';
+ box.querySelectorAll('[data-f]').forEach(el=>el.value=data[el.dataset.f]||'');
+ box.querySelector('.remove').onclick=()=>{box.remove();renumber()};
+ $('transports').appendChild(box);renumber();
+}
+function renumber(){document.querySelectorAll('.transport h3').forEach((h,i)=>h.textContent='Transport '+(i+1))}
+function read(){return {date:$('date').value,tractor:$('tractor').value,start:$('start').value,end:$('end').value,drive:$('drive').value,place:$('place').value,kmstart:$('kmstart').value,kmend:$('kmend').value,breakfast:$('breakfast').checked,lunch:$('lunch').checked,dinner:$('dinner').checked,night:$('night').checked,train:$('train').checked,transports:[...document.querySelectorAll('.transport')].map(b=>Object.fromEntries([...b.querySelectorAll('[data-f]')].map(e=>[e.dataset.f,e.value])))}}
+function load(entry){if(!entry)return;Object.entries(entry).forEach(([k,v])=>{const el=$(k);if(el&&el.type==='checkbox')el.checked=!!v;else if(el&&typeof v!=='object')el.value=v??''});$('transports').innerHTML='';(entry.transports?.length?entry.transports:[{},{}]).forEach(makeTransport)}
+function entries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
+$('date').value=new Date().toISOString().slice(0,10);
+makeTransport();makeTransport();
+$('date').addEventListener('change',()=>{const all=entries();$('transports').innerHTML='';const e=all[$('date').value];if(e)load(e);else{makeTransport();makeTransport();['tractor','start','end','drive','place','kmstart','kmend'].forEach(id=>$(id).value='');['breakfast','lunch','dinner','night','train'].forEach(id=>$(id).checked=false)}});
+$('addTransport').onclick=()=>makeTransport();
+$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries();all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée ✓ — '+days[new Date(e.date+'T12:00:00').getDay()]};
+$('clear').onclick=()=>{if(!confirm('Effacer les champs de cette journée ?'))return;const date=$('date').value;$('transports').innerHTML='';makeTransport();makeTransport();['tractor','start','end','drive','place','kmstart','kmend'].forEach(id=>$(id).value='');['breakfast','lunch','dinner','night','train'].forEach(id=>$(id).checked=false);$('status').textContent='Formulaire vidé. La journée déjà enregistrée n’est pas supprimée.'};
+const lists=[['donors',['LPO Sogena','TFS France','TBI','Seyris','Tps Louis','Atlas Transit']],['clients',['Tang Frères','BARIAU','LAD']],['sizes',['20 D','20 HC','20 RE','20 OT','40 D','40 HC','40 RE','40 OT']],['chassis',['EQ 531 FL','EQ 647 FL','FR 653 SE']]];
+lists.forEach(([id,vals])=>{const d=document.createElement('datalist');d.id=id;vals.forEach(v=>{const o=document.createElement('option');o.value=v;d.appendChild(o)});document.body.appendChild(d)});
+const existing=entries()[$('date').value];if(existing)load(existing);
+</script></body></html>
