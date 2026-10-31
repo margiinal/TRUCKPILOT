@@ -1,31 +1,189 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#102b46"><meta name="description" content="TruckPilote — votre suivi hebdomadaire chauffeur poids lourd.">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b46">
+<meta name="description" content="TruckPilote — votre suivi hebdomadaire chauffeur poids lourd.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>TruckPilote — Espace chauffeur</title>
 <style>
 :root{--navy:#102b46;--blue:#1769aa;--pale:#edf3f8;--ink:#172536;--muted:#66788a;--line:#dce5ed;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:16px system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.top{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:25px 20px 30px;border-radius:0 0 25px 25px}.toprow{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--navy);display:grid;place-items:center;font-size:25px;font-weight:900}.brand{font-size:23px;font-weight:850;letter-spacing:.2px}.tag{font-size:13px;color:#d4e6f6;margin-top:2px}.welcome{margin:27px 0 0;font-size:24px;font-weight:750}.sub{color:#d4e6f6;font-size:14px;margin-top:5px}.wrap{max-width:720px;margin:auto;padding:18px 16px 34px}.section-title{font-size:17px;font-weight:800;margin:8px 2px 12px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:13px;box-shadow:0 5px 18px #102b460b}.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--blue);color:white;text-decoration:none;border-radius:15px;padding:17px 18px;font-weight:750}.primary small{display:block;font-weight:500;opacity:.9;margin-top:4px}.arrow{font-size:25px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{background:white;border:1px solid var(--line);border-radius:16px;padding:15px;text-decoration:none;color:var(--ink);min-height:108px}.ico{font-size:23px}.tile b{display:block;margin-top:8px}.tile span{font-size:12px;color:var(--muted)}.profileline{display:flex;justify-content:space-between;gap:10px;align-items:center}.profileline strong{font-size:16px}.pill{background:#e6f4ec;color:#187044;border-radius:30px;padding:5px 10px;font-size:11px;font-weight:700}.notice{font-size:12px;color:var(--muted);line-height:1.5;margin:14px 3px 0}.footer{text-align:center;color:#7a8998;font-size:11px;padding:5px 0 20px}
-</style></head><body>
-<header class="top"><div class="toprow"><div class="logo">T</div><div><div class="brand">TruckPilote</div><div class="tag">Votre activité poids lourd, sous contrôle.</div></div></div><div class="welcome">Bonjour <span id="helloName">chauffeur</span> 👋</div><div class="sub">Bienvenue dans votre espace personnel.</div></header>
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:16px system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.top{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:25px 20px 30px;border-radius:0 0 25px 25px}
+.toprow{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--navy);display:grid;place-items:center;font-size:25px;font-weight:900}
+.brand{font-size:23px;font-weight:850;letter-spacing:.2px}.tag{font-size:13px;color:#d4e6f6;margin-top:2px}.welcome{margin:27px 0 0;font-size:24px;font-weight:750}.sub{color:#d4e6f6;font-size:14px;margin-top:5px}
+.wrap{max-width:720px;margin:auto;padding:18px 16px 34px}.section-title{font-size:17px;font-weight:800;margin:8px 2px 12px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:13px;box-shadow:0 5px 18px #102b460b}
+.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--blue);color:white;text-decoration:none;border-radius:15px;padding:17px 18px;font-weight:750}
+.primary small{display:block;font-weight:500;opacity:.9;margin-top:4px}.arrow{font-size:25px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:white;border:1px solid var(--line);border-radius:16px;padding:15px;text-decoration:none;color:var(--ink);min-height:108px}
+.ico{font-size:23px}.tile b{display:block;margin-top:8px}.tile span{font-size:12px;color:var(--muted)}
+.profileline{display:flex;justify-content:space-between;gap:10px;align-items:center}.profileline strong{font-size:16px}
+.pill{background:#e6f4ec;color:#187044;border-radius:30px;padding:5px 10px;font-size:11px;font-weight:700}
+.notice{font-size:12px;color:var(--muted);line-height:1.5;margin:14px 3px 0}.footer{text-align:center;color:#7a8998;font-size:11px;padding:5px 0 20px}
+.auth-card{max-width:520px;margin:18px auto}.field{display:block;width:100%;padding:13px 14px;margin:8px 0 13px;border:1px solid var(--line);border-radius:11px;font:inherit;background:#fff;color:var(--ink)}
+.btn{border:0;border-radius:11px;padding:13px 16px;background:var(--blue);color:#fff;font:700 15px system-ui;cursor:pointer}
+.btn.secondary{background:#e8eef4;color:var(--navy);margin-left:7px}.btn:disabled{opacity:.55;cursor:wait}
+.auth-actions{display:flex;flex-wrap:wrap;gap:8px}.status{font-size:13px;line-height:1.45;margin-top:12px;color:var(--muted);min-height:20px}
+.hidden{display:none!important}.accountbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+@media(max-width:420px){.grid{gap:9px}.tile{padding:12px}.auth-actions .btn{flex:1}.btn.secondary{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="toprow"><div class="logo">T</div><div><div class="brand">TruckPilote</div><div class="tag">Votre activité poids lourd, sous contrôle.</div></div></div>
+  <div class="welcome">Bonjour <span id="helloName">chauffeur</span> 👋</div>
+  <div class="sub">Bienvenue dans votre espace personnel.</div>
+</header>
+
 <main class="wrap">
-<div class="section-title">Mon activité</div>
-<a class="primary" href="feuille.html"><span>📋 <span style="font-size:17px">Ma feuille de semaine</span><small>Saisir mes horaires, transports et kilomètres</small></span><span class="arrow">›</span></a>
-<div class="section-title" style="margin-top:23px">Mes outils</div>
-<div class="grid">
-<a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Suivi hebdomadaire</b><span>Ouvrir ma feuille en cours</span></a>
-<a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Sauvegarde</b><span>Enregistrement sur cet appareil</span></a>
-<a class="tile" href="profil.html"><div class="ico">👤</div><b>Mon profil</b><span>Mes informations personnelles</span></a>
-<a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico">📄</div><b>Mes documents</b><span>Préparer et imprimer ma feuille PDF</span></a>
-</div>
-<div class="section-title" style="margin-top:23px">Mon compte</div>
-<div class="card"><div class="profileline"><div><strong id="profileName">Profil chauffeur</strong><div style="font-size:12px;color:#66788a;margin-top:4px" id="profileEmail">Renseignez vos informations</div></div><span class="pill">ESPACE CHAUFFEUR</span></div><a href="profil.html" style="display:inline-block;margin-top:14px;color:#1769aa;font-weight:700;font-size:13px;text-decoration:none">Modifier mon profil →</a></div>
-<p class="notice">Première version de TruckPilote : vos saisies sont conservées localement sur cet appareil. La création de comptes sécurisés et la synchronisation en ligne seront ajoutées dans une prochaine étape. Pensez à exporter régulièrement votre semaine.</p>
-<div class="footer">TruckPilote · Version de démarrage</div>
+  <section id="authSection" class="card auth-card">
+    <div class="section-title" style="margin-top:0">Mon compte chauffeur</div>
+    <p style="font-size:13px;color:#66788a;margin-top:0">Connectez-vous ou créez votre compte TruckPilote.</p>
+    <form id="authForm">
+      <label for="nameInput" id="nameLabel">Nom et prénom (pour la création du compte)</label>
+      <input class="field" id="nameInput" autocomplete="name" placeholder="Ex. Jeremy Mathias">
+      <label for="emailInput">Adresse e-mail</label>
+      <input class="field" id="emailInput" type="email" autocomplete="email" required placeholder="vous@exemple.fr">
+      <label for="passwordInput">Mot de passe</label>
+      <input class="field" id="passwordInput" type="password" autocomplete="current-password" minlength="6" required placeholder="6 caractères minimum">
+      <div class="auth-actions">
+        <button class="btn" id="loginBtn" type="submit">Se connecter</button>
+        <button class="btn secondary" id="signupBtn" type="button">Créer mon compte</button>
+      </div>
+      <button id="switchModeBtn" type="button" style="margin-top:12px;padding:0;border:0;background:none;color:#1769aa;font:600 13px system-ui;cursor:pointer">Première visite ? Créer mon compte</button>
+    </form>
+    <div id="authStatus" class="status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section id="appSection" class="hidden">
+    <div class="card accountbar">
+      <div><strong id="accountName">Compte chauffeur</strong><div id="accountEmail" style="font-size:12px;color:#66788a;margin-top:3px"></div></div>
+      <button class="btn secondary" id="logoutBtn" type="button">Déconnexion</button>
+    </div>
+    <div class="section-title">Mon activité</div>
+    <a class="primary" href="feuille.html"><span>📋 <span style="font-size:17px">Ma feuille de semaine</span><small>Saisir mes horaires, transports et kilomètres</small></span><span class="arrow">›</span></a>
+    <div class="section-title" style="margin-top:23px">Mes outils</div>
+    <div class="grid">
+      <a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Suivi hebdomadaire</b><span>Ouvrir ma feuille en cours</span></a>
+      <a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Sauvegarde</b><span>Enregistrement sur cet appareil</span></a>
+      <a class="tile" href="profil.html"><div class="ico">👤</div><b>Mon profil</b><span>Mes informations personnelles</span></a>
+      <a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico">📄</div><b>Mes documents</b><span>Préparer et imprimer ma feuille PDF</span></a>
+    </div>
+    <div class="section-title" style="margin-top:23px">Mon compte</div>
+    <div class="card"><div class="profileline"><div><strong id="profileName">Profil chauffeur</strong><div style="font-size:12px;color:#66788a;margin-top:4px" id="profileEmail">Profil à compléter</div></div><span class="pill">ESPACE CHAUFFEUR</span></div><a href="profil.html" style="display:inline-block;margin-top:14px;color:#1769aa;font-weight:700;font-size:13px;text-decoration:none">Modifier mon profil →</a></div>
+    <p class="notice">Vos informations de compte sont gérées par Supabase. Les feuilles hebdomadaires restent pour le moment enregistrées localement sur cet appareil : la synchronisation en ligne sera ajoutée dans une prochaine étape. Pensez à exporter régulièrement votre semaine.</p>
+  </section>
+  <div class="footer">TruckPilote · Version de démarrage</div>
 </main>
-<script>
-const p=JSON.parse(localStorage.getItem('truckpilote_profile')||'{}');const full=[p.firstname,p.lastname].filter(Boolean).join(' ');document.getElementById('helloName').textContent=p.firstname||'chauffeur';document.getElementById('profileName').textContent=full||'Profil chauffeur';document.getElementById('profileEmail').textContent=p.email||'Profil à compléter';
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
-</script></body></html>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL = 'https://ahgdzxgowadoehqhlmqa.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+const $ = id => document.getElementById(id);
+const authSection = $('authSection');
+const appSection = $('appSection');
+let authMode = 'login';
+
+function showStatus(message, isError = false) {
+  $('authStatus').textContent = message;
+  $('authStatus').style.color = isError ? '#b42318' : '#187044';
+}
+function setMode(mode) {
+  authMode = mode;
+  $('nameInput').classList.toggle('hidden', mode !== 'signup');
+  $('nameLabel').classList.toggle('hidden', mode !== 'signup');
+  $('loginBtn').classList.toggle('hidden', mode !== 'login');
+  $('signupBtn').classList.toggle('hidden', mode !== 'signup');
+  $('switchModeBtn').textContent = mode === 'signup' ? 'Déjà inscrit ? Se connecter' : 'Première visite ? Créer mon compte';
+  $('passwordInput').setAttribute('autocomplete', mode === 'signup' ? 'new-password' : 'current-password');
+  showStatus(mode === 'signup' ? 'Renseignez votre nom, votre e-mail et un mot de passe.' : 'Connectez-vous avec votre adresse e-mail et votre mot de passe.');
+}
+function showSignedIn(user) {
+  const metadata = user.user_metadata || {};
+  const fullName = metadata.full_name || localStorage.getItem('truckpilote_profile_name') || '';
+  const firstName = fullName.trim().split(/\s+/)[0] || 'chauffeur';
+  $('helloName').textContent = firstName;
+  $('accountName').textContent = fullName || 'Compte chauffeur';
+  $('accountEmail').textContent = user.email || '';
+  $('profileName').textContent = fullName || 'Profil chauffeur';
+  $('profileEmail').textContent = user.email || 'Profil à compléter';
+  authSection.classList.add('hidden');
+  appSection.classList.remove('hidden');
+}
+function showSignedOut() {
+  appSection.classList.add('hidden');
+  authSection.classList.remove('hidden');
+  $('helloName').textContent = 'chauffeur';
+}
+
+$('switchModeBtn').addEventListener('click', () => setMode(authMode === 'login' ? 'signup' : 'login'));
+
+$('authForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (authMode !== 'login') return;
+  const email = $('emailInput').value.trim();
+  const password = $('passwordInput').value;
+  $('loginBtn').disabled = true;
+  showStatus('Connexion en cours…');
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  $('loginBtn').disabled = false;
+  if (error) return showStatus(error.message, true);
+  if (data.user) showSignedIn(data.user);
+});
+$('signupBtn').addEventListener('click', async () => {
+  const fullName = $('nameInput').value.trim();
+  const email = $('emailInput').value.trim();
+  const password = $('passwordInput').value;
+  if (!fullName) return showStatus('Saisissez votre nom et prénom.', true);
+  if (!email || !password) return showStatus('Saisissez votre e-mail et votre mot de passe.', true);
+  if (password.length < 6) return showStatus('Le mot de passe doit contenir au moins 6 caractères.', true);
+  $('signupBtn').disabled = true;
+  showStatus('Création du compte en cours…');
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: {
+      data: { full_name: fullName },
+      emailRedirectTo: window.location.origin + window.location.pathname
+    }
+  });
+  $('signupBtn').disabled = false;
+  if (error) return showStatus(error.message, true);
+  localStorage.setItem('truckpilote_profile_name', fullName);
+  if (data.session && data.user) {
+    // If Supabase returns a session immediately, email confirmation is probably disabled.
+    // Sign out so the app does not bypass the intended email-verification step.
+    await supabase.auth.signOut();
+    setMode('login');
+    showStatus('Le compte a été créé, mais Supabase autorise une connexion sans confirmation. Activez « Confirm email » dans Authentication > Sign In / Providers > Email, puis demandez au chauffeur de confirmer son adresse.', true);
+  } else {
+    setMode('login');
+    showStatus('Compte créé ! Consultez votre boîte e-mail (et les courriers indésirables), puis cliquez sur le lien de confirmation. Vous pourrez ensuite vous connecter.');
+  }
+});
+$('logoutBtn').addEventListener('click', async () => {
+  $('logoutBtn').disabled = true;
+  const { error } = await supabase.auth.signOut();
+  $('logoutBtn').disabled = false;
+  if (error) return alert('Déconnexion impossible : ' + error.message);
+  showSignedOut();
+  $('passwordInput').value = '';
+  setMode('login');
+});
+const { data: { session } } = await supabase.auth.getSession();
+if (session?.user) showSignedIn(session.user);
+else { showSignedOut(); setMode('login'); }
+supabase.auth.onAuthStateChange((_event, sessionNow) => {
+  if (sessionNow?.user) showSignedIn(sessionNow.user);
+  else showSignedOut();
+});
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+</script>
+</body>
+</html>
