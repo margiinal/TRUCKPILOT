@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b46">
+<title>TruckPilote — Mes frais</title>
+<style>
+:root{--navy:#102b46;--blue:#1769aa;--pale:#edf3f8;--ink:#172536;--muted:#66788a;--line:#dce5ed}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:15px system-ui,Arial}
+header{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:22px 18px;border-radius:0 0 22px 22px}
+header a{color:#dcecff}main{max-width:850px;margin:auto;padding:16px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+h1{font-size:22px;margin:8px 0}h2{font-size:18px;margin:0 0 12px}
+.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--ink);background:#fff}
+button{border:0;border-radius:10px;background:var(--blue);color:#fff;padding:12px 15px;font:700 14px system-ui;cursor:pointer}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:#f3f7fb;border-radius:12px;padding:13px}.stat b{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.stat strong{font-size:22px}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:10px 6px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}
+.status{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.5}
+.warning{background:#fff7e6;border:1px solid #f1d49a;color:#72500b;padding:11px;border-radius:10px;font-size:13px;line-height:1.45;margin-top:10px}
+@media(max-width:480px){main{padding:12px}.card{padding:13px}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><a href="index.html">← Retour à l’accueil</a><h1>Mes frais</h1><div>Suivi mensuel des repas et des nuits.</div></header>
+<main>
+<section class="card">
+ <h2>Mes tarifs</h2>
+ <p class="muted">Renseigne tes montants en euros. Ils seront enregistrés sur cet appareil et utilisés comme tarifs par défaut pour les prochaines journées.</p>
+ <div class="grid">
+  <div class="field"><label for="breakfastRate">Petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="lunchRate">Déjeuner (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="dinnerRate">Dîner (€)</label><input id="dinnerRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="nightRate">Nuit (€)</label><input id="nightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+ </div>
+ <div class="row" style="margin-top:12px"><button id="saveRates">Enregistrer les tarifs</button></div>
+ <div class="status" id="rateStatus"></div>
+</section>
+<section class="card">
+ <h2>Résumé du mois</h2>
+ <div class="row">
+  <div class="field"><label for="month">Mois à consulter</label><input id="month" type="month"></div>
+  <button id="refresh" type="button">Actualiser</button>
+ </div>
+ <div class="stats" style="margin-top:12px">
+  <div class="stat"><b>Total des frais</b><strong id="grandTotal">0,00 €</strong></div>
+  <div class="stat"><b>Journées renseignées</b><strong id="daysCount">0</strong></div>
+ </div>
+ <table style="margin-top:14px">
+  <thead><tr><th>Type de frais</th><th>Quantité</th><th>Montant</th></tr></thead>
+  <tbody id="totals"></tbody>
+ </table>
+ <div class="status" id="dataStatus">Chargement des journées…</div>
+ <div class="warning" id="legacyWarning" hidden></div>
+</section>
+</main>
+<script>
+const ENTRY_KEY='truckpilote_daily_entries_v1';
+const RATE_KEY='truckpilote_fee_rates_v1';
+const names=[['breakfast','Petit-déjeuner'],['lunch','Déjeuner'],['dinner','Dîner'],['night','Nuit']];
+const $=id=>document.getElementById(id);
+const euro=n=>Number(n||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+const defaultRates=()=>({breakfast:0,lunch:0,dinner:0,night:0});
+function getRates(){try{return {...defaultRates(),...JSON.parse(localStorage.getItem(RATE_KEY)||'{}')}}catch{return defaultRates()}}
+function setRateInputs(){const r=getRates();names.forEach(([k])=>$(k+'Rate').value=Number(r[k]||0).toFixed(2))}
+function saveRates(){const r={};names.forEach(([k])=>r[k]=Math.max(0,Number($(k+'Rate').value)||0));localStorage.setItem(RATE_KEY,JSON.stringify(r));$('rateStatus').textContent='Tarifs enregistrés sur cet appareil ✓ Ils serviront de tarifs par défaut.';calculate()}
+function localEntries(){try{return JSON.parse(localStorage.getItem(ENTRY_KEY)||'{}')}catch{return {}}}
+function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!==''))return true;if(['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true))return true;return Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''))}
+let entries=localEntries(),legacyCount=0;
+function calculate(){
+ const ym=$('month').value;if(!ym)return;
+ const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0};const amounts={...sums};let days=0;legacyCount=0;
+ Object.entries(entries).forEach(([date,e])=>{
+  if(!date.startsWith(ym)||!meaningful(e))return;
+  days++;
+  names.forEach(([k])=>{if(e[k]===true){sums[k]++;const saved=e.feeRates&&Number.isFinite(Number(e.feeRates[k]));if(saved)amounts[k]+=Number(e.feeRates[k]);else{amounts[k]+=Number(current[k]||0);legacyCount++}}});
+ });
+ $('daysCount').textContent=days;
+ $('grandTotal').textContent=euro(Object.values(amounts).reduce((a,b)=>a+b,0));
+ $('totals').innerHTML='';
+ names.forEach(([k,label])=>{const tr=document.createElement('tr');const cells=[label,String(sums[k]),euro(amounts[k])];cells.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});$('totals').append(tr)});
+ if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
+ else{$('legacyWarning').hidden=true}
+}
+async function loadData(){
+ entries=localEntries();let msg='Données locales chargées.';
+ try{
+  const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
+  const {data:{user},error:authError}=await sb.auth.getUser();if(authError)throw authError;
+  if(user){const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{if(meaningful(r.entry))entries[r.work_date]=r.entry});localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));msg='Journées récupérées depuis Supabase ✓'}
+  else msg='Mode local : connecte-toi à l’accueil pour récupérer les journées en ligne.';
+ }catch(e){msg='Données locales affichées. Synchronisation en ligne indisponible : '+(e.message||'erreur')}
+ $('dataStatus').textContent=msg;calculate();
+}
+$('saveRates').onclick=saveRates;$('refresh').onclick=loadData;$('month').onchange=calculate;
+const now=new Date();$('month').value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+setRateInputs();loadData();
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+</script>
+</body></html>
