@@ -148,7 +148,8 @@ function calculate(){
  const total=Object.values(amounts).reduce((a,b)=>a+b,0);
  $('daysCount').textContent=days;
  $('grandTotal').textContent=euro(total);
- $('totalCenter').textContent=euro(total);\n $('totalFooter').textContent=euro(total);
+ $('totalCenter').textContent=euro(total);
+ $('totalFooter').textContent=euro(total);
  $('daysBadge').textContent=days+' journée'+(days>1?'s':'')+' renseignée'+(days>1?'s':'');
  const meta=[
   ['breakfast','Petit-déjeuner',current.breakfast,'#0b9df5'],
@@ -165,7 +166,9 @@ function calculate(){
   $('count-'+k).textContent=sums[k];
   $('amount-'+k).textContent=euro(amount);
   $('rate-'+k).textContent=euro(rate);
-  const share=pct.toLocaleString('fr-FR',{maximumFractionDigits:1})+' %';\n  $('share-'+k).textContent=share;\n  $('share-'+k+'-legend').textContent=share;
+  const share=pct.toLocaleString('fr-FR',{maximumFractionDigits:1})+' %';
+  $('share-'+k).textContent=share;
+  $('share-'+k+'-legend').textContent=share;
  });
  $('donut').style.background=total>0?'conic-gradient('+segments.join(',')+')':'conic-gradient(#24445e 0deg 360deg)';
  $('totals').innerHTML='';
