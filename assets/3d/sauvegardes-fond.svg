@@ -5,5 +5,5 @@
 <rect x="9" y="9" width="782" height="382" rx="26" fill="none" stroke="url(#a)" stroke-width="7" filter="url(#g)"/>
 <g transform="translate(400 154)" fill="none" stroke="url(#a)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#g)"><path d="M-95 -30h120l25 25h105v115h-250z"/><path d="M-55 18h160v90h-160z"/><path d="M-20 55l22 22 48-52"/><path d="M-90 -85h165a18 18 0 0 1 18 18v20h-201z"/></g>
 <path d="M85 300H715" stroke="#42d9ff" stroke-width="3" opacity=".35"/>
-<text x="400" y="355" fill="#dff8ff" font-family="Arial,sans-serif" font-size="25" text-anchor="middle" opacity=".85">Sauvegarde sécurisée</text>
+
 </svg>
