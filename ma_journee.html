@@ -1,21 +1,40 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#081725"><title>MYTRUCK MATE — Ma journée</title>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061626"><title>MYTRUCK MATE — Ma journée</title>
 <style>
-:root{--navy:#081725;--panel:#142b41;--blue:#078fe5;--cyan:#4dbaff;--ink:#f3f8fc;--muted:#a9bfd1;--line:#24445e}
-*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-.top{background:radial-gradient(ellipse at 90% 0,#17517a 0,transparent 45%),linear-gradient(135deg,#071522,#102d47);color:white;padding:23px 18px 24px;border-bottom:1px solid #1e4868}.top h2{font-size:22px;letter-spacing:.2px}.top a{color:#71c8ff;text-decoration:none;font-weight:650}.top .brandline{font-size:10px;letter-spacing:1.5px;color:#72caff;font-weight:850;margin-bottom:7px}.top .subline{color:#b8d0e2;font-size:13px}.wrap{max-width:760px;margin:auto;padding:16px 16px 34px}
-.card{background:linear-gradient(145deg,#142c42,#10263a);border:1px solid var(--line);border-radius:18px;padding:17px;margin:12px 0;box-shadow:0 8px 25px #0002}.title{font-weight:850;font-size:17px;margin:4px 0 14px;color:#f3f8fc}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{min-width:0;margin-bottom:11px}.field label{display:block;font-size:12px;color:#b7cada;font-weight:650;margin:0 0 6px}
-.field input,.field select{width:100%;padding:12px;border:1px solid #31516a;border-radius:10px;font:inherit;background:#0b1d2d;color:#f3f8fc;min-height:44px}.field input:focus,.field select:focus{outline:2px solid #168fe0;outline-offset:1px}
-.field input::placeholder{color:#7792a7}.checks{display:flex;flex-wrap:wrap;gap:12px}.checks label{display:flex;align-items:center;gap:7px;font-weight:650;color:#e4eff7;background:#10283d;border:1px solid #294a64;border-radius:11px;padding:10px 12px}.checks input{accent-color:#079fe9;width:18px;height:18px}
-.transport{border:1px solid #31516a;border-radius:14px;padding:13px;margin:12px 0;background:#0e2235}.transport h3{font-size:14px;margin:0 0 12px;color:#65c4ff}
-.btn{border:0;border-radius:11px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;padding:13px 16px;font:750 14px system-ui;cursor:pointer}.btn.alt{background:#1b344a;color:#d9eaf6;border:1px solid #35546c}.actions{display:flex;gap:9px;flex-wrap:wrap}.status{font-size:13px;color:#79d5a7;margin-top:10px;min-height:18px;line-height:1.5}.note{font-size:12px;color:#91aabd;line-height:1.55}
-@media(max-width:480px){.grid{grid-template-columns:1fr 1fr;gap:9px}.card{padding:14px}.field input,.field select{padding:11px 9px;font-size:14px}.checks{gap:8px}.checks label{font-size:13px;padding:9px}.actions .btn{flex:1}}
-@media(max-width:350px){.grid{grid-template-columns:1fr}}
-</style></head><body>
-<header class="top"><div class="brandline">MYTRUCK MATE · DRIVER COMPANION</div><h2 style="margin:0 0 6px">Ma journée</h2><div class="subline">Renseignez votre activité, vos transports et vos kilomètres.</div><p style="margin:13px 0 0"><a href="index.html">← Accueil MYTRUCK MATE</a>　·　<a href="feuille.html">Ma feuille de semaine</a></p></header>
+:root{--bg:#061626;--panel:#0c263c;--panel2:#102f49;--cyan:#16c9f4;--blue:#078fe5;--ink:#f4f9ff;--muted:#a9c2d6;--line:#1d6288;--glow:#00bfff66}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#123c5c 0,#061626 58%);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:#75d8ff;text-decoration:none}.top{max-width:1120px;margin:auto;padding:14px 20px 0}
+.brandline{display:flex;align-items:center;gap:10px;color:#8edfff;font-size:11px;font-weight:900;letter-spacing:1.8px}.brandmark{width:42px;height:32px;display:grid;place-items:center;color:var(--cyan)}.brandmark svg{width:42px;height:32px}
+.hero{position:relative;overflow:hidden;min-height:164px;margin-top:10px;padding:22px 24px;border:1px solid #1677a2;border-radius:18px;background:linear-gradient(100deg,#061827 0%,#0a2942dd 48%,#0a2036a8 100%),radial-gradient(ellipse at 75% 95%,#ff9b4533,transparent 42%);box-shadow:0 0 25px #00aaff18,inset 0 1px #ffffff20}
+.hero:before{content:"";position:absolute;inset:0;opacity:.8;background:linear-gradient(160deg,transparent 42%,#0b5c83 43%,transparent 44%),linear-gradient(172deg,transparent 63%,#078fc544 64%,transparent 65%),radial-gradient(ellipse at 72% 100%,#ff9d3b44,transparent 34%);pointer-events:none}
+.hero-copy{position:relative;z-index:2;max-width:65%}.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 5px;font-weight:900;letter-spacing:-.6px}.hero p{margin:0;color:#c5e6f8;font-size:13px}.hero-art{position:absolute;right:20px;top:8px;width:34%;height:145px;display:flex;align-items:center;justify-content:center;gap:4px;color:#bceeff;filter:drop-shadow(0 0 12px #00bfff88)}.hero-art svg{height:112px;max-width:54%}
+.hero-links{position:relative;z-index:2;margin-top:15px;font-size:12px;color:#9fc5dc}.hero-links a{margin-right:14px}
+.wrap{max-width:1120px;margin:auto;padding:14px 18px 36px}
+.card{background:linear-gradient(145deg,#102f49f5,#0a2237f5);border:1px solid #17618a;border-radius:18px;padding:17px;margin:12px 0;box-shadow:0 8px 26px #0004,inset 0 1px #ffffff0d}
+.title{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;margin:0 0 15px;color:#f4fbff}.title svg{width:25px;height:25px;color:var(--cyan);flex:none}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}.field{min-width:0;margin-bottom:8px}.field label{display:block;font-size:12px;color:#c4d9e8;font-weight:750;margin:0 0 6px}
+.field input,.field select{width:100%;padding:11px 12px;border:1px solid #285c7b;border-radius:10px;font:inherit;background:#071c2d;color:#f3f8fc;min-height:44px;outline:none}.field input:focus,.field select:focus{border-color:#22caff;box-shadow:0 0 0 3px #0b9edc2b}.field input::placeholder{color:#7898ae}
+.mileage{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:10px 14px;border:1px solid #1689b8;border-radius:12px;background:linear-gradient(110deg,#0b3652,#071c2d);box-shadow:0 0 15px #00bfff20}.mileage span{font-size:11px;color:#b7d8e9}.mileage strong{font-size:21px;color:#15d9ff;white-space:nowrap}
+.checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.checks label{display:flex;align-items:center;justify-content:center;gap:9px;font-weight:750;color:#edf8ff;background:linear-gradient(145deg,#10344f,#0a2237);border:1px solid #28698b;border-radius:12px;padding:13px 9px;min-height:60px;text-align:center}.checks input{accent-color:#08bce9;width:19px;height:19px;flex:none}
+.transport-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}.transport-head .title{margin:0}.train-toggle{display:flex;align-items:center;gap:9px;border:1px solid #28698b;border-radius:30px;background:#09243a;padding:8px 14px;font-weight:750}.train-toggle input{accent-color:#08bce9;width:18px;height:18px}
+.transport{border:1px solid #24739a;border-radius:15px;padding:14px;margin:12px 0;background:linear-gradient(145deg,#0d2a42,#081f33);box-shadow:inset 0 1px #ffffff0d}.transport h3{font-size:15px;margin:0 0 12px;color:#39d5ff}.transport .grid{gap:7px 12px}
+.btn{border:1px solid #20b9ee;border-radius:12px;background:linear-gradient(110deg,#087fc9,#08a9e8);color:#fff;padding:12px 17px;font:800 14px system-ui;cursor:pointer;box-shadow:0 4px 12px #001a2c66}.btn.alt{background:linear-gradient(145deg,#1a3b55,#102b42);color:#e4f4ff;border-color:#315d79}.btn.remove{background:linear-gradient(110deg,#8d1c25,#d52e35);border-color:#ff7777;padding:10px 13px}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions .btn{min-height:46px}.save-actions{display:grid;grid-template-columns:1fr 1fr 1.5fr}.save-actions .btn:last-child{box-shadow:0 0 18px #00bfff55}
+.status{font-size:13px;color:#79d5a7;margin-top:10px;min-height:18px;line-height:1.5}.note{font-size:12px;color:#91aabd;line-height:1.55;margin-bottom:0}
+@media(max-width:650px){.top{padding:10px 12px 0}.hero{min-height:135px;padding:18px 16px}.hero-copy{max-width:72%}.hero-art{right:3px;width:33%;height:115px}.hero-art svg{height:82px}.hero h1{font-size:27px}.hero p{font-size:11px}.wrap{padding:9px 11px 28px}.card{padding:13px;border-radius:15px}.title{font-size:16px;margin-bottom:12px}.grid{gap:7px 8px}.field label{font-size:10px}.field input,.field select{min-height:42px;padding:10px 8px;font-size:13px}.checks{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.checks label{font-size:12px;padding:10px 6px;min-height:54px}.transport{padding:11px}.transport .grid{gap:5px 8px}.transport .field label{font-size:10px}.save-actions{grid-template-columns:1fr 1fr}.save-actions .btn:last-child{grid-column:1/-1}.hero-links{font-size:10px}}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.hero-copy{max-width:100%}.hero-art{opacity:.25}.checks{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brandline"><span class="brandmark"><svg viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 28V14L34 5l16 5 8 11v7H4Z"/><path d="M34 5v23M50 10v18M4 19h30"/><circle cx="17" cy="32" r="6"/><circle cx="47" cy="32" r="6"/></svg></span> MYTRUCK MATE <span style="color:#eaf8ff">· ESPACE CHAUFFEUR</span></div>
+<section class="hero"><div class="hero-copy"><h1>Ma journée</h1><p>Saisir les informations de ma journée de travail</p><div class="hero-links"><a href="index.html">← Accueil MYTRUCK MATE</a><a href="feuille.html">Ma feuille de semaine</a></div></div>
+<div class="hero-art" aria-hidden="true"><svg viewBox="0 0 130 130" fill="none" stroke="currentColor" stroke-width="3"><circle cx="53" cy="62" r="43" fill="#071b2c" fill-opacity=".8"/><circle cx="53" cy="62" r="36" stroke="#48cfff" stroke-width="2"/><path d="M53 34v29l20 13" stroke="#ffb36b" stroke-width="4" stroke-linecap="round"/><path d="M53 12v7M53 105v7M3 62h7M96 62h7"/><rect x="79" y="40" width="45" height="62" rx="6" fill="#102d46"/><path d="M89 35h25v12H89zM88 59l5 5 9-11M106 61h11M88 78l5 5 9-11M106 80h11" stroke="#18d5ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</section></header>
 <main class="wrap">
-<section class="card"><div class="title">Ma journée</div><div class="grid">
+<section class="card"><h2 class="title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M5 3h14v18H5zM8 11h8M8 15h5"/></svg>Informations de journée</h2><div class="grid">
 <div class="field"><label for="date">Date de travail</label><input id="date" type="date" required></div>
 <div class="field"><label for="tractor">Immatriculation tracteur</label><input id="tractor" placeholder="Ex. FN-769-YY"></div>
 <div class="field"><label for="start">Heure début journée</label><input id="start" type="time"></div>
@@ -24,13 +43,13 @@
 <div class="field"><label for="place">Lieu de conduite fin de journée</label><input id="place"></div>
 <div class="field"><label for="kmstart">Kilomètres début</label><input id="kmstart" type="number" inputmode="numeric"></div>
 <div class="field"><label for="kmend">Kilomètres fin</label><input id="kmend" type="number" inputmode="numeric"></div>
-</div><div class="title" style="font-size:14px">Repas et nuit</div><div class="checks">
-<label><input id="breakfast" type="checkbox"> Petit-déjeuner</label><label><input id="lunch" type="checkbox"> Déjeuner</label><label><input id="dinner" type="checkbox"> Dîner</label><label><input id="night" type="checkbox"> Découché</label>
+<div class="mileage"><div><span>KILOMÈTRES PARCOURUS</span><br><strong id="distance">— km</strong></div><span>↗</span></div>
 </div></section>
-<section class="card"><div class="title">Transports de la journée</div><div class="checks" style="margin-bottom:12px"><label><input id="train" type="checkbox"> Journée avec train</label></div><div id="transports"></div>
-<div class="actions"><button class="btn alt" id="addTransport" type="button">＋ Ajouter un transport</button></div>
-<p class="note">Deux transports sont proposés au départ. Vous pouvez en ajouter autant que nécessaire.</p></section>
-<section class="card"><div class="actions"><button class="btn" id="save" type="button">Enregistrer ma journée</button><button class="btn alt" id="clear" type="button">Effacer le formulaire</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil et synchronisées en ligne lorsque vous êtes connecté. La sauvegarde locale reste disponible en secours.</p></section>
+<section class="card"><h2 class="title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3v8M8 3v8M6 3v18M16 3v18M13 3c0 5 6 5 6 0"/></svg>Mes frais de route</h2><div class="checks">
+<label><input id="breakfast" type="checkbox"> Petit-déjeuner</label><label><input id="lunch" type="checkbox"> Déjeuner</label><label><input id="dinner" type="checkbox"> Dîner</label><label><input id="night" type="checkbox"> Découché / Nuit</label>
+</div></section>
+<section class="card"><div class="transport-head"><h2 class="title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l3 4v7H3zM16 7v4h6M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM17 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>Transports de la journée</h2><label class="train-toggle"><input id="train" type="checkbox"> Journée avec train</label></div><div id="transports"></div><div class="actions"><button class="btn alt" id="addTransport" type="button">＋ Ajouter un transport</button></div><p class="note">Deux transports sont proposés au départ. Vous pouvez en ajouter autant que nécessaire.</p></section>
+<section class="card"><div class="actions save-actions"><button class="btn alt" id="clear" type="button">✕ Annuler</button><button class="btn alt" id="preview" type="button">▤ Prévisualiser</button><button class="btn" id="save" type="button">▣ Enregistrer ma journée</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil et synchronisées avec votre compte lorsque vous êtes connecté.</p></section>
 </main>
 <script>
 const KEY='truckpilote_daily_entries_v1';
@@ -56,6 +75,7 @@ function makeTransport(data={}) {
 function renumber(){document.querySelectorAll('.transport h3').forEach((h,i)=>h.textContent='Transport '+(i+1))}
 function read(){return {date:$('date').value,tractor:$('tractor').value,start:$('start').value,end:$('end').value,drive:$('drive').value,place:$('place').value,kmstart:$('kmstart').value,kmend:$('kmend').value,breakfast:$('breakfast').checked,lunch:$('lunch').checked,dinner:$('dinner').checked,night:$('night').checked,train:$('train').checked,transports:[...document.querySelectorAll('.transport')].map(b=>Object.fromEntries([...b.querySelectorAll('[data-f]')].map(e=>[e.dataset.f,e.value])))}}
 function load(entry){if(!entry)return;Object.entries(entry).forEach(([k,v])=>{const el=$(k);if(el&&el.type==='checkbox')el.checked=!!v;else if(el&&typeof v!=='object')el.value=v??''});if(entry.night)$('dinner').checked=true;$('transports').innerHTML='';(entry.transports?.length?entry.transports:[{},{}]).forEach(makeTransport)}
+window.loadDailyEntry=load;
 function entries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
 function clearFields(){ $('transports').innerHTML='';makeTransport();makeTransport();['tractor','start','end','drive','place','kmstart','kmend'].forEach(id=>$(id).value='');['breakfast','lunch','dinner','night','train'].forEach(id=>$(id).checked=false); }
 $('date').value=new Date().toISOString().slice(0,10);
@@ -68,6 +88,10 @@ $('clear').onclick=()=>{if(!confirm('Effacer les champs de cette journée ?'))re
 const lists=[['donors',['LPO Sogena','TFS France','TBI','Seyris','Tps Louis','Atlas Transit']],['clients',['Tang Frères','BARIAU','LAD']],['sizes',['20 D','20 HC','20 RE','20 OT','40 D','40 HC','40 RE','40 OT']],['chassis',['EQ 531 FL','EQ 647 FL','FR 653 SE']]];
 lists.forEach(([id,vals])=>{const d=document.createElement('datalist');d.id=id;vals.forEach(v=>{const o=document.createElement('option');o.value=v;d.appendChild(o)});document.body.appendChild(d)});
 const existing=entries()[$('date').value];if(existing)load(existing);
+$('kmstart').addEventListener('input',updateDistance);$('kmend').addEventListener('input',updateDistance);
+function updateDistance(){const a=Number($('kmstart').value),b=Number($('kmend').value);$('distance').textContent=$('kmstart').value!==''&&$('kmend').value!==''&&b>=a?(b-a).toLocaleString('fr-FR')+' km':'— km'}
+const originalLoad=window.loadDailyEntry;window.loadDailyEntry=(entry)=>{originalLoad(entry);updateDistance()};
+$('preview').onclick=()=>{const e=read();const rows=[['Date',e.date],['Tracteur',e.tractor],['Horaires',e.start+' – '+e.end],['Conduite',e.drive],['Kilomètres',e.kmstart+' – '+e.kmend],['Lieu fin de journée',e.place],['Frais de route',[e.breakfast&&'Petit-déjeuner',e.lunch&&'Déjeuner',e.dinner&&'Dîner',e.night&&'Découché'].filter(Boolean).join(', ')],['Transports',e.transports.length]].map(([k,v])=>'<p><strong>'+k+' :</strong> '+(v||'—')+'</p>').join('');const w=window.open('','_blank');if(w){w.document.write('<!doctype html><html lang="fr"><meta charset="utf-8"><title>Prévisualisation</title><body style="font:15px system-ui;max-width:700px;margin:30px auto;color:#142b41"><h1>MYTRUCK MATE — Ma journée</h1>'+rows+'</body></html>');w.document.close()}};
 </script>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -127,4 +151,5 @@ async function syncFromCloud() {
 }
 await syncFromCloud();
 </script>
+<script>if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));</script>
 </body></html>
