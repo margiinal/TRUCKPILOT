@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v40';
+const CACHE = 'truckpilote-chauffeur-v41';
 
 const APP_FILES = [
   './',
@@ -12,6 +12,7 @@ const APP_FILES = [
   './icon.svg',
   './assets/3d/dashboard-icons.svg',
   './assets/3d/ma-journee-bandeau.svg',
+  './assets/3d/ma-journee-bandeau-fourni.svg',
   './assets/3d/ma-journee-realiste.jpg',
   './assets/3d/mytruck-buttons-sprite.jpg',
   './assets/3d/ma-feuille-semaine-scania.jpg',
