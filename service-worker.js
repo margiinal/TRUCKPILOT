@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v18';
+const CACHE = 'truckpilote-chauffeur-v19';
 
 const APP_FILES = [
   './',
@@ -10,7 +10,8 @@ const APP_FILES = [
   './profil.html',
   './manifest.json',
   './icon.svg',
-  './assets/3d/dashboard-icons.svg'
+  './assets/3d/dashboard-icons.svg',
+  './assets/3d/ma-journee-realiste.jpg'
 ];
 
 self.addEventListener('install', event => {
