@@ -21,7 +21,7 @@
 <section class="card"><div class="title">Transports de la journée</div><div class="checks" style="margin-bottom:12px"><label><input id="train" type="checkbox"> Journée avec train</label></div><div id="transports"></div>
 <div class="actions"><button class="btn alt" id="addTransport" type="button">＋ Ajouter un transport</button></div>
 <p class="note">Deux transports sont proposés au départ. Vous pouvez en ajouter autant que nécessaire.</p></section>
-<section class="card"><div class="actions"><button class="btn" id="save" type="button">Enregistrer ma journée</button><button class="btn alt" id="clear" type="button">Effacer le formulaire</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil. Elles sont ensuite reprises dans la feuille hebdomadaire ouverte sur le même navigateur. La synchronisation en ligne sera ajoutée dans une prochaine étape.</p></section>
+<section class="card"><div class="actions"><button class="btn" id="save" type="button">Enregistrer ma journée</button><button class="btn alt" id="clear" type="button">Effacer le formulaire</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil et synchronisées en ligne lorsque vous êtes connecté. La sauvegarde locale reste disponible en secours.</p></section>
 </main>
 <script>
 const KEY='truckpilote_daily_entries_v1';
@@ -48,14 +48,36 @@ function makeTransport(data={}) {
 function renumber(){document.querySelectorAll('.transport h3').forEach((h,i)=>h.textContent='Transport '+(i+1))}
 function read(){return {date:$('date').value,tractor:$('tractor').value,start:$('start').value,end:$('end').value,drive:$('drive').value,place:$('place').value,kmstart:$('kmstart').value,kmend:$('kmend').value,breakfast:$('breakfast').checked,lunch:$('lunch').checked,dinner:$('dinner').checked,night:$('night').checked,train:$('train').checked,transports:[...document.querySelectorAll('.transport')].map(b=>Object.fromEntries([...b.querySelectorAll('[data-f]')].map(e=>[e.dataset.f,e.value])))}}
 function load(entry){if(!entry)return;Object.entries(entry).forEach(([k,v])=>{const el=$(k);if(el&&el.type==='checkbox')el.checked=!!v;else if(el&&typeof v!=='object')el.value=v??''});$('transports').innerHTML='';(entry.transports?.length?entry.transports:[{},{}]).forEach(makeTransport)}
+window.loadDailyEntry = load;
 function entries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
 $('date').value=new Date().toISOString().slice(0,10);
 makeTransport();makeTransport();
 $('date').addEventListener('change',()=>{const all=entries();$('transports').innerHTML='';const e=all[$('date').value];if(e)load(e);else{makeTransport();makeTransport();['tractor','start','end','drive','place','kmstart','kmend'].forEach(id=>$(id).value='');['breakfast','lunch','dinner','night','train'].forEach(id=>$(id).checked=false)}});
 $('addTransport').onclick=()=>makeTransport();
-$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries();all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée sur cet appareil ✓';window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}))};
+$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries();all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée sur cet appareil ✓ — '+days[new Date(e.date+'T12:00:00').getDay()];window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}))};
 $('clear').onclick=()=>{if(!confirm('Effacer les champs de cette journée ?'))return;const date=$('date').value;$('transports').innerHTML='';makeTransport();makeTransport();['tractor','start','end','drive','place','kmstart','kmend'].forEach(id=>$(id).value='');['breakfast','lunch','dinner','night','train'].forEach(id=>$(id).checked=false);$('status').textContent='Formulaire vidé. La journée déjà enregistrée n’est pas supprimée.'};
 const lists=[['donors',['LPO Sogena','TFS France','TBI','Seyris','Tps Louis','Atlas Transit']],['clients',['Tang Frères','BARIAU','LAD']],['sizes',['20 D','20 HC','20 RE','20 OT','40 D','40 HC','40 RE','40 OT']],['chassis',['EQ 531 FL','EQ 647 FL','FR 653 SE']]];
 lists.forEach(([id,vals])=>{const d=document.createElement('datalist');d.id=id;vals.forEach(v=>{const o=document.createElement('option');o.value=v;d.appendChild(o)});document.body.appendChild(d)});
 const existing=entries()[$('date').value];if(existing)load(existing);
-</script></body></html>
+</script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase = createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
+const status = document.getElementById('status');
+window.addEventListener('truckpilote:daily-saved', async (event) => {
+  const entry = event.detail;
+  try {
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError) throw authError;
+    if (!user) throw new Error('Connexion nécessaire : ouvrez d’abord l’accueil et connectez-vous.');
+    const { error } = await supabase.from('truckpilote_daily_entries').upsert({
+      user_id: user.id, work_date: entry.date, entry, updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,work_date' });
+    if (error) throw error;
+    status.textContent = 'Journée enregistrée et synchronisée en ligne ✓';
+  } catch (error) {
+    status.textContent = 'Sauvegarde locale conservée. Synchronisation impossible : ' + (error.message || 'erreur réseau');
+  }
+});
+</script>
+</body></html>
