@@ -24,10 +24,12 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
 .primary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(110deg,#087fc9,#079fe9);color:white;text-decoration:none;border:1px solid #4dbaff55;border-radius:14px;padding:14px;font-weight:800}
 .primary small{display:block;font-weight:500;color:#e1f4ff;margin-top:4px;font-size:11px}.arrow{font-size:24px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.tile{background:linear-gradient(145deg,#142f46,#10263a);border:1px solid #234b66;border-radius:14px;padding:13px;text-decoration:none;color:var(--ink);min-height:105px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}
-.tile:active{transform:scale(.98)}.tile:hover{border-color:#3e9ed7;background:#17364f}
-.ico{width:37px;height:37px;border-radius:11px;background:#0b75b52a;color:var(--cyan);display:grid;place-items:center;font-size:21px}
-.tile b{display:block;margin-top:8px;font-size:13px}.tile span{display:block;font-size:10px;color:var(--muted);line-height:1.35;margin-top:3px}
+.tile{background:linear-gradient(145deg,#102b40,#0d2336);border:1px solid #214660;border-radius:13px;padding:13px 9px 11px;text-decoration:none;color:var(--ink);min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;box-shadow:inset 0 1px 0 #ffffff08}
+.tile:active{transform:scale(.98)}.tile:hover{border-color:#3e9ed7;background:#15364f}
+.ico{width:42px;height:38px;border-radius:10px;background:transparent;color:#21a9ff;display:grid;place-items:center}
+.ico svg{width:29px;height:29px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #078fe544)}
+.tile b{display:block;margin:0;font-size:12px;font-weight:750;letter-spacing:.1px}
+.tile span{display:none}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 14px}
 .stat{background:#142d43;border:1px solid #254761;border-radius:13px;padding:12px}.stat-label{font-size:10px;color:#a9bfd1}.stat-value{font-size:20px;font-weight:850;margin-top:4px;color:#fff}
 .tools-label{font-size:9px;letter-spacing:1.1px;font-weight:800;color:#6fc7ff;margin:0 2px 8px}
@@ -38,7 +40,7 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
 .btn.secondary{background:#1b344a;color:#d9eaf6;border:1px solid #35546c;margin-left:7px}.btn:disabled{opacity:.55;cursor:wait}.auth-actions{display:flex;flex-wrap:wrap;gap:8px}
 .status{font-size:13px;line-height:1.45;margin-top:12px;color:#a9bfd1;min-height:20px}.hidden{display:none!important}
 .bottom-nav{display:none}
-@media(min-width:900px){.top{padding:18px max(24px,calc((100% - 1120px)/2)) 18px}.top .welcome{font-size:21px}.wrap{padding-top:20px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{min-height:120px;padding:16px}.ico{width:40px;height:40px;font-size:23px}.tile b{font-size:14px}.tile span{font-size:11px}}
+@media(min-width:900px){.top{padding:18px max(24px,calc((100% - 1120px)/2)) 18px}.top .welcome{font-size:21px}.wrap{padding-top:20px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{min-height:128px;padding:16px}.ico{width:46px;height:42px}.ico svg{width:32px;height:32px}.tile b{font-size:13px}}
 @media(max-width:600px){
  body{padding-bottom:calc(68px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#0b1e30 0,#071522 38%,#071522 100%)}
  .top{padding:10px 13px 13px;border-bottom:1px solid #24506c}
@@ -53,14 +55,14 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
  .tools-label{font-size:8px;margin-bottom:7px}
  .primary{padding:12px;border-radius:12px}.primary small{font-size:9px}.primary span[style]{font-size:14px!important}
  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
- .tile{min-height:88px;padding:9px;border-radius:12px}
- .ico{width:32px;height:32px;border-radius:9px;font-size:18px}
- .tile b{font-size:11px;margin-top:6px}.tile span{font-size:8px;margin-top:2px;line-height:1.3}
+ .tile{min-height:104px;padding:9px 6px;border-radius:12px;gap:6px}
+ .ico{width:38px;height:34px;border-radius:9px}.ico svg{width:27px;height:27px}
+ .tile b{font-size:10px;margin-top:0}.tile span{display:none}
  .notice{font-size:9px}.footer{font-size:9px;padding-bottom:4px}
  .auth-card{margin:10px auto}.auth-card .section-title{margin-top:0}
  .bottom-nav{position:fixed;z-index:50;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 6px calc(7px + env(safe-area-inset-bottom));background:rgba(7,21,34,.96);border-top:1px solid #254760;backdrop-filter:blur(14px)}
  .bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#8da9bd;text-decoration:none;font-size:8px;font-weight:650}
- .bottom-nav a span:first-child{font-size:17px;line-height:19px}.bottom-nav a.active{color:#48baff}
+ .bottom-nav a span:first-child{display:grid;place-items:center;width:22px;height:21px}.bottom-nav a svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.bottom-nav a.active{color:#48baff}
 }
 @media(max-width:350px){.tile{padding:8px}.tile b{font-size:10px}.tile span{font-size:7px}}
 </style>
@@ -104,13 +106,13 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
     </div>
     <div class="tools-label">MON ESPACE CHAUFFEUR</div>
     <div class="grid">
-      <a class="tile" href="ma_journee.html"><div class="ico">📝</div><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
-      <a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
-      <a class="tile" href="frais.html"><div class="ico">💶</div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
-      <a class="tile" href="historique.html"><div class="ico">📚</div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
-      <a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Mes sauvegardes</b><span>Enregistrement et suivi des données</span></a>
-      <a class="tile" href="profil.html"><div class="ico">👤</div><b>Mon profil</b><span>Mes informations personnelles</span></a>
-      <a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico">📄</div><b>Mes documents</b><span>Préparer et imprimer ma feuille</span></a>
+      <a class="tile" href="ma_journee.html"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg></div><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
+      <a class="tile" href="feuille.html"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg></div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
+      <a class="tile" href="frais.html"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9h.01M18 15h.01M9 10.5c.6-.7 1.3-1 2.2-1 1.5 0 2.6.9 2.8 2.1M9 13h5M9.5 14.5c.5.7 1.3 1 2.2 1"/></svg></div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
+      <a class="tile" href="historique.html"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 4.5v17M8 6h8M8 10h8M8 14h5"/></svg></div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
+      <a class="tile" href="feuille.html#save-status"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l4 4v14H3V3z"/><path d="M7 3v6h10V3M7 21v-8h10v8M9 6h4"/></svg></div><b>Mes sauvegardes</b><span>Enregistrement et suivi des données</span></a>
+      <a class="tile" href="profil.html"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><b>Mon profil</b><span>Mes informations personnelles</span></a>
+      <a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><b>Mes documents</b><span>Préparer et imprimer ma feuille</span></a>
     </div>
     <div class="section-title">Mon compte</div>
     <div class="card"><div class="profileline"><div><strong id="profileName">Profil chauffeur</strong><div style="font-size:12px;color:#a9bfd1;margin-top:4px" id="profileEmail">Profil à compléter</div></div><span class="pill">DRIVER SPACE</span></div><a href="profil.html" style="display:inline-block;margin-top:14px;color:#63c4ff;font-weight:700;font-size:13px;text-decoration:none">Modifier mon profil →</a></div>
@@ -118,10 +120,10 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
   </section>
   <div class="footer">MYTRUCK MATE · Le compagnon du chauffeur routier</div>
   <nav class="bottom-nav" aria-label="Navigation principale">
-    <a class="active" href="index.html"><span>⌂</span><span>Accueil</span></a>
-    <a href="ma_journee.html"><span>▤</span><span>Carnet</span></a>
-    <a href="historique.html"><span>◷</span><span>Historique</span></a>
-    <a href="profil.html"><span>♙</span><span>Compte</span></a>
+    <a class="active" href="index.html"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg></span><span>Accueil</span></a>
+    <a href="ma_journee.html"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span><span>Carnet</span></a>
+    <a href="historique.html"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span><span>Historique</span></a>
+    <a href="profil.html"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span>Compte</span></a>
   </nav>
 
 </main>
