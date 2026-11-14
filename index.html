@@ -27,27 +27,19 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
 .tile{position:relative;overflow:hidden;background:linear-gradient(145deg,#087fc7 0%,#0867ad 54%,#084a83 100%);border:1px solid #269ee5;border-radius:16px;padding:15px 9px 13px;text-decoration:none;color:#fff;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;box-shadow:inset 0 1px 0 #ffffff35,inset 0 -10px 22px #002f5b33,0 5px 14px #0003}
 .tile:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#ffffff15,transparent 42%,#001d3a18);pointer-events:none}
 .tile:active{transform:translateY(2px) scale(.985)}
-/* Ma journée : bouton principal en relief, inspiré de la maquette */
-.tile-day{background:linear-gradient(155deg,#167fc1 0%,#075a9a 48%,#06345f 100%);border:1px solid #64d3ff;box-shadow:inset 0 2px 0 #ffffff70,inset 0 -12px 22px #001d43a8,0 7px 0 #032849,0 10px 18px #0008;min-height:138px}
-.tile-day:before{background:linear-gradient(135deg,#ffffff28 0%,transparent 43%,#00142e38 100%)}
-.tile-day .ico{width:68px;height:62px;filter:drop-shadow(0 7px 5px #00152eaa)}
-.tile-day .ico svg{width:74px;height:68px;filter:drop-shadow(0 2px 0 #b9f1ff55)}
-.tile-day b{font-size:14px;letter-spacing:.2px;text-shadow:0 2px 2px #00284f,0 0 9px #58caff55}
-@media(max-width:600px){.tile-day{min-height:124px}.tile-day .ico{width:64px;height:58px}.tile-day .ico svg{width:70px;height:64px}.tile-day b{font-size:12px}}.tile:hover{border-color:#65caff;background:linear-gradient(145deg,#1198e8,#075da2)}
-.ico{position:relative;width:58px;height:55px;border:0;border-radius:0;background:transparent;display:grid;place-items:center;box-shadow:none}
-.ico svg{width:64px;height:58px;display:block;overflow:visible;filter:drop-shadow(0 5px 4px #001b35a8)}
-.tile b{position:relative;display:block;margin:0;font-size:13px;font-weight:800;letter-spacing:.1px;text-shadow:0 1px 2px #00345b88}
-.tile span{display:none}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 14px}
-.stat{background:#142d43;border:1px solid #254761;border-radius:13px;padding:12px}.stat-label{font-size:10px;color:#a9bfd1}.stat-value{font-size:20px;font-weight:850;margin-top:4px;color:#fff}
-.tools-label{font-size:9px;letter-spacing:1.1px;font-weight:800;color:#6fc7ff;margin:0 2px 8px}
-.profileline{display:flex;justify-content:space-between;gap:10px;align-items:center}.profileline strong{font-size:14px}.pill{background:#0c8ed52b;color:#7dcaff;border:1px solid #168bd766;border-radius:30px;padding:5px 10px;font-size:10px;font-weight:800}
-.notice{font-size:10px;color:#91aabd;line-height:1.6;margin:12px 3px 0}.footer{text-align:center;color:#66839a;font-size:10px;padding:10px 0 20px}
-.auth-card{max-width:520px;margin:18px auto}.field{display:block;width:100%;padding:13px 14px;margin:8px 0 13px;border:1px solid #31516a;border-radius:11px;font:inherit;background:#0b1d2d;color:#f3f8fc}
-.field::placeholder{color:#7792a7}.auth-card label{font-size:12px;color:#c4d6e4}.btn{border:0;border-radius:11px;padding:12px 15px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;font:700 13px system-ui;cursor:pointer}
-.btn.secondary{background:#1b344a;color:#d9eaf6;border:1px solid #35546c;margin-left:7px}.btn:disabled{opacity:.55;cursor:wait}.auth-actions{display:flex;flex-wrap:wrap;gap:8px}
-.status{font-size:13px;line-height:1.45;margin-top:12px;color:#a9bfd1;min-height:20px}.hidden{display:none!important}
-.bottom-nav{display:none}
+/* Ma journée : tuile premium et pictogramme pixel-art en relief */
+.tile-day{
+ background:linear-gradient(145deg,#168fe0 0%,#0872bd 48%,#06477f 100%);
+ border:1px solid #62d6ff;
+ border-radius:15px;
+ box-shadow:inset 0 2px 0 #ffffff88,inset 2px 0 0 #ffffff28,inset 0 -8px 0 #03345f,0 7px 0 #03294a,0 10px 16px #0009;
+ min-height:142px;
+}
+.tile-day:before{background:linear-gradient(135deg,#ffffff35 0%,transparent 38%,#001b3c45 100%)}
+.tile-day .ico{width:72px;height:66px;filter:drop-shadow(0 7px 3px #00203eaa)}
+.tile-day .ico svg{width:78px;height:72px;filter:none;shape-rendering:crispEdges}
+.tile-day b{font-size:14px;letter-spacing:.25px;text-shadow:0 2px 0 #03416e,0 0 8px #54d4ff66}
+.tile-day:active{transform:translateY(4px);box-shadow:inset 0 2px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
 @media(min-width:900px){.top{padding:18px max(24px,calc((100% - 1120px)/2)) 18px}.top .welcome{font-size:21px}.wrap{padding-top:20px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{min-height:148px;padding:16px}.ico{width:62px;height:58px}.ico svg{width:68px;height:62px}.tile b{font-size:13px}}
 @media(max-width:600px){
  body{padding-bottom:calc(68px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#0b1e30 0,#071522 38%,#071522 100%)}
@@ -114,7 +106,7 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
     </div>
     <div class="tools-label">MON ESPACE CHAUFFEUR</div>
     <div class="grid">
-      <a class="tile tile-day" href="ma_journee.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#day"></use></svg></div><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
+      <a class="tile tile-day" aria-label="Ma journée, ouvrir la saisie de journée" href="ma_journee.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#day"></use></svg></div><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
       <a class="tile" href="feuille.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#week"></use></svg></div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
       <a class="tile" href="frais.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#fees"></use></svg></div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
       <a class="tile" href="historique.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#history"></use></svg></div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
