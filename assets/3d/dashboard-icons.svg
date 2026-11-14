@@ -6,7 +6,24 @@
  <linearGradient id="dark" x2="0" y2="1"><stop stop-color="#347ca8"/><stop offset="1" stop-color="#092c4a"/></linearGradient>
  <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dy="4"/><feComponentTransfer><feFuncA type="linear" slope=".38"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
-<symbol id="day" viewBox="0 0 100 90"><g filter="url(#shadow)" stroke-linejoin="round"><path d="M25 13h38l15 15v47H25z" fill="url(#ice)" stroke="#d9f7ff" stroke-width="4"/><path d="M63 13v17h15" fill="#d9f7ff" stroke="#42baff" stroke-width="3"/><path d="M36 43h29M36 53h29M36 63h20" stroke="#07558b" stroke-width="5" stroke-linecap="round"/><path d="M18 20l-7 7v43q0 8 8 8h43" fill="none" stroke="#53c9ff" stroke-width="5" opacity=".8"/></g></symbol>
+<symbol id="day" viewBox="0 0 100 90">
+ <defs>
+  <linearGradient id="dayPaper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".48" stop-color="#b9f0ff"/><stop offset="1" stop-color="#3aa8e8"/></linearGradient>
+  <linearGradient id="dayClip" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e9fbff"/><stop offset=".48" stop-color="#43c9ff"/><stop offset="1" stop-color="#0873bd"/></linearGradient>
+  <linearGradient id="dayGold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2a8"/><stop offset=".55" stop-color="#ffc64d"/><stop offset="1" stop-color="#d47b19"/></linearGradient>
+ </defs>
+ <g stroke-linejoin="round" filter="url(#shadow)">
+  <path d="M24 18q0-7 8-7h34l17 17v45q0 7-8 7H31q-7 0-7-7z" fill="#032e55" opacity=".8" transform="translate(2 3)"/>
+  <path d="M22 16q0-7 8-7h34l17 17v47q0 7-8 7H30q-8 0-8-8z" fill="url(#dayPaper)" stroke="#e6fbff" stroke-width="3.5"/>
+  <path d="M64 9v18h18" fill="#75d9ff" stroke="#dffaff" stroke-width="3"/>
+  <path d="M34 38h28M34 49h20" stroke="#08629c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M33 63l7 7 13-15" fill="none" stroke="url(#dayGold)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38 7h20q5 0 5 5v8H33v-8q0-5 5-5z" fill="url(#dayClip)" stroke="#e6fbff" stroke-width="3"/>
+  <path d="M41 7v-2q0-5 6-5h5q6 0 6 5v2" fill="none" stroke="#9ceaff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M26 23v45q0 5 6 5" fill="none" stroke="#ffffff" stroke-width="2" opacity=".65"/>
+ </g>
+ <path d="M73 51l4-4" stroke="#fff5c8" stroke-width="3" stroke-linecap="round"/>
+</symbol>
 <symbol id="week" viewBox="0 0 100 90"><g filter="url(#shadow)" stroke-linejoin="round"><rect x="14" y="20" width="72" height="58" rx="10" fill="url(#ice)" stroke="#dff9ff" stroke-width="4"/><path d="M14 34h72" stroke="#0878ba" stroke-width="8"/><path d="M31 12v19M69 12v19" stroke="#dff8ff" stroke-width="7" stroke-linecap="round"/><g fill="url(#blue)"><rect x="27" y="44" width="12" height="10" rx="3"/><rect x="47" y="44" width="12" height="10" rx="3"/><rect x="67" y="44" width="10" height="10" rx="3"/></g><rect x="27" y="62" width="12" height="8" rx="2" fill="url(#gold)"/><rect x="47" y="62" width="12" height="8" rx="2" fill="url(#blue)"/></g></symbol>
 <symbol id="fees" viewBox="0 0 100 90"><g filter="url(#shadow)" stroke-linejoin="round"><rect x="13" y="22" width="74" height="52" rx="11" fill="url(#blue)" stroke="#c8f2ff" stroke-width="4"/><path d="M19 30h62v34H19z" fill="url(#dark)"/><circle cx="50" cy="47" r="17" fill="url(#gold)" stroke="#fff0b5" stroke-width="4"/><path d="M45 42h10M50 36v23" stroke="#9a5d12" stroke-width="3.5" stroke-linecap="round"/><path d="M20 18h60" stroke="#b5efff" stroke-width="4" stroke-linecap="round"/></g></symbol>
 <symbol id="history" viewBox="0 0 100 90"><g filter="url(#shadow)" stroke-linejoin="round"><path d="M20 16h60v61H20z" fill="url(#ice)" stroke="#dff8ff" stroke-width="4"/><path d="M30 31h40M30 43h40M30 55h31" stroke="#12659a" stroke-width="5" stroke-linecap="round"/><path d="M30 66h22" stroke="#f6b94b" stroke-width="5" stroke-linecap="round"/><path d="M72 16v14h8" fill="none" stroke="#218ec9" stroke-width="3"/></g></symbol>
