@@ -188,11 +188,15 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 @media(max-width:600px){.tile-week{min-height:158px;padding:12px;background-position:center 42%}.tile-week b{font-size:13px}.tile-week span{font-size:9px}}
 .tile-fees{background-image:url('assets/3d/mytruck-buttons-sprite.jpg');background-position:100% 0}
 .tile-history{background-image:url('assets/3d/mytruck-buttons-sprite.jpg');background-position:0 50%}
-.tile-save{background-image:url('assets/3d/mytruck-buttons-sprite.jpg');background-position:100% 50%}
-.tile-profile{background-image:url('assets/3d/mytruck-buttons-sprite.jpg');background-position:0 100%}
-.tile-docs{background-image:url('assets/3d/mytruck-buttons-sprite.jpg');background-position:100% 100%}
+.tile-save,.tile-profile,.tile-docs{
+ background-size:100% 100%!important;background-position:center center!important;background-repeat:no-repeat!important;
+ min-height:178px;
+}
+.tile-save{background-image:url('assets/3d/sauvegardes-fond.svg')!important}
+.tile-profile{background-image:url('assets/3d/profil-fond.svg')!important}
+.tile-docs{background-image:url('assets/3d/documents-fond.svg')!important}
 .tile:not(.tile-day):active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #032a49,0 5px 10px #0008}
-@media(max-width:600px){.tile:not(.tile-day){min-height:144px;padding:10px 8px 11px}.tile:not(.tile-day) b{font-size:11px}.tile:not(.tile-day) span{font-size:8px}}
+@media(max-width:600px){.tile:not(.tile-day){min-height:158px;padding:10px 8px 11px}.tile:not(.tile-day) b{font-size:11px}.tile:not(.tile-day) span{font-size:8px}}
 @media(min-width:900px){.tile:not(.tile-day){min-height:172px;padding:14px}.tile:not(.tile-day) b{font-size:14px}.tile:not(.tile-day) span{font-size:10px}}
 
 
@@ -229,7 +233,7 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
  border:1px solid #48caff;
  border-radius:16px;
  background-image:url('assets/3d/mes-frais-maquette.webp')!important;
- background-size:100% 112%!important;
+ background-size:100% 100%!important;
  background-position:center top!important;
  background-repeat:no-repeat!important;
  box-shadow:inset 0 1px 0 #ffffff88,inset 0 -2px 0 #03416b,0 6px 0 #03294a,0 10px 18px #0008;
@@ -243,8 +247,8 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 /* Visuel dédié « Mon historique » : archives et calendrier, sans camion */
 .tile.tile-history{
  min-height:178px;padding:0;border:1px solid #48caff;border-radius:16px;
- background-image:url('assets/3d/historique-corrige.svg')!important;
- background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;
+ background-image:url('assets/3d/historique-maquette.jpg')!important;
+ background-size:100% 100%!important;background-position:center center!important;background-repeat:no-repeat!important;
  box-shadow:inset 0 1px 0 #ffffff88,inset 0 -2px 0 #03416b,0 6px 0 #03294a,0 10px 18px #0008;
 }
 .tile.tile-history:before{background:none!important}
