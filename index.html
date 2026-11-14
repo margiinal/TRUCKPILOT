@@ -333,6 +333,7 @@ function updateHomeFees(entries) {
   const ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
   let rates = {breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};
   try { rates = {...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}; } catch {}
+  const TRAIN_RATE = 30;
   let total=0, days=0;
   Object.entries(entries||{}).forEach(([date,e])=>{
     if(!date.startsWith(ym)||!e||typeof e!=='object') return;
@@ -342,15 +343,17 @@ function updateHomeFees(entries) {
     if(!meaningful)return;
     days++;
     const r=e.feeRates||rates;
-    if(e.breakfast) total+=Number(r.breakfast??rates.breakfast);
-    if(e.lunch) total+=Number(r.lunch??rates.lunch);
-    if(e.night) total+=Number(r.night??rates.night);
-    else if(e.dinner) total+=Number(r.dinner??rates.dinner);
+    if(e.breakfast===true) total+=Number(r.breakfast??rates.breakfast);
+    if(e.lunch===true) total+=Number(r.lunch??rates.lunch);
+    if(e.night===true) total+=Number(r.night??rates.night);
+    else if(e.dinner===true) total+=Number(r.dinner??rates.dinner);
+    if(e.train===true) total+=TRAIN_RATE;
   });
   const formatted=total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
   const value=document.getElementById('homeFeesValue'); if(value) value.textContent=formatted;
   const count=document.getElementById('homeFeesDays'); if(count) count.textContent=days+' journée(s) renseignée(s) ce mois';
 }
+
 function localDailyEntries(){try{return JSON.parse(localStorage.getItem('truckpilote_daily_entries_v1')||'{}')}catch{return {}}}
 function showStatus(message, isError = false) {
   $('authStatus').textContent = message;
@@ -366,8 +369,17 @@ function setMode(mode) {
   $('passwordInput').setAttribute('autocomplete', mode === 'signup' ? 'new-password' : 'current-password');
   showStatus(mode === 'signup' ? 'Renseignez votre nom, votre e-mail et un mot de passe.' : 'Connectez-vous avec votre adresse e-mail et votre mot de passe.');
 }
-function showSignedIn(user) {
+async function showSignedIn(user) {
   updateHomeFees(localDailyEntries());
+  try {
+    const {data,error}=await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id);
+    if(!error){
+      const merged=localDailyEntries();
+      (data||[]).forEach(row=>{if(row.entry)merged[row.work_date]=row.entry});
+      localStorage.setItem('truckpilote_daily_entries_v1',JSON.stringify(merged));
+      updateHomeFees(merged);
+    }
+  } catch {}
   const metadata = user.user_metadata || {};
   const fullName = metadata.full_name || localStorage.getItem('truckpilote_profile_name') || '';
   const firstName = fullName.trim().split(/\s+/)[0] || 'chauffeur';
