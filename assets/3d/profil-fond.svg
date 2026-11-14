@@ -5,5 +5,5 @@
 <rect x="9" y="9" width="782" height="382" rx="26" fill="none" stroke="url(#a)" stroke-width="7" filter="url(#g)"/>
 <g transform="translate(400 154)" fill="none" stroke="url(#a)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#g)"><circle cx="0" cy="-60" r="58"/><path d="M-130 115c8-82 54-123 130-123s122 41 130 123z"/><path d="M-170 -110h340" opacity=".25"/></g>
 <path d="M85 300H715" stroke="#55c8ff" stroke-width="3" opacity=".35"/>
-<text x="400" y="355" fill="#dff8ff" font-family="Arial,sans-serif" font-size="25" text-anchor="middle" opacity=".85">Espace chauffeur</text>
+
 </svg>
