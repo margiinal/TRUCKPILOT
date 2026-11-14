@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+<defs><linearGradient id="b" x2="0" y2="1"><stop stop-color="#0b3154"/><stop offset=".55" stop-color="#06213b"/><stop offset="1" stop-color="#031321"/></linearGradient><linearGradient id="a" x2="1" y2="1"><stop stop-color="#b8f6ff"/><stop offset=".4" stop-color="#55c8ff"/><stop offset="1" stop-color="#0873c7"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="9" result="x"/><feMerge><feMergeNode in="x"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="800" height="400" rx="30" fill="url(#b)"/>
+<path d="M0 320Q240 210 420 300T800 250V400H0Z" fill="#0a4770" opacity=".32"/>
+<rect x="9" y="9" width="782" height="382" rx="26" fill="none" stroke="url(#a)" stroke-width="7" filter="url(#g)"/>
+<g transform="translate(400 154)" fill="none" stroke="url(#a)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#g)"><circle cx="0" cy="-60" r="58"/><path d="M-130 115c8-82 54-123 130-123s122 41 130 123z"/><path d="M-170 -110h340" opacity=".25"/></g>
+<path d="M85 300H715" stroke="#55c8ff" stroke-width="3" opacity=".35"/>
+<text x="400" y="355" fill="#dff8ff" font-family="Arial,sans-serif" font-size="25" text-anchor="middle" opacity=".85">Espace chauffeur</text>
+</svg>
