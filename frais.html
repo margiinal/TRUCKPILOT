@@ -1,64 +1,121 @@
 <!doctype html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#081725">
-<title>MYTRUCK MATE — Mes frais</title>
-<style>
-:root{--navy:#081725;--panel:#142b41;--blue:#078fe5;--cyan:#4dbaff;--ink:#f3f8fc;--muted:#a9bfd1;--line:#24445e}
-*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{background:radial-gradient(ellipse at 90% 0,#17517a 0,transparent 45%),linear-gradient(135deg,#071522,#102d47);color:white;padding:23px 18px 24px;border-bottom:1px solid #1e4868}
-header a{color:#71c8ff;text-decoration:none;font-weight:650}header .brandline{font-size:10px;letter-spacing:1.5px;color:#72caff;font-weight:850;margin-bottom:7px}
-header h1{font-size:24px;margin:8px 0 5px}header .subline{color:#b8d0e2;font-size:13px}
-main{max-width:850px;margin:auto;padding:16px}.card{background:linear-gradient(145deg,#142c42,#10263a);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 8px 25px #0002}
-h2{font-size:18px;margin:0 0 12px;color:#f3f8fc}.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.field label{display:block;font-size:12px;color:#b7cada;font-weight:650;margin-bottom:6px}
-input,select{width:100%;padding:12px;border:1px solid #31516a;border-radius:10px;font:inherit;color:var(--ink);background:#0b1d2d;min-height:44px}input:focus,select:focus{outline:2px solid #168fe0;outline-offset:1px}
-button{border:0;border-radius:11px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;padding:13px 16px;font:750 14px system-ui;cursor:pointer}
-.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:0}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#0e2235;border:1px solid #294a64;border-radius:14px;padding:14px}.stat b{display:block;font-size:11px;color:#a9bfd1;margin-bottom:6px}.stat strong{font-size:22px;color:#fff}
-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}td,th{text-align:left;padding:11px 7px;border-bottom:1px solid #29445b;color:#e4eff7}th{font-size:11px;color:#8fb1ca;text-transform:uppercase;letter-spacing:.5px}td:last-child,th:last-child{text-align:right}
-.status{font-size:13px;color:#a9bfd1;margin-top:10px;line-height:1.5}.warning{background:#3b2d16;border:1px solid #8c6727;color:#f4d99c;padding:12px;border-radius:11px;font-size:13px;line-height:1.5;margin-top:10px}
-@media(max-width:480px){main{padding:12px}.card{padding:14px}.grid{grid-template-columns:1fr 1fr;gap:9px}.row{align-items:stretch}.row button{align-self:end}.stat strong{font-size:20px}td,th{padding:10px 5px;font-size:12px}}
-@media(max-width:350px){.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header><div class="brandline">MYTRUCK MATE · DRIVER COMPANION</div><a href="index.html">← Accueil MYTRUCK MATE</a><h1>Mes frais</h1><div class="subline">Suivi mensuel de tes repas, découchés et primes de train.</div></header>
-<main>
-<section class="card">
- <h2>Mes tarifs</h2>
- <p class="muted">Les montants sont préremplis. Tu peux les modifier et enregistrer tes tarifs personnels.</p>
- <div class="grid">
-  <div class="field"><label for="breakfastRate">Petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="lunchRate">Repas (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="dinnerRate">Dîner (€)</label><input id="dinnerRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="nightRate">Découché (repas du soir + nuitée) (€)</label><input id="nightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
- </div>
- <div class="row" style="margin-top:12px"><button id="saveRates">Enregistrer mes tarifs</button></div>
- <div class="status" id="rateStatus"></div>
- <p class="muted">Quand un découché est coché dans « Ma journée », le dîner est coché automatiquement. Le découché est alors compté à 52,31 €, sans ajouter le dîner une deuxième fois.</p>
-</section>
-<section class="card">
- <h2>Résumé du mois</h2>
- <div class="row">
-  <div class="field"><label for="month">Mois à consulter</label><input id="month" type="month"></div>
-  <button id="refresh" type="button">Actualiser</button>
- </div>
- <div class="stats" style="margin-top:12px">
-  <div class="stat"><b>Total des frais</b><strong id="grandTotal">0,00 €</strong></div>
-  <div class="stat"><b>Journées renseignées</b><strong id="daysCount">0</strong></div>
- </div>
- <table style="margin-top:14px">
-  <thead><tr><th>Type de frais</th><th>Quantité</th><th>Montant</th></tr></thead>
-  <tbody id="totals"></tbody>
- </table>
- <div class="status" id="dataStatus">Chargement des journées…</div>
- <div class="warning" id="legacyWarning" hidden></div>
-</section>
-</main>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#04111f"><meta name="description" content="MYTRUCK MATE — suivi mensuel des indemnités et primes chauffeur."><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><title>MYTRUCK MATE — Mes frais</title><style>
+:root{--bg:#04111f;--panel:#071d31;--panel2:#0b2943;--cyan:#04c8ff;--blue:#087fe0;--line:#087db5;--ink:#f3f8ff;--muted:#9bbbd3}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 55% -15%,#103d60 0,transparent 48%),var(--bg);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.shell{min-height:100vh;display:grid;grid-template-columns:248px minmax(0,1fr)}
+.sidebar{background:linear-gradient(180deg,#071b2d,#041321);border-right:1px solid #075078;padding:22px 14px;display:flex;flex-direction:column;gap:22px}
+.brand{padding:12px 10px 20px;border-bottom:1px solid #125071}
+.brand-mark{font-size:19px;font-weight:950;letter-spacing:.4px}.brand-mark span{color:#04d2ff}
+.brand small{display:block;margin-top:8px;color:#5dd4ff;font-size:10px;font-weight:850;letter-spacing:1.3px}
+.nav{display:grid;gap:7px}
+.nav a{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:12px;color:#d9eafa;font-weight:700}
+.nav a .navico{width:24px;text-align:center;font-size:21px;color:#8ddfff}
+.nav a.active{background:linear-gradient(100deg,#087fc4,#05b8f2);box-shadow:0 0 18px #00a9ff66;color:white}
+.logout{margin-top:auto;border:1px solid #075b89;background:#0a2942;border-radius:12px;padding:13px;text-align:center;font-weight:800}
+.content{min-width:0;padding:0 24px 34px}
+.hero{height:175px;margin:0 -24px 18px;padding:22px 30px;display:flex;align-items:center;background:linear-gradient(90deg,#041525 0%,#041525dd 28%,#04152522 75%),url('assets/3d/ma-feuille-semaine-scania.jpg') center 48%/cover no-repeat;border-bottom:1px solid #057cb5}
+.hero-kicker{font-size:10px;color:#62d8ff;font-weight:900;letter-spacing:1.5px}.hero h1{font-size:30px;margin:7px 0 4px;font-weight:950}.hero p{margin:0;color:#c4d9e9;font-size:13px}
+.toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(230px,380px) auto auto;gap:14px;align-items:center;margin-bottom:18px}
+.period{display:flex;align-items:center;gap:12px;font-weight:800;color:#d7eafa}
+input,select{color:white;background:#08233a;border:1px solid #0787c4;border-radius:11px;padding:12px 14px;min-height:46px;font:700 14px inherit}
+input:focus,select:focus{outline:2px solid #16bfff;outline-offset:2px}
+button{border:1px solid #079fe5;border-radius:13px;padding:13px 17px;color:white;font:800 14px inherit;background:linear-gradient(135deg,#073c65,#087fbd);box-shadow:0 0 15px #00aaff33;cursor:pointer}
+.totalbox{border:1px solid #00baff;border-radius:17px;padding:12px 18px;background:linear-gradient(135deg,#06243b,#073c60);box-shadow:0 0 22px #00baff44;text-align:center}
+.totalbox small{display:block;color:#8ee9ff;font-weight:850}.totalbox strong{display:block;color:#16e0ff;font-size:32px;line-height:1.15;text-shadow:0 0 14px #00caff66}
+.tariff-toggle{white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.stat{position:relative;overflow:hidden;min-width:0;border:1px solid #087cb8;border-radius:17px;padding:16px 13px 12px;background:linear-gradient(145deg,#0b3150,#061a2d 80%);box-shadow:inset 0 1px 0 #a6eaff44,0 7px 18px #0005}
+.stat:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#08caff,transparent)}
+.stat-head{display:flex;align-items:center;justify-content:center;min-height:42px;font-size:26px}
+.stat h3{text-align:center;font-size:14px;margin:6px 0;color:#f2f8ff}
+.stat .rate{display:block;text-align:center;color:#25dcff;font-size:23px;font-weight:950}
+.stat .qty{display:flex;justify-content:center;gap:5px;align-items:center;margin-top:10px;padding:8px 4px;border:1px solid #075f91;border-radius:10px;background:#041a2b;color:#b8d7ec;font-size:11px}
+.stat .qty strong{color:white;font-size:14px}
+.stat .share{display:block;text-align:center;color:#8eafc8;font-size:10px;margin-top:7px}
+.lower{display:grid;grid-template-columns:minmax(290px,.82fr) minmax(420px,1.18fr);gap:16px}
+.panel{min-width:0;border:1px solid #0786c2;border-radius:19px;padding:17px;background:linear-gradient(145deg,#092a44,#051a2d);box-shadow:inset 0 1px 0 #b5edff33,0 10px 22px #0005}
+.panel h2{font-size:19px;margin:0 0 14px}
+.chart-layout{display:flex;align-items:center;gap:17px;min-height:235px}
+.donut{width:190px;height:190px;flex:0 0 190px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#24445e 0deg 360deg);position:relative;box-shadow:0 0 18px #00aaff33}
+.donut:after{content:"";position:absolute;inset:25%;border-radius:50%;background:#071c30;border:1px solid #145477}
+.donut-center{position:relative;z-index:1;text-align:center;font-weight:950;font-size:18px}.donut-center small{display:block;color:#9bbbd3;font-size:11px}
+.legend{display:grid;gap:13px;flex:1;min-width:0}
+.legend-row{display:grid;grid-template-columns:13px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:12px}
+.swatch{width:12px;height:12px;border-radius:3px}.legend-row b{font-size:12px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:420px}
+th{background:#0b3b5c;color:#d8f3ff;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+th,td{padding:12px 10px;border-bottom:1px solid #125174}
+th:first-child{border-radius:9px 0 0 0}th:last-child{border-radius:0 9px 0 0}
+td{background:#061f34;color:#e5f2fb}
+td:not(:first-child),th:not(:first-child){text-align:right}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+tfoot td{background:linear-gradient(90deg,#05b7df,#05d3ef);color:#03233a;font-weight:950;font-size:15px;border:0}
+tfoot td:first-child{border-radius:0 0 0 9px}tfoot td:last-child{border-radius:0 0 9px 0}
+.warning{background:#3b2d16;border:1px solid #8c6727;color:#f4d99c;padding:12px;border-radius:11px;font-size:13px;line-height:1.5;margin-top:12px}
+.status{font-size:12px;color:#8fb1c9;margin-top:10px;line-height:1.5}
+.rates{margin-top:18px}.rates summary{cursor:pointer;list-style:none;font-weight:850;color:#c9eaff}.rates summary::-webkit-details-marker{display:none}.rates summary:after{content:"＋";float:right;color:#28d7ff}.rates[open] summary:after{content:"−"}
+.rate-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:16px}
+.field label{display:block;font-size:12px;color:#b7cada;font-weight:700;margin-bottom:6px}
+.rate-grid input{width:100%}.rate-actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+@media(max-width:1150px){.shell{grid-template-columns:210px minmax(0,1fr)}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.toolbar{grid-template-columns:1fr 1fr}.totalbox{grid-column:1}.lower{grid-template-columns:1fr}.chart-layout{justify-content:center}}
+@media(max-width:700px){.shell{display:block}.sidebar{display:none}.content{padding:0 12px 24px}.hero{height:145px;margin:0 -12px 14px;padding:18px}.hero h1{font-size:25px}.toolbar{grid-template-columns:1fr 1fr;gap:9px}.period{grid-column:1/-1}.period input{flex:1;min-width:0}.totalbox{grid-column:1/-1;grid-row:2}.toolbar button{padding:11px 8px;font-size:12px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{padding:13px 8px 10px}.stat:last-child{grid-column:1/-1}.lower{grid-template-columns:1fr}.chart-layout{gap:12px}.donut{width:150px;height:150px;flex-basis:150px}.legend{gap:10px}.legend-row{font-size:11px}.rate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:14px}.panel h2{font-size:17px}}
+@media(max-width:390px){.chart-layout{flex-direction:column}.legend{width:100%}.toolbar{grid-template-columns:1fr 1fr}.totalbox strong{font-size:27px}}
+</style></head><body>
+<div class="shell">
+ <aside class="sidebar">
+  <div class="brand"><div class="brand-mark">🚛 MYTRUCK <span>MATE</span></div><small>MON ESPACE CHAUFFEUR</small></div>
+  <nav class="nav">
+   <a href="index.html"><span class="navico">⌂</span>Accueil</a>
+   <a href="ma_journee.html"><span class="navico">▤</span>Ma journée</a>
+   <a href="feuille.html"><span class="navico">▦</span>Ma feuille de semaine</a>
+   <a class="active" href="frais.html"><span class="navico">▤</span>Mes frais</a>
+   <a href="historique.html"><span class="navico">◷</span>Mon historique</a>
+   <a href="feuille.html#save-status"><span class="navico">☁</span>Mes sauvegardes</a>
+   <a href="feuille.html"><span class="navico">▧</span>Mes documents</a>
+   <a href="profil.html"><span class="navico">♙</span>Mon profil</a>
+  </nav>
+  <a class="logout" href="index.html">⏻　Retour à l'accueil</a>
+ </aside>
+ <main class="content">
+  <header class="hero"><div><div class="hero-kicker">MYTRUCK MATE · DRIVER COMPANION</div><h1>Mes frais</h1><p>Calcul de mes indemnités et primes</p></div></header>
+  <section class="toolbar">
+   <label class="period" for="month"><span>▦　Période</span><input id="month" type="month"></label>
+   <div class="totalbox"><small>💰　Total du mois</small><strong id="grandTotal">0,00 €</strong><span id="daysBadge" class="status">0 journée renseignée</span></div>
+   <button id="refresh" type="button">▦　Recalculer</button>
+   <button class="tariff-toggle" type="button" onclick="document.getElementById('tariffs').open=!document.getElementById('tariffs').open">⚙　Modifier les tarifs</button>
+  </section>
+  <section class="stats">
+   <article class="stat"><div class="stat-head">☕</div><h3>Petit-déjeuner</h3><strong class="rate" id="rate-breakfast">8,87 €</strong><div class="qty"><span id="count-breakfast">0</span> × <strong id="amount-breakfast">0,00 €</strong></div><small class="share" id="share-breakfast">0 %</small></article>
+   <article class="stat"><div class="stat-head">🍽</div><h3>Déjeuner</h3><strong class="rate" id="rate-lunch">16,36 €</strong><div class="qty"><span id="count-lunch">0</span> × <strong id="amount-lunch">0,00 €</strong></div><small class="share" id="share-lunch">0 %</small></article>
+   <article class="stat"><div class="stat-head">🍴</div><h3>Dîner</h3><strong class="rate" id="rate-dinner">16,36 €</strong><div class="qty"><span id="count-dinner">0</span> × <strong id="amount-dinner">0,00 €</strong></div><small class="share" id="share-dinner">0 %</small></article>
+   <article class="stat"><div class="stat-head">🛏</div><h3>Nuit / Découché</h3><strong class="rate" id="rate-night">52,31 €</strong><div class="qty"><span id="count-night">0</span> × <strong id="amount-night">0,00 €</strong></div><small class="share" id="share-night">0 %</small></article>
+   <article class="stat"><div class="stat-head">🚆</div><h3>Prime de train</h3><strong class="rate" id="rate-train">30,00 €</strong><div class="qty"><span id="count-train">0</span> × <strong id="amount-train">0,00 €</strong></div><small class="share" id="share-train">0 %</small></article>
+  </section>
+  <section class="lower">
+   <article class="panel"><h2>Répartition du mois</h2><div class="chart-layout"><div class="donut" id="donut"><div class="donut-center"><span id="totalCenter">0,00 €</span><small>Total</small></div></div><div class="legend">
+    <div class="legend-row"><i class="swatch" style="background:#0b9df5"></i><span>Petit-déjeuner</span><b id="share-breakfast-legend">0 %</b></div>
+    <div class="legend-row"><i class="swatch" style="background:#19d93d"></i><span>Déjeuner</span><b id="share-lunch-legend">0 %</b></div>
+    <div class="legend-row"><i class="swatch" style="background:#ff9418"></i><span>Dîner</span><b id="share-dinner-legend">0 %</b></div>
+    <div class="legend-row"><i class="swatch" style="background:#9748f5"></i><span>Nuit / Découché</span><b id="share-night-legend">0 %</b></div>
+    <div class="legend-row"><i class="swatch" style="background:#ffd21a"></i><span>Prime de train</span><b id="share-train-legend">0 %</b></div>
+   </div></div></article>
+   <article class="panel"><h2>Détail des indemnités</h2><div class="table-wrap"><table><thead><tr><th>Type</th><th>Quantité</th><th>Tarif</th><th>Montant</th></tr></thead><tbody id="totals"></tbody><tfoot><tr><td colspan="3">TOTAL DU MOIS</td><td id="totalFooter">0,00 €</td></tr></tfoot></table></div><div class="status" id="dataStatus">Chargement des journées…</div><div class="warning" id="legacyWarning" hidden></div></article>
+  </section>
+  <details class="panel rates" id="tariffs"><summary>⚙　Mes tarifs personnalisés</summary><p class="status">Tu peux modifier tes montants. Les tarifs sont enregistrés sur cet appareil. Le découché comprend le repas du soir.</p>
+   <div class="rate-grid">
+    <div class="field"><label for="breakfastRate">Petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+    <div class="field"><label for="lunchRate">Déjeuner (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+    <div class="field"><label for="dinnerRate">Dîner (€)</label><input id="dinnerRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+    <div class="field"><label for="nightRate">Découché (repas du soir + nuitée) (€)</label><input id="nightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+   </div><div class="rate-actions"><button id="saveRates" type="button">Enregistrer mes tarifs</button><span class="status" id="rateStatus"></span></div>
+  </details>
+ </main>
+</div>
 <script>
+
 const ENTRY_KEY='truckpilote_daily_entries_v1';
 const RATE_KEY='truckpilote_fee_rates_v1';
 const names=[['breakfast','Petit-déjeuner'],['lunch','Repas'],['dinner','Dîner'],['night','Découché']];
@@ -75,7 +132,10 @@ function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','st
 let entries=localEntries(),legacyCount=0;
 function calculate(){
  const ym=$('month').value;if(!ym)return;
- const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0,train:0};const amounts={breakfast:0,lunch:0,dinner:0,night:0,train:0};let days=0;legacyCount=0;
+ const current=getRates();
+ const sums={breakfast:0,lunch:0,dinner:0,night:0,train:0};
+ const amounts={breakfast:0,lunch:0,dinner:0,night:0,train:0};
+ let days=0;legacyCount=0;
  Object.entries(entries).forEach(([date,e])=>{
   if(!date.startsWith(ym)||!meaningful(e))return;
   days++;
@@ -85,11 +145,37 @@ function calculate(){
   else if(e.dinner===true){sums.dinner++;amounts.dinner+=Number(e.feeRates?.dinner??current.dinner);if(e.feeRates?.dinner==null)legacyCount++;}
   if(e.train===true){sums.train++;amounts.train+=TRAIN_RATE;}
  });
+ const total=Object.values(amounts).reduce((a,b)=>a+b,0);
  $('daysCount').textContent=days;
- $('grandTotal').textContent=euro(Object.values(amounts).reduce((a,b)=>a+b,0));
+ $('grandTotal').textContent=euro(total);
+ $('totalCenter').textContent=euro(total);\n $('totalFooter').textContent=euro(total);
+ $('daysBadge').textContent=days+' journée'+(days>1?'s':'')+' renseignée'+(days>1?'s':'');
+ const meta=[
+  ['breakfast','Petit-déjeuner',current.breakfast,'#0b9df5'],
+  ['lunch','Déjeuner',current.lunch,'#19d93d'],
+  ['dinner','Dîner',current.dinner,'#ff9418'],
+  ['night','Nuit / Découché',current.night,'#9748f5'],
+  ['train','Prime de train',TRAIN_RATE,'#ffd21a']
+ ];
+ let offset=0;const segments=[];
+ meta.forEach(([k,label,rate,color])=>{
+  const amount=amounts[k],pct=total>0?amount/total*100:0;
+  const start=offset;offset+=pct*3.6;
+  segments.push(color+' '+start+'deg '+offset+'deg');
+  $('count-'+k).textContent=sums[k];
+  $('amount-'+k).textContent=euro(amount);
+  $('rate-'+k).textContent=euro(rate);
+  const share=pct.toLocaleString('fr-FR',{maximumFractionDigits:1})+' %';\n  $('share-'+k).textContent=share;\n  $('share-'+k+'-legend').textContent=share;
+ });
+ $('donut').style.background=total>0?'conic-gradient('+segments.join(',')+')':'conic-gradient(#24445e 0deg 360deg)';
  $('totals').innerHTML='';
- [['breakfast','Petit-déjeuner'],['lunch','Repas'],['dinner','Dîner'],['night','Découché'],['train','Prime de train (30 € / train)']].forEach(([k,label])=>{const tr=document.createElement('tr');[label,String(sums[k]),euro(amounts[k])].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});$('totals').append(tr)});
- if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Le découché comprend le repas du soir, qui n’est pas facturé une deuxième fois. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
+ meta.forEach(([k,label,rate,color])=>{
+  const tr=document.createElement('tr');
+  const vals=[label,String(sums[k]),euro(rate),euro(amounts[k])];
+  vals.forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===0){const dot=document.createElement('i');dot.className='dot';dot.style.background=color;td.prepend(dot)}tr.append(td)});
+  $('totals').append(tr);
+ });
+ if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent='Attention : '+legacyCount+' repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Le découché comprend le repas du soir, qui n’est pas facturé une deuxième fois. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». '}
  else{$('legacyWarning').hidden=true}
 }
 async function loadData(){
@@ -107,5 +193,5 @@ $('saveRates').onclick=saveRates;$('refresh').onclick=loadData;$('month').onchan
 const now=new Date();$('month').value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
 setRateInputs();loadData();
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
-</script>
-</body></html>
+
+</script></body></html>
