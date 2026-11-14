@@ -26,11 +26,11 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 </style>
 </head>
 <body>
-<header><a href="index.html">← Retour à l’accueil</a><h1>Mes frais</h1><div>Suivi mensuel des repas et des nuits.</div></header>
+<header><a href="index.html">← Retour à l’accueil</a><h1>Mes frais</h1><div>Suivi mensuel des repas, des nuits et des primes de train.</div></header>
 <main>
 <section class="card">
  <h2>Mes tarifs</h2>
- <p class="muted">Renseigne tes montants en euros. Ils seront enregistrés sur cet appareil et utilisés comme tarifs par défaut pour les prochaines journées.</p>
+ <p class="muted">Renseigne tes montants en euros. La prime de train est ajoutée automatiquement à 30 € par case Train cochée.</p>
  <div class="grid">
   <div class="field"><label for="breakfastRate">Petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
   <div class="field"><label for="lunchRate">Déjeuner (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
@@ -62,6 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 const ENTRY_KEY='truckpilote_daily_entries_v1';
 const RATE_KEY='truckpilote_fee_rates_v1';
 const names=[['breakfast','Petit-déjeuner'],['lunch','Déjeuner'],['dinner','Dîner'],['night','Nuit']];
+const TRAIN_RATE=30;
 const $=id=>document.getElementById(id);
 const euro=n=>Number(n||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 const defaultRates=()=>({breakfast:0,lunch:0,dinner:0,night:0});
@@ -73,17 +74,21 @@ function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','st
 let entries=localEntries(),legacyCount=0;
 function calculate(){
  const ym=$('month').value;if(!ym)return;
- const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0};const amounts={...sums};let days=0;legacyCount=0;
+ const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0,train:0};const amounts={breakfast:0,lunch:0,dinner:0,night:0,train:0};let days=0;legacyCount=0;
  Object.entries(entries).forEach(([date,e])=>{
   if(!date.startsWith(ym)||!meaningful(e))return;
   days++;
   names.forEach(([k])=>{if(e[k]===true){sums[k]++;const saved=e.feeRates&&Number.isFinite(Number(e.feeRates[k]));if(saved)amounts[k]+=Number(e.feeRates[k]);else{amounts[k]+=Number(current[k]||0);legacyCount++}}});
+  if(e.train===true){sums.train++;amounts.train+=TRAIN_RATE;}
  });
  $('daysCount').textContent=days;
  $('grandTotal').textContent=euro(Object.values(amounts).reduce((a,b)=>a+b,0));
  $('totals').innerHTML='';
  names.forEach(([k,label])=>{const tr=document.createElement('tr');const cells=[label,String(sums[k]),euro(amounts[k])];cells.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});$('totals').append(tr)});
- if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
+ const trainRow=document.createElement('tr');
+ ['Prime de train (30 € / train)',String(sums.train),euro(amounts.train)].forEach(v=>{const td=document.createElement('td');td.textContent=v;trainRow.append(td)});
+ $('totals').append(trainRow);
+ if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Les trains sont comptés à 30 € chacun. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
  else{$('legacyWarning').hidden=true}
 }
 async function loadData(){
