@@ -68,6 +68,7 @@
     <div class="section-title" style="margin-top:23px">Mes outils</div>
     <div class="grid">
       <a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Ma feuille de semaine</b><span>Retrouver et consulter ma semaine</span></a>
+      <a class="tile" href="frais.html"><div class="ico">💶</div><b>Mes frais du mois</b><span id="homeFeesSummary">Voir le total de mes indemnités</span></a>
       <a class="tile" href="historique.html"><div class="ico">📚</div><b>Historique</b><span>Retrouver mes journées par année, mois et semaine</span></a>
       <a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Sauvegarde</b><span>Enregistrement sur cet appareil</span></a>
       <a class="tile" href="profil.html"><div class="ico">👤</div><b>Mon profil</b><span>Mes informations personnelles</span></a>
@@ -92,6 +93,29 @@ const authSection = $('authSection');
 const appSection = $('appSection');
 let authMode = 'login';
 
+function updateHomeFees(entries) {
+  const now = new Date();
+  const ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  let rates = {breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};
+  try { rates = {...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}; } catch {}
+  let total=0, days=0;
+  Object.entries(entries||{}).forEach(([date,e])=>{
+    if(!date.startsWith(ym)||!e||typeof e!=='object') return;
+    const meaningful=['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!=='') ||
+      ['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true) ||
+      (Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!=='')));
+    if(!meaningful)return;
+    days++;
+    const r=e.feeRates||rates;
+    if(e.breakfast) total+=Number(r.breakfast??rates.breakfast);
+    if(e.lunch) total+=Number(r.lunch??rates.lunch);
+    if(e.night) total+=Number(r.night??rates.night);
+    else if(e.dinner) total+=Number(r.dinner??rates.dinner);
+  });
+  const el=document.getElementById('homeFeesSummary');
+  if(el) el.textContent = total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) + ' · ' + days + ' journée(s) ce mois';
+}
+function localDailyEntries(){try{return JSON.parse(localStorage.getItem('truckpilote_daily_entries_v1')||'{}')}catch{return {}}}
 function showStatus(message, isError = false) {
   $('authStatus').textContent = message;
   $('authStatus').style.color = isError ? '#b42318' : '#187044';
@@ -107,6 +131,7 @@ function setMode(mode) {
   showStatus(mode === 'signup' ? 'Renseignez votre nom, votre e-mail et un mot de passe.' : 'Connectez-vous avec votre adresse e-mail et votre mot de passe.');
 }
 function showSignedIn(user) {
+  updateHomeFees(localDailyEntries());
   const metadata = user.user_metadata || {};
   const fullName = metadata.full_name || localStorage.getItem('truckpilote_profile_name') || '';
   const firstName = fullName.trim().split(/\s+/)[0] || 'chauffeur';
@@ -178,6 +203,13 @@ $('logoutBtn').addEventListener('click', async () => {
   setMode('login');
 });
 const { data: { session } } = await supabase.auth.getSession();
+if (session?.user) {
+  try {
+    const {data} = await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',session.user.id);
+    const merged=localDailyEntries();(data||[]).forEach(row=>{merged[row.work_date]=row.entry});
+    localStorage.setItem('truckpilote_daily_entries_v1',JSON.stringify(merged));updateHomeFees(merged);
+  } catch { updateHomeFees(localDailyEntries()); }
+} else updateHomeFees(localDailyEntries());
 if (session?.user) showSignedIn(session.user);
 else { showSignedOut(); setMode('login'); }
 supabase.auth.onAuthStateChange((_event, sessionNow) => {
