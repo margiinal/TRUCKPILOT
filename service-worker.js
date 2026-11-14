@@ -14,7 +14,8 @@ const APP_FILES = [
   './assets/3d/ma-journee-realiste.jpg',
   './assets/3d/mytruck-buttons-sprite.jpg',
   './assets/3d/ma-feuille-semaine-scania.jpg',
-  './assets/3d/ma-feuille-semaine-3d.jpg'
+  './assets/3d/ma-feuille-semaine-3d.jpg',
+  './assets/3d/mes-frais.svg'
 ];
 
 self.addEventListener('install', event => {
