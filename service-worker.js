@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v30';
+const CACHE = 'truckpilote-chauffeur-v31';
 
 const APP_FILES = [
   './',
@@ -16,7 +16,8 @@ const APP_FILES = [
   './assets/3d/ma-feuille-semaine-scania.jpg',
   './assets/3d/ma-feuille-semaine-3d.jpg',
   './assets/3d/mes-frais-maquette.webp',
-  './assets/3d/mes-frais.svg'
+  './assets/3d/mes-frais.svg',
+  './assets/3d/historique-maquette.jpg'
 ];
 
 self.addEventListener('install', event => {

@@ -239,6 +239,18 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 .tile.tile-fees:active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
 @media(max-width:600px){.tile.tile-fees{min-height:158px;background-position:center center!important}}
 
+
+/* Visuel dédié « Mon historique » : archives et calendrier, sans camion */
+.tile.tile-history{
+ min-height:178px;padding:0;border:1px solid #48caff;border-radius:16px;
+ background-image:url('assets/3d/historique-maquette.jpg')!important;
+ background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;
+ box-shadow:inset 0 1px 0 #ffffff88,inset 0 -2px 0 #03416b,0 6px 0 #03294a,0 10px 18px #0008;
+}
+.tile.tile-history:before{background:none!important}
+.tile.tile-history .ico,.tile.tile-history b,.tile.tile-history span{display:none!important}
+.tile.tile-history:active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
+@media(max-width:600px){.tile.tile-history{min-height:158px;background-position:center center!important}}
 </style>
 </head>
 <body>
