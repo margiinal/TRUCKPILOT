@@ -9,51 +9,60 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>MYTRUCK MATE — Driver Companion</title>
 <style>
-:root{--navy:#081725;--navy2:#102b43;--panel:#142b41;--blue:#078fe5;--cyan:#4dbaff;--ink:#f3f8fc;--muted:#a9bfd1;--line:#24445e}
-*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-.top{position:relative;overflow:hidden;background:radial-gradient(ellipse at 85% 5%,#17517a 0,transparent 42%),linear-gradient(135deg,#071522,#102d47 72%,#0a2033);padding:25px 20px 27px;border-bottom:1px solid #1e4868}
-.toprow{display:flex;align-items:center;gap:12px}.logo{width:49px;height:49px;border-radius:15px;background:linear-gradient(145deg,#17496e,#0b8edb);display:grid;place-items:center;font-size:25px;box-shadow:0 7px 20px #008de54a}
-.brand{font-size:22px;font-weight:900;letter-spacing:.4px}.tag{font-size:11px;color:#75caff;margin-top:2px;font-weight:800;letter-spacing:1.5px}.welcome{margin:27px 0 0;font-size:25px;font-weight:800}.sub{color:#b8d0e2;font-size:14px;margin-top:6px}
-.wrap{max-width:760px;margin:auto;padding:18px 16px 34px}.section-title{font-size:16px;font-weight:850;margin:22px 2px 12px;color:#eaf5fc}
-.card{background:linear-gradient(145deg,#142c42,#10263a);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 8px 25px #0002;color:var(--ink)}
-.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(110deg,#087fc9,#079fe9);color:white;text-decoration:none;border:1px solid #4dbaff55;border-radius:17px;padding:18px;font-weight:800}
-.primary small{display:block;font-weight:500;color:#e1f4ff;margin-top:5px;font-size:12px}.arrow{font-size:27px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.tile{background:linear-gradient(145deg,#142b40,#102438);border:1px solid #23445d;border-radius:16px;padding:15px;text-decoration:none;color:var(--ink);min-height:112px;display:block}
-.tile:active{transform:scale(.98)}.tile:hover{border-color:#3e9ed7}.ico{width:36px;height:36px;border-radius:11px;background:#0b75b52a;color:var(--cyan);display:grid;place-items:center;font-size:21px}
-.tile b{display:block;margin-top:10px;font-size:14px}.tile span{display:block;font-size:11px;color:var(--muted);line-height:1.4;margin-top:4px}
-.profileline{display:flex;justify-content:space-between;gap:10px;align-items:center}.profileline strong{font-size:15px}.pill{background:#0c8ed52b;color:#7dcaff;border:1px solid #168bd766;border-radius:30px;padding:5px 10px;font-size:10px;font-weight:800}
-.notice{font-size:11px;color:#91aabd;line-height:1.6;margin:14px 3px 0}.footer{text-align:center;color:#66839a;font-size:11px;padding:10px 0 20px}
+:root{--navy:#071522;--navy2:#0c2134;--panel:#102a40;--panel2:#15364f;--blue:#078fe5;--cyan:#4dbaff;--ink:#f3f8fc;--muted:#9eb7ca;--line:#234760}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.top{position:relative;background:linear-gradient(180deg,#103754 0,#0b263c 100%);padding:13px 18px 16px;border-bottom:1px solid #1e4868}
+.toprow{display:flex;align-items:center;gap:9px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#17496e,#0b8edb);display:grid;place-items:center;font-size:22px;box-shadow:0 5px 15px #008de54a}
+.brand{font-size:18px;font-weight:900;letter-spacing:.3px}.tag{font-size:9px;color:#75caff;margin-top:1px;font-weight:800;letter-spacing:1.35px}
+.welcome{margin:14px 0 0;font-size:17px;font-weight:800}.sub{color:#b8d0e2;font-size:11px;margin-top:4px}
+.wrap{max-width:1120px;margin:auto;padding:16px 18px 34px}
+.section-title{font-size:15px;font-weight:850;margin:18px 2px 10px;color:#eaf5fc}
+.card{background:linear-gradient(145deg,#142c42,#10263a);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:11px;box-shadow:0 6px 20px #0002;color:var(--ink)}
+.accountbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 13px}
+.accountbar strong{font-size:13px}.accountbar #accountEmail{font-size:11px!important}
+.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(110deg,#087fc9,#079fe9);color:white;text-decoration:none;border:1px solid #4dbaff55;border-radius:14px;padding:14px;font-weight:800}
+.primary small{display:block;font-weight:500;color:#e1f4ff;margin-top:4px;font-size:11px}.arrow{font-size:24px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{background:linear-gradient(145deg,#142f46,#10263a);border:1px solid #234b66;border-radius:14px;padding:13px;text-decoration:none;color:var(--ink);min-height:105px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}
+.tile:active{transform:scale(.98)}.tile:hover{border-color:#3e9ed7;background:#17364f}
+.ico{width:37px;height:37px;border-radius:11px;background:#0b75b52a;color:var(--cyan);display:grid;place-items:center;font-size:21px}
+.tile b{display:block;margin-top:8px;font-size:13px}.tile span{display:block;font-size:10px;color:var(--muted);line-height:1.35;margin-top:3px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 14px}
+.stat{background:#142d43;border:1px solid #254761;border-radius:13px;padding:12px}.stat-label{font-size:10px;color:#a9bfd1}.stat-value{font-size:20px;font-weight:850;margin-top:4px;color:#fff}
+.tools-label{font-size:9px;letter-spacing:1.1px;font-weight:800;color:#6fc7ff;margin:0 2px 8px}
+.profileline{display:flex;justify-content:space-between;gap:10px;align-items:center}.profileline strong{font-size:14px}.pill{background:#0c8ed52b;color:#7dcaff;border:1px solid #168bd766;border-radius:30px;padding:5px 10px;font-size:10px;font-weight:800}
+.notice{font-size:10px;color:#91aabd;line-height:1.6;margin:12px 3px 0}.footer{text-align:center;color:#66839a;font-size:10px;padding:10px 0 20px}
 .auth-card{max-width:520px;margin:18px auto}.field{display:block;width:100%;padding:13px 14px;margin:8px 0 13px;border:1px solid #31516a;border-radius:11px;font:inherit;background:#0b1d2d;color:#f3f8fc}
-.field::placeholder{color:#7792a7}.auth-card label{font-size:12px;color:#c4d6e4}.btn{border:0;border-radius:11px;padding:13px 16px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;font:700 14px system-ui;cursor:pointer}
+.field::placeholder{color:#7792a7}.auth-card label{font-size:12px;color:#c4d6e4}.btn{border:0;border-radius:11px;padding:12px 15px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;font:700 13px system-ui;cursor:pointer}
 .btn.secondary{background:#1b344a;color:#d9eaf6;border:1px solid #35546c;margin-left:7px}.btn:disabled{opacity:.55;cursor:wait}.auth-actions{display:flex;flex-wrap:wrap;gap:8px}
 .status{font-size:13px;line-height:1.45;margin-top:12px;color:#a9bfd1;min-height:20px}.hidden{display:none!important}
-.accountbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0 19px}.stat{background:#142d43;border:1px solid #254761;border-radius:15px;padding:14px}.stat-label{font-size:11px;color:#a9bfd1}.stat-value{font-size:22px;font-weight:850;margin-top:5px;color:#fff}
-.tools-label{font-size:10px;letter-spacing:1.1px;font-weight:800;color:#6fc7ff;margin:0 2px 10px}
+.bottom-nav{display:none}
+@media(min-width:900px){.top{padding:18px max(24px,calc((100% - 1120px)/2)) 18px}.top .welcome{font-size:21px}.wrap{padding-top:20px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{min-height:120px;padding:16px}.ico{width:40px;height:40px;font-size:23px}.tile b{font-size:14px}.tile span{font-size:11px}}
 @media(max-width:600px){
- body{padding-bottom:76px;background:linear-gradient(180deg,#0b1e30 0,#071522 34%,#071522 100%)}
- .top{padding:12px 15px 17px;border-bottom:1px solid #24506c;border-radius:0 0 18px 18px}
- .toprow{gap:9px}.logo{width:40px;height:40px;border-radius:13px;font-size:21px}
- .brand{font-size:17px;letter-spacing:.25px}.tag{font-size:9px;letter-spacing:1.2px}
- .welcome{margin:16px 0 0;font-size:18px}.sub{font-size:11px;margin-top:4px}
- .wrap{padding:12px 13px 24px}.section-title{font-size:14px;margin:17px 2px 9px}
- .card{border-radius:15px;padding:13px;margin-bottom:10px;box-shadow:0 5px 16px #0002}
- .accountbar{padding:11px 12px}.accountbar strong{font-size:13px}.accountbar #accountEmail{font-size:10px!important}
- .accountbar .btn{width:auto;margin:0;padding:9px 11px;font-size:11px}
- .stats{gap:8px;margin:10px 0 14px}.stat{padding:11px;border-radius:13px}.stat-label{font-size:9px}.stat-value{font-size:18px}
- .tools-label{font-size:9px;margin-bottom:8px}
- .primary{padding:14px;border-radius:14px}.primary small{font-size:10px}.primary span[style]{font-size:15px!important}
- .grid{gap:8px}.tile{min-height:96px;padding:11px;border-radius:14px}
- .ico{width:32px;height:32px;border-radius:10px;font-size:19px}
- .tile b{font-size:12px;margin-top:7px}.tile span{font-size:9px;margin-top:3px;line-height:1.35}
- .notice{font-size:10px}.footer{font-size:10px;padding-bottom:8px}
- .auth-card{margin:12px auto}.auth-card .section-title{margin-top:0}
- .bottom-nav{position:fixed;z-index:20;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 7px calc(8px + env(safe-area-inset-bottom));background:#0b1c2cF2;border-top:1px solid #254760;backdrop-filter:blur(14px)}
- .bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#8da9bd;text-decoration:none;font-size:9px;font-weight:650}
- .bottom-nav a span:first-child{font-size:17px;line-height:20px}.bottom-nav a.active{color:#48baff}
+ body{padding-bottom:calc(68px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#0b1e30 0,#071522 38%,#071522 100%)}
+ .top{padding:10px 13px 13px;border-bottom:1px solid #24506c}
+ .toprow{gap:8px}.logo{width:37px;height:37px;border-radius:12px;font-size:20px}
+ .brand{font-size:16px}.tag{font-size:8px;letter-spacing:1.15px}
+ .welcome{margin:12px 0 0;font-size:15px}.sub{font-size:10px;margin-top:3px}
+ .wrap{padding:11px 12px 18px}.section-title{font-size:13px;margin:15px 2px 8px}
+ .card{border-radius:13px;padding:11px;margin-bottom:9px}
+ .accountbar{padding:9px 11px}.accountbar strong{font-size:12px}.accountbar #accountEmail{font-size:9px!important}
+ .accountbar .btn{width:auto;margin:0;padding:8px 10px;font-size:10px}
+ .stats{gap:7px;margin:9px 0 12px}.stat{padding:10px;border-radius:11px}.stat-label{font-size:8px}.stat-value{font-size:17px}
+ .tools-label{font-size:8px;margin-bottom:7px}
+ .primary{padding:12px;border-radius:12px}.primary small{font-size:9px}.primary span[style]{font-size:14px!important}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .tile{min-height:88px;padding:9px;border-radius:12px}
+ .ico{width:32px;height:32px;border-radius:9px;font-size:18px}
+ .tile b{font-size:11px;margin-top:6px}.tile span{font-size:8px;margin-top:2px;line-height:1.3}
+ .notice{font-size:9px}.footer{font-size:9px;padding-bottom:4px}
+ .auth-card{margin:10px auto}.auth-card .section-title{margin-top:0}
+ .bottom-nav{position:fixed;z-index:50;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 6px calc(7px + env(safe-area-inset-bottom));background:rgba(7,21,34,.96);border-top:1px solid #254760;backdrop-filter:blur(14px)}
+ .bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#8da9bd;text-decoration:none;font-size:8px;font-weight:650}
+ .bottom-nav a span:first-child{font-size:17px;line-height:19px}.bottom-nav a.active{color:#48baff}
 }
-@media(min-width:601px){.bottom-nav{display:none}}
-@media(max-width:350px){.tile{padding:9px}.tile b{font-size:11px}.tile span{font-size:8px}}
+@media(max-width:350px){.tile{padding:8px}.tile b{font-size:10px}.tile span{font-size:7px}}
 </style>
 </head>
 <body>
@@ -88,26 +97,20 @@
       <div><strong id="accountName">Espace chauffeur</strong><div id="accountEmail" style="font-size:12px;color:#a9bfd1;margin-top:3px"></div></div>
       <button class="btn secondary" id="logoutBtn" type="button">Déconnexion</button>
     </div>
-    <div class="section-title" style="margin-top:10px">Mon tableau de bord</div>
+    <div class="section-title" style="margin-top:8px">Mon tableau de bord</div>
     <div class="stats">
       <div class="stat"><div class="stat-label">MES FRAIS CE MOIS</div><div class="stat-value" id="homeFeesValue">— €</div><div class="stat-label" id="homeFeesDays">Consulter mes indemnités</div></div>
-      <div class="stat"><div class="stat-label">MON ESPACE</div><div class="stat-value" style="font-size:18px">Chauffeur</div><div class="stat-label">Mes outils professionnels</div></div>
+      <div class="stat"><div class="stat-label">MON ESPACE</div><div class="stat-value" style="font-size:17px">Chauffeur</div><div class="stat-label">Mes outils professionnels</div></div>
     </div>
-    <div class="tools-label">MON QUOTIDIEN</div>
-    <a class="primary" href="ma_journee.html"><span>📝 <span style="font-size:17px">Ma journée</span><small>Saisir mes horaires, transports et kilomètres</small></span><span class="arrow">›</span></a>
-    <div class="section-title">Mes outils</div>
+    <div class="tools-label">MON ESPACE CHAUFFEUR</div>
     <div class="grid">
-      <a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi hebdomadaire</span></a>
+      <a class="tile" href="ma_journee.html"><div class="ico">📝</div><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
+      <a class="tile" href="feuille.html"><div class="ico">🗓️</div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
       <a class="tile" href="frais.html"><div class="ico">💶</div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
       <a class="tile" href="historique.html"><div class="ico">📚</div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
-      <a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Mes sauvegardes</b><span>Enregistrement et suivi de mes données</span></a>
+      <a class="tile" href="feuille.html#save-status"><div class="ico">💾</div><b>Mes sauvegardes</b><span>Enregistrement et suivi des données</span></a>
       <a class="tile" href="profil.html"><div class="ico">👤</div><b>Mon profil</b><span>Mes informations personnelles</span></a>
-      <a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico">📄</div><b>Mes documents</b><span>Préparer et imprimer ma feuille PDF</span></a>
-    </div>
-    <div class="section-title">Bientôt sur MYTRUCK MATE</div>
-    <div class="grid">
-      <div class="tile" aria-disabled="true"><div class="ico">🚛</div><b>Mon camion</b><span>Entretien, kilométrage et rappels — bientôt</span></div>
-      <div class="tile" aria-disabled="true"><div class="ico">📍</div><b>Services routiers</b><span>Parkings PL, carburant et services — bientôt</span></div>
+      <a class="tile" href="feuille.html" onclick="localStorage.setItem('tp_print_on_open','1')"><div class="ico">📄</div><b>Mes documents</b><span>Préparer et imprimer ma feuille</span></a>
     </div>
     <div class="section-title">Mon compte</div>
     <div class="card"><div class="profileline"><div><strong id="profileName">Profil chauffeur</strong><div style="font-size:12px;color:#a9bfd1;margin-top:4px" id="profileEmail">Profil à compléter</div></div><span class="pill">DRIVER SPACE</span></div><a href="profil.html" style="display:inline-block;margin-top:14px;color:#63c4ff;font-weight:700;font-size:13px;text-decoration:none">Modifier mon profil →</a></div>
@@ -116,8 +119,8 @@
   <div class="footer">MYTRUCK MATE · Le compagnon du chauffeur routier</div>
   <nav class="bottom-nav" aria-label="Navigation principale">
     <a class="active" href="index.html"><span>⌂</span><span>Accueil</span></a>
-    <a href="ma_journee.html"><span>▤</span><span>Journée</span></a>
-    <a href="feuille.html"><span>▦</span><span>Semaine</span></a>
+    <a href="ma_journee.html"><span>▤</span><span>Carnet</span></a>
+    <a href="historique.html"><span>◷</span><span>Historique</span></a>
     <a href="profil.html"><span>♙</span><span>Compte</span></a>
   </nav>
 
