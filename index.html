@@ -74,6 +74,39 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
 }
 @media(max-width:350px){.tile{padding:8px}.tile b{font-size:10px}.tile span{font-size:7px}}
 
+/* Titre et sous-titre visibles sur la tuile « Ma feuille de semaine » */
+.tile.tile-week{
+ align-items:flex-start!important;
+ justify-content:flex-end!important;
+ text-align:left!important;
+}
+.tile.tile-week b{
+ display:block!important;
+ width:100%;
+ color:#fff!important;
+ font-size:15px!important;
+ line-height:1.25;
+ text-align:left!important;
+ position:relative;
+ z-index:2;
+ text-shadow:0 2px 5px #001629,0 0 10px #001629;
+}
+.tile.tile-week span{
+ display:block!important;
+ width:100%;
+ color:#eff9ff!important;
+ font-size:11px!important;
+ line-height:1.35;
+ text-align:left!important;
+ position:relative;
+ z-index:2;
+ text-shadow:0 1px 4px #001629;
+}
+@media(max-width:600px){
+ .tile.tile-week b{font-size:13px!important}
+ .tile.tile-week span{font-size:9px!important}
+}
+
 /* Correctifs de structure et composants du tableau de bord */
 .hidden{display:none!important}
 label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:700}

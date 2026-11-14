@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v23';
+const CACHE = 'truckpilote-chauffeur-v25';
 
 const APP_FILES = [
   './',
