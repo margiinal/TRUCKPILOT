@@ -13,7 +13,8 @@ const APP_FILES = [
   './assets/3d/dashboard-icons.svg',
   './assets/3d/ma-journee-realiste.jpg',
   './assets/3d/mytruck-buttons-sprite.jpg',
-  './assets/3d/ma-feuille-semaine-scania.jpg'
+  './assets/3d/ma-feuille-semaine-scania.jpg',
+  './assets/3d/ma-feuille-semaine-3d.jpg'
 ];
 
 self.addEventListener('install', event => {
