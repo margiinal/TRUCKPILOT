@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b46">
+<title>TruckPilote — Historique</title>
+<style>
+:root{--navy:#102b46;--blue:#1769aa;--pale:#edf3f8;--ink:#172536;--muted:#66788a;--line:#dce5ed}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:15px system-ui,Arial}
+header{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:22px 18px;border-radius:0 0 22px 22px}
+header a{color:#dcecff}main{max-width:850px;margin:auto;padding:16px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+h1{font-size:22px;margin:8px 0}h2{font-size:18px;margin:0 0 12px}
+.muted{color:var(--muted);font-size:13px}.crumb{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.crumb button,.back,.item{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit}
+.crumb button.active{background:#e7f1fb;border-color:#8db7dc;color:#124d7b;font-weight:700}
+.list{display:grid;gap:9px}.item{display:flex;justify-content:space-between;align-items:center;text-align:left;width:100%;cursor:pointer}
+.item strong{display:block}.item small{display:block;color:var(--muted);margin-top:3px}
+.item .arrow{font-size:20px;color:var(--blue)}.back{margin-bottom:12px;cursor:pointer}
+.detailgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}
+.detail{background:#f5f8fb;border-radius:10px;padding:10px}.detail b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+.transport{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.status{font-size:13px;color:var(--muted);margin-top:8px}.empty{padding:18px;text-align:center;color:var(--muted)}
+@media(max-width:480px){main{padding:12px}.card{padding:13px}}
+</style>
+</head>
+<body>
+<header><a href="index.html">← Retour à l’accueil</a><h1>Mon historique</h1><div>Retrouve tes journées de travail enregistrées.</div></header>
+<main>
+<section class="card"><div class="muted" id="status">Chargement des journées…</div><div class="crumb" id="crumb"></div><div id="content"></div></section>
+</main>
+<script>
+const KEY='truckpilote_daily_entries_v1';
+const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const weekdays=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+let allEntries={}, level='years', selected={};
+const $=id=>document.getElementById(id);
+function meaningful(e){
+ if(!e||typeof e!=='object')return false;
+ if(['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!==''))return true;
+ if(['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true))return true;
+ return Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''));
+}
+function localEntries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
+function dateObj(d){const [y,m,day]=d.split('-').map(Number);return new Date(y,m-1,day)}
+function weekStart(d){const x=dateObj(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function showCrumb(){
+ const c=$('crumb');c.innerHTML='';
+ const parts=[['years','Années'],['months',selected.year?String(selected.year):''],['weeks',selected.month!==undefined?months[selected.month]: ''],['days',selected.week?`Semaine du ${selected.week}`:'']];
+ parts.forEach(([l,t],i)=>{if(!t)return;const b=document.createElement('button');b.textContent=t;b.className=level===l?'active':'';b.onclick=()=>{level=l; if(l==='years')selected={};if(l==='months')delete selected.month,delete selected.week,delete selected.day;if(l==='weeks')delete selected.week,delete selected.day;if(l==='days')delete selected.day;render()};c.appendChild(b)});
+}
+function item(title,sub,fn){const b=document.createElement('button');b.className='item';b.innerHTML=`<span><strong>${title}</strong><small>${sub||''}</small></span><span class="arrow">›</span>`;b.onclick=fn;return b}
+function render(){
+ showCrumb();const c=$('content');c.innerHTML='';const dates=Object.keys(allEntries).filter(d=>meaningful(allEntries[d])).sort();
+ if(!dates.length){c.innerHTML='<div class="empty">Aucune journée renseignée pour le moment.</div>';return}
+ if(level==='years'){
+  const ys=[...new Set(dates.map(d=>+d.slice(0,4)))].sort((a,b)=>b-a);c.innerHTML='<h2>Choisis une année</h2><div class="list" id="list"></div>';ys.forEach(y=>$('list').append(item(y,`${dates.filter(d=>+d.slice(0,4)===y).length} journée(s)`,()=>{selected.year=y;level='months';render()})));
+ }else if(level==='months'){
+  const ms=[...new Set(dates.filter(d=>+d.slice(0,4)===selected.year).map(d=>+d.slice(5,7)-1))].sort((a,b)=>a-b);c.innerHTML='<h2>Choisis un mois</h2><div class="list" id="list"></div>';ms.forEach(m=>$('list').append(item(months[m],`${dates.filter(d=>+d.slice(0,4)===selected.year&&+d.slice(5,7)===m+1).length} journée(s)`,()=>{selected.month=m;level='weeks';render()})));
+ }else if(level==='weeks'){
+  const ds=dates.filter(d=>+d.slice(0,4)===selected.year&&+d.slice(5,7)===selected.month+1);
+  const groups={};ds.forEach(d=>{const w=dateKey(weekStart(d));(groups[w]??=[]).push(d)});
+  c.innerHTML='<h2>Choisis une semaine</h2><div class="list" id="list"></div>';Object.keys(groups).sort().reverse().forEach(w=>$('list').append(item(`Semaine du ${dateObj(w).toLocaleDateString('fr-FR')}`,`${groups[w].length} journée(s) renseignée(s)`,()=>{selected.week=w;level='days';render()})));
+ }else if(level==='days'){
+  const ds=dates.filter(d=>dateKey(weekStart(d))===selected.week);c.innerHTML='<h2>Choisis une journée</h2><div class="list" id="list"></div>';ds.sort().forEach(d=>$('list').append(item(`${weekdays[dateObj(d).getDay()]} ${dateObj(d).toLocaleDateString('fr-FR')}`,allEntries[d].tractor?`Tracteur : ${allEntries[d].tractor}`:'Détails de la journée',()=>{selected.day=d;level='detail';render()})));
+ }else if(level==='detail'){renderDetail(c)}
+}
+function addDetail(parent,label,value){if(value===undefined||value===null||String(value).trim()==='')return;const d=document.createElement('div');d.className='detail';const b=document.createElement('b');b.textContent=label;const span=document.createElement('span');span.textContent=String(value);d.append(b,span);parent.append(d)}
+function renderDetail(c){
+ const e=allEntries[selected.day]||{};const back=document.createElement('button');back.className='back';back.textContent='← Retour aux journées';back.onclick=()=>{level='days';render()};c.append(back);
+ const h=document.createElement('h2');h.textContent=dateObj(selected.day).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});c.append(h);
+ const grid=document.createElement('div');grid.className='detailgrid';[['Immatriculation','tractor'],['Début de journée','start'],['Fin de journée','end'],['Temps de conduite','drive'],['Lieu / remarque','place'],['Kilomètres départ','kmstart'],['Kilomètres arrivée','kmend'],['Petit-déjeuner','breakfast'],['Déjeuner','lunch'],['Dîner','dinner'],['Nuit','night'],['Train','train']].forEach(([l,k])=>{let v=e[k];if(['breakfast','lunch','dinner','night','train'].includes(k))v=v?'Oui':'Non';addDetail(grid,l,v)});c.append(grid);
+ (e.transports||[]).forEach((t,i)=>{const box=document.createElement('div');box.className='transport';const title=document.createElement('h3');title.textContent=`Transport ${i+1}`;box.append(title);const g=document.createElement('div');g.className='detailgrid';[['Donneur d’ordre','donor'],['Client','client'],['Lieu','place'],['Conteneur 1','container1'],['Plomb 1','seal1'],['Conteneur 2','container2'],['Plomb 2','seal2'],['Import / Export','movement'],['Châssis','chassis']].forEach(([l,k])=>addDetail(g,l,t[k]));box.append(g);c.append(box)});
+}
+async function load(){
+ allEntries=localEntries();let msg='Historique chargé depuis cet appareil.';
+ try{
+  const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
+  const {data:{user},error:authError}=await sb.auth.getUser();if(authError)throw authError;
+  if(user){const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{if(meaningful(r.entry))allEntries[r.work_date]=r.entry});localStorage.setItem(KEY,JSON.stringify(allEntries));msg='Historique synchronisé avec le compte en ligne ✓'}
+  else msg='Connecte-toi à l’accueil pour récupérer les journées en ligne. Les données de cet appareil restent visibles.';
+ }catch(e){msg='Historique local affiché. Synchronisation en ligne indisponible : '+(e.message||'erreur')}
+ $('status').textContent=msg;render();
+}
+load();
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+</script>
+</body></html>
