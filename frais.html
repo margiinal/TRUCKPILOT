@@ -3,30 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#102b46">
-<title>TruckPilote — Mes frais</title>
+<meta name="theme-color" content="#081725">
+<title>MYTRUCK MATE — Mes frais</title>
 <style>
-:root{--navy:#102b46;--blue:#1769aa;--pale:#edf3f8;--ink:#172536;--muted:#66788a;--line:#dce5ed}
-*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:15px system-ui,Arial}
-header{background:linear-gradient(135deg,#102b46,#174e79);color:white;padding:22px 18px;border-radius:0 0 22px 22px}
-header a{color:#dcecff}main{max-width:850px;margin:auto;padding:16px}
-.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
-h1{font-size:22px;margin:8px 0}h2{font-size:18px;margin:0 0 12px}
-.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
-input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--ink);background:#fff}
-button{border:0;border-radius:10px;background:var(--blue);color:#fff;padding:12px 15px;font:700 14px system-ui;cursor:pointer}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.stat{background:#f3f7fb;border-radius:12px;padding:13px}.stat b{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.stat strong{font-size:22px}
-table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:10px 6px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}
-.status{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.5}
-.warning{background:#fff7e6;border:1px solid #f1d49a;color:#72500b;padding:11px;border-radius:10px;font-size:13px;line-height:1.45;margin-top:10px}
-@media(max-width:480px){main{padding:12px}.card{padding:13px}.grid{grid-template-columns:1fr 1fr}}
+:root{--navy:#081725;--panel:#142b41;--blue:#078fe5;--cyan:#4dbaff;--ink:#f3f8fc;--muted:#a9bfd1;--line:#24445e}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:radial-gradient(ellipse at 90% 0,#17517a 0,transparent 45%),linear-gradient(135deg,#071522,#102d47);color:white;padding:23px 18px 24px;border-bottom:1px solid #1e4868}
+header a{color:#71c8ff;text-decoration:none;font-weight:650}header .brandline{font-size:10px;letter-spacing:1.5px;color:#72caff;font-weight:850;margin-bottom:7px}
+header h1{font-size:24px;margin:8px 0 5px}header .subline{color:#b8d0e2;font-size:13px}
+main{max-width:850px;margin:auto;padding:16px}.card{background:linear-gradient(145deg,#142c42,#10263a);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 8px 25px #0002}
+h2{font-size:18px;margin:0 0 12px;color:#f3f8fc}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.field label{display:block;font-size:12px;color:#b7cada;font-weight:650;margin-bottom:6px}
+input,select{width:100%;padding:12px;border:1px solid #31516a;border-radius:10px;font:inherit;color:var(--ink);background:#0b1d2d;min-height:44px}input:focus,select:focus{outline:2px solid #168fe0;outline-offset:1px}
+button{border:0;border-radius:11px;background:linear-gradient(110deg,#087fc9,#079fe9);color:#fff;padding:13px 16px;font:750 14px system-ui;cursor:pointer}
+.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#0e2235;border:1px solid #294a64;border-radius:14px;padding:14px}.stat b{display:block;font-size:11px;color:#a9bfd1;margin-bottom:6px}.stat strong{font-size:22px;color:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}td,th{text-align:left;padding:11px 7px;border-bottom:1px solid #29445b;color:#e4eff7}th{font-size:11px;color:#8fb1ca;text-transform:uppercase;letter-spacing:.5px}td:last-child,th:last-child{text-align:right}
+.status{font-size:13px;color:#a9bfd1;margin-top:10px;line-height:1.5}.warning{background:#3b2d16;border:1px solid #8c6727;color:#f4d99c;padding:12px;border-radius:11px;font-size:13px;line-height:1.5;margin-top:10px}
+@media(max-width:480px){main{padding:12px}.card{padding:14px}.grid{grid-template-columns:1fr 1fr;gap:9px}.row{align-items:stretch}.row button{align-self:end}.stat strong{font-size:20px}td,th{padding:10px 5px;font-size:12px}}
+@media(max-width:350px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header><a href="index.html">← Retour à l’accueil</a><h1>Mes frais</h1><div>Suivi mensuel des repas, des nuits et des primes de train.</div></header>
+<header><div class="brandline">MYTRUCK MATE · DRIVER COMPANION</div><a href="index.html">← Accueil MYTRUCK MATE</a><h1>Mes frais</h1><div class="subline">Suivi mensuel de tes repas, découchés et primes de train.</div></header>
 <main>
 <section class="card">
  <h2>Mes tarifs</h2>
