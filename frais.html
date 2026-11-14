@@ -29,23 +29,17 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 <header><a href="index.html">← Retour à l’accueil</a><h1>Mes frais</h1><div>Suivi mensuel des repas, des nuits et des primes de train.</div></header>
 <main>
 <section class="card">
- <h2>Barème des indemnités</h2>
- <p class="muted">Montants préremplis selon le barème que tu as fourni. Chaque chauffeur peut les modifier puis enregistrer ses tarifs personnels.</p>
+ <h2>Mes tarifs</h2>
+ <p class="muted">Les montants sont préremplis. Tu peux les modifier et enregistrer tes tarifs personnels.</p>
  <div class="grid">
-  <div class="field"><label for="breakfastRate">Casse-croûte / petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="lunchRate">Repas déjeuner (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="dinnerRate">Repas dîner (€)</label><input id="dinnerRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="nightRate">Nuit seule (€) — à définir</label><input id="nightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="uniqueMealRate">Repas unique courte distance (€)</label><input id="uniqueMealRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="nightMealRate">Repas unique de nuit (€)</label><input id="nightMealRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="specialRate">Indemnité spéciale (€)</label><input id="specialRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="oneMealNightRate">1 repas + 1 nuitée (€)</label><input id="oneMealNightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="twoMealsNightRate">2 repas + 1 nuitée (€)</label><input id="twoMealsNightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
-  <div class="field"><label for="trainRate">Prime de train (€)</label><input id="trainRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="breakfastRate">Petit-déjeuner (€)</label><input id="breakfastRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="lunchRate">Repas (€)</label><input id="lunchRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="dinnerRate">Dîner (€)</label><input id="dinnerRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
+  <div class="field"><label for="nightRate">Découché (repas du soir + nuitée) (€)</label><input id="nightRate" type="number" min="0" step="0.01" inputmode="decimal"></div>
  </div>
  <div class="row" style="margin-top:12px"><button id="saveRates">Enregistrer mes tarifs</button></div>
  <div class="status" id="rateStatus"></div>
- <p class="muted">Les montants complémentaires sont enregistrés dans le barème. Leur comptabilisation automatique sera activée lorsque les choix correspondants seront ajoutés dans « Ma journée ». La majoration de 18 % à l’étranger sera également prévue.</p>
+ <p class="muted">Quand un découché est coché dans « Ma journée », le dîner est coché automatiquement. Le découché est alors compté à 52,31 €, sans ajouter le dîner une deuxième fois.</p>
 </section>
 <section class="card">
  <h2>Résumé du mois</h2>
@@ -68,13 +62,12 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 <script>
 const ENTRY_KEY='truckpilote_daily_entries_v1';
 const RATE_KEY='truckpilote_fee_rates_v1';
-const names=[['breakfast','Petit-déjeuner'],['lunch','Déjeuner'],['dinner','Dîner'],['night','Nuit']];
-const TRAIN_RATE=30;
-const RATE_DEFAULTS={breakfast:8.87,lunch:16.36,dinner:16.36,night:0,uniqueMeal:10.07,nightMeal:9.81,special:4.42,oneMealNight:52.31,twoMealsNight:68.67,train:30};
+const names=[['breakfast','Petit-déjeuner'],['lunch','Repas'],['dinner','Dîner'],['night','Découché']];
+const RATE_DEFAULTS={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};
 const $=id=>document.getElementById(id);
 const euro=n=>Number(n||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 function getRates(){try{return {...RATE_DEFAULTS,...JSON.parse(localStorage.getItem(RATE_KEY)||'{}')}}catch{return {...RATE_DEFAULTS}}}
-const rateFields=['breakfast','lunch','dinner','night','uniqueMeal','nightMeal','special','oneMealNight','twoMealsNight','train'];
+const rateFields=['breakfast','lunch','dinner','night'];
 function setRateInputs(){const r=getRates();rateFields.forEach(k=>$(k+'Rate').value=Number(r[k]??0).toFixed(2))}
 function saveRates(){const r={};rateFields.forEach(k=>r[k]=Math.max(0,Number($(k+'Rate').value)||0));localStorage.setItem(RATE_KEY,JSON.stringify(r));$('rateStatus').textContent='Tes tarifs personnalisés sont enregistrés sur cet appareil ✓';calculate()}
 function localEntries(){try{return JSON.parse(localStorage.getItem(ENTRY_KEY)||'{}')}catch{return {}}}
@@ -82,21 +75,20 @@ function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','st
 let entries=localEntries(),legacyCount=0;
 function calculate(){
  const ym=$('month').value;if(!ym)return;
- const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0,train:0};const amounts={breakfast:0,lunch:0,dinner:0,night:0,train:0};let days=0;legacyCount=0;
+ const current=getRates();const sums={breakfast:0,lunch:0,dinner:0,night:0};const amounts={breakfast:0,lunch:0,dinner:0,night:0};let days=0;legacyCount=0;
  Object.entries(entries).forEach(([date,e])=>{
   if(!date.startsWith(ym)||!meaningful(e))return;
   days++;
-  names.forEach(([k])=>{if(e[k]===true){sums[k]++;const saved=e.feeRates&&Number.isFinite(Number(e.feeRates[k]));if(saved)amounts[k]+=Number(e.feeRates[k]);else{amounts[k]+=Number(current[k]||0);legacyCount++}}});
-  if(e.train===true){sums.train++;amounts.train+=Number(current.train??TRAIN_RATE);}
+  if(e.breakfast===true){sums.breakfast++;amounts.breakfast+=Number(e.feeRates?.breakfast??current.breakfast);if(e.feeRates?.breakfast==null)legacyCount++;}
+  if(e.lunch===true){sums.lunch++;amounts.lunch+=Number(e.feeRates?.lunch??current.lunch);if(e.feeRates?.lunch==null)legacyCount++;}
+  if(e.night===true){sums.night++;amounts.night+=Number(e.feeRates?.night??current.night);if(e.feeRates?.night==null)legacyCount++;}
+  else if(e.dinner===true){sums.dinner++;amounts.dinner+=Number(e.feeRates?.dinner??current.dinner);if(e.feeRates?.dinner==null)legacyCount++;}
  });
  $('daysCount').textContent=days;
  $('grandTotal').textContent=euro(Object.values(amounts).reduce((a,b)=>a+b,0));
  $('totals').innerHTML='';
- names.forEach(([k,label])=>{const tr=document.createElement('tr');const cells=[label,String(sums[k]),euro(amounts[k])];cells.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});$('totals').append(tr)});
- const trainRow=document.createElement('tr');
- ['Prime de train ('+Number(current.train??30).toFixed(2).replace('.',',')+' € / train)',String(sums.train),euro(amounts.train)].forEach(v=>{const td=document.createElement('td');td.textContent=v;trainRow.append(td)});
- $('totals').append(trainRow);
- if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Les trains sont comptés à 30 € chacun. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
+ [['breakfast','Petit-déjeuner'],['lunch','Repas'],['dinner','Dîner'],['night','Découché']].forEach(([k,label])=>{const tr=document.createElement('tr');[label,String(sums[k]),euro(amounts[k])].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});$('totals').append(tr)});
+ if(legacyCount){$('legacyWarning').hidden=false;$('legacyWarning').textContent=`Attention : ${legacyCount} repas/nuit(s) de ce mois n’ont pas encore de tarif enregistré dans leur journée. Pour ces éléments, le calcul utilise tes tarifs actuels. Le découché comprend le repas du soir, qui n’est pas facturé une deuxième fois. Les tarifs des prochaines journées seront mémorisés à leur enregistrement après la mise à jour de « Ma journée ». `}
  else{$('legacyWarning').hidden=true}
 }
 async function loadData(){
