@@ -255,6 +255,68 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 .tile.tile-history .ico,.tile.tile-history b,.tile.tile-history span{display:none!important}
 .tile.tile-history:active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
 @media(max-width:600px){.tile.tile-history{min-height:158px;background-position:center center!important}}
+
+/* MYTRUCK MATE — accueil premium */
+:root{--cyan:#08c9f5;--electric:#078fe5;--line:#1b638b}
+body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.top{max-width:none;margin:0 auto;padding:13px max(18px,calc((100% - 1500px)/2)) 17px;background:linear-gradient(180deg,#0b2a42,#071a2a);border-bottom:1px solid #174b6c}
+.toprow{max-width:1500px;margin:0 auto;gap:12px}
+.logo{width:45px;height:45px;border:1px solid #05c9f7;border-radius:14px;background:linear-gradient(145deg,#07314c,#087fc0);font-size:24px;box-shadow:0 0 18px #00bfff55}
+.brand{font-size:19px;letter-spacing:.5px}.tag{font-size:9px;letter-spacing:1.8px}
+.welcome{max-width:1500px;margin:14px auto 0;padding:22px 26px;min-height:142px;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;border:1px solid #078ed0;border-radius:18px;background:linear-gradient(90deg,#061827 0%,#061827e8 30%,#06182740 65%,#06182715 100%),url('assets/3d/ma-journee-bandeau-fourni.svg') center/cover no-repeat;box-shadow:0 0 22px #00aaff1c,inset 0 1px #ffffff22;font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.5px}
+.welcome #helloName{color:#10d2f6;font-style:italic}
+.sub{max-width:1500px;margin:8px auto 0;padding-left:26px;color:#d1e8f7;font-size:13px}
+.wrap{max-width:1500px;padding:15px 18px 34px}
+.dashboard-heading{margin:5px 2px 10px;font-size:16px}
+.stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:10px 0 18px}
+.stat{position:relative;display:flex;align-items:center;gap:14px;min-height:94px;padding:14px 16px;border:1px solid #176b9a;border-radius:15px;background:linear-gradient(135deg,#123b59,#0b2034 72%);box-shadow:inset 0 1px #ffffff17,0 7px 18px #0004;overflow:hidden}
+.stat:after{content:"";position:absolute;inset:auto -20px -50px auto;width:130px;height:100px;border-radius:50%;background:#008fe51c;filter:blur(15px)}
+.stat-icon{width:54px;height:54px;flex:none;display:grid;place-items:center;border:1.5px solid #08c9f5;border-radius:14px;color:#0dd4f6;font-size:29px;font-weight:800;box-shadow:0 0 17px #00bfff33,inset 0 0 15px #00bfff13}
+.stat-content{min-width:0;position:relative;z-index:1}
+.stat-label{font-size:10px;letter-spacing:.75px;color:#a9d6ee;font-weight:900}
+.stat-value{margin:5px 0 2px;font-size:26px;line-height:1.08;font-weight:950;color:#fff;white-space:nowrap}
+.stat-foot{font-size:10px;color:#76caff;font-weight:700}
+.stat-space .stat-value{font-size:21px}
+.active-dot{display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:#26e783;box-shadow:0 0 8px #26e783}
+.tools-heading{display:flex;align-items:center;gap:12px;margin:17px 2px 11px;font-size:20px;color:#f2f9ff}
+.tools-heading>span{font-size:32px;line-height:.7;color:#08c9f5;font-weight:900}
+.tools-heading i{height:2px;flex:1;background:linear-gradient(90deg,#078fe5,#078fe500)}
+.grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.tile{grid-column:span 2;min-height:180px!important;border-radius:17px!important;border:1px solid #159ce0!important;box-shadow:inset 0 1px #ffffff40,0 5px 0 #032a49,0 10px 18px #0007!important;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.tile:hover{transform:translateY(-3px);filter:brightness(1.08);box-shadow:inset 0 1px #ffffff60,0 6px 0 #032a49,0 13px 24px #0008,0 0 16px #00bfff3b!important}
+.tile.tile-history,.tile.tile-profile{grid-column:span 3}
+.tile.tile-day,.tile.tile-week,.tile.tile-fees,.tile.tile-history,.tile.tile-profile{background-size:cover!important;background-position:center!important}
+.accountbar-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:17px 0 10px;padding:12px 16px;border:1px solid #1473a5;border-radius:16px;background:linear-gradient(110deg,#123650,#091d30);box-shadow:0 7px 18px #0004}
+.account-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.account-avatar{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;border:2px solid #0ccaf4;background:linear-gradient(145deg,#0b5278,#061b2b);font-size:27px;color:#12d4fa;box-shadow:0 0 15px #00bfff33}
+.account-identity strong{font-size:14px}.account-email{font-size:11px;color:#a9cfe5;margin-top:3px}
+.edit-profile{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:1px solid #08c9f5;border-radius:30px;color:#e9f9ff;text-decoration:none;font-size:12px;font-weight:850;background:#07304b}
+.logout-btn{background:linear-gradient(180deg,#ef3d43,#b80f24);border-color:#ff7777;border-radius:30px;padding:11px 19px;font-size:12px}
+.notice{margin:12px 3px;color:#8daec4}
+.footer{margin:18px 2px 8px;color:#668da8}
+.accountbar-bottom .pill{display:none}
+@media(min-width:900px){.top .welcome{font-size:clamp(26px,3vw,36px)}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.grid{grid-template-columns:repeat(6,minmax(0,1fr))}.tile{min-height:190px!important}}
+@media(max-width:899px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tile{grid-column:span 2}.tile.tile-history,.tile.tile-profile{grid-column:span 2}}
+@media(max-width:600px){
+ .top{padding:10px 12px 13px}.toprow{gap:8px}.logo{width:38px;height:38px;font-size:20px}.brand{font-size:16px}
+ .welcome{margin-top:10px;padding:17px 15px;min-height:112px;border-radius:14px;background-position:center right;font-size:24px;max-width:100%}
+ .sub{margin-top:6px;padding-left:15px;font-size:10px}
+ .wrap{padding:10px 12px 20px}.dashboard-heading{font-size:14px;margin-top:4px}
+ .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 14px}
+ .stat{display:block;min-height:103px;padding:9px 8px;border-radius:11px;text-align:left}
+ .stat-icon{width:30px;height:30px;border-radius:9px;font-size:17px;margin-bottom:7px}
+ .stat-label{font-size:7px;letter-spacing:.35px}.stat-value{font-size:16px;margin:4px 0 3px}.stat-space .stat-value{font-size:14px}.stat-foot{font-size:8px}
+ .tools-heading{font-size:16px;margin:13px 1px 9px;gap:7px}.tools-heading>span{font-size:25px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .tile,.tile.tile-history,.tile.tile-profile{grid-column:span 1;min-height:145px!important;padding:9px!important;border-radius:13px!important}
+ .tile.tile-day,.tile.tile-week,.tile.tile-fees,.tile.tile-history,.tile.tile-profile{background-size:cover!important;background-position:center!important}
+ .accountbar-bottom{display:grid;grid-template-columns:1fr auto;gap:10px;padding:11px;border-radius:13px}
+ .account-identity{gap:9px}.account-avatar{width:39px;height:39px;font-size:22px}.account-identity strong{font-size:11px}.account-email{font-size:9px}
+ .edit-profile{grid-column:1;padding:9px 11px;font-size:10px;justify-self:start}
+ .logout-btn{grid-column:2;grid-row:1/3;align-self:center;padding:9px 11px;font-size:10px}
+ .notice{font-size:9px;line-height:1.5}.footer{font-size:9px}
+}
+
 </style>
 </head>
 <body>
@@ -285,16 +347,13 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
   </section>
 
   <section id="appSection" class="hidden">
-    <div class="card accountbar">
-      <div><strong id="accountName">Espace chauffeur</strong><div id="accountEmail" style="font-size:12px;color:#a9bfd1;margin-top:3px"></div></div>
-      <button class="btn secondary" id="logoutBtn" type="button">Déconnexion</button>
-    </div>
-    <div class="section-title" style="margin-top:8px">Mon tableau de bord</div>
+    <div class="section-title dashboard-heading">Mon tableau de bord</div>
     <div class="stats">
-      <div class="stat"><div class="stat-label">MES FRAIS CE MOIS</div><div class="stat-value" id="homeFeesValue">— €</div><div class="stat-label" id="homeFeesDays">Consulter mes indemnités</div></div>
-      <div class="stat"><div class="stat-label">MON ESPACE</div><div class="stat-value" style="font-size:17px">Chauffeur</div><div class="stat-label">Mes outils professionnels</div></div>
+      <div class="stat stat-fees"><div class="stat-icon">€</div><div class="stat-content"><div class="stat-label">MES FRAIS DU MOIS</div><div class="stat-value" id="homeFeesValue">— €</div><div class="stat-foot">Total de mes indemnités</div></div></div>
+      <div class="stat stat-days"><div class="stat-icon">✓</div><div class="stat-content"><div class="stat-label">JOURNÉES SAISIES</div><div class="stat-value" id="homeDaysValue">0</div><div class="stat-foot" id="homeFeesDays">Ce mois-ci</div></div></div>
+      <div class="stat stat-space"><div class="stat-icon">♙</div><div class="stat-content"><div class="stat-label">MON ESPACE</div><div class="stat-value">Chauffeur</div><div class="stat-foot"><span class="active-dot"></span> Compte actif</div></div></div>
     </div>
-    <div class="tools-label">MON ESPACE CHAUFFEUR</div>
+    <div class="tools-heading"><span>»</span><strong>Mes fonctionnalités</strong><i></i></div>
     <div class="grid">
       <a class="tile tile-day" aria-label="Ma journée, ouvrir la saisie de journée" href="ma_journee.html"><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
       <a class="tile tile-week" href="feuille.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#week"></use></svg></div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
@@ -302,8 +361,12 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
       <a class="tile tile-history" href="historique.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#history"></use></svg></div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
       <a class="tile tile-profile" href="profil.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#profile"></use></svg></div><b>Mon profil</b><span>Mes informations personnelles</span></a>
     </div>
-    <div class="section-title">Mon compte</div>
-    <div class="card"><div class="profileline"><div><strong id="profileName">Profil chauffeur</strong><div style="font-size:12px;color:#a9bfd1;margin-top:4px" id="profileEmail">Profil à compléter</div></div><span class="pill">DRIVER SPACE</span></div><a href="profil.html" style="display:inline-block;margin-top:14px;color:#63c4ff;font-weight:700;font-size:13px;text-decoration:none">Modifier mon profil →</a></div>
+    <div class="accountbar accountbar-bottom">
+      <div class="account-identity"><div class="account-avatar">♙</div><div><strong id="accountName">Espace chauffeur</strong><div id="accountEmail" class="account-email"></div></div></div>
+      <a class="edit-profile" href="profil.html">⚙️ <span>Modifier mon profil</span></a>
+      <button class="btn logout-btn" id="logoutBtn" type="button">↪ <span>Déconnexion</span></button>
+      <span id="profileName" class="hidden">Profil chauffeur</span><span id="profileEmail" class="hidden">Profil à compléter</span>
+    </div>
     <p class="notice">Tes journées sont enregistrées sur cet appareil et synchronisées avec ton compte en ligne lorsque tu es connecté. Les feuilles hebdomadaires restent pour le moment enregistrées localement sur cet appareil. Pense à exporter régulièrement tes documents.</p>
   </section>
   <div class="footer">MYTRUCK MATE · Le compagnon du chauffeur routier</div>
@@ -351,7 +414,8 @@ function updateHomeFees(entries) {
   });
   const formatted=total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
   const value=document.getElementById('homeFeesValue'); if(value) value.textContent=formatted;
-  const count=document.getElementById('homeFeesDays'); if(count) count.textContent=days+' journée(s) renseignée(s) ce mois';
+  const count=document.getElementById('homeFeesDays'); if(count) count.textContent='Ce mois-ci';
+  const dayValue=document.getElementById('homeDaysValue'); if(dayValue) dayValue.textContent=String(days);
 }
 
 function localDailyEntries(){try{return JSON.parse(localStorage.getItem('truckpilote_daily_entries_v1')||'{}')}catch{return {}}}
