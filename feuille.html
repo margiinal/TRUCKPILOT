@@ -544,7 +544,7 @@ function clearAll(){
     saveForm();
   }
 }
-restoreForm();
+// La restauration globale est désactivée pour éviter de réinjecter la dernière semaine dans toutes les semaines.
 
 // Importer uniquement les journées comprises dans la semaine demandée.
 function importDailyEntriesForWeek(weekStart){
@@ -689,7 +689,7 @@ let loadingCloudWeek = false;
 
 function weeklyFields() {
   return Array.from(document.querySelectorAll('input, select, textarea'))
-    .filter(el => !el.classList.contains('name') && el.id !== 'week-picker');
+    .filter(el => !el.classList.contains('name') && el.id !== 'week-picker' && el.id !== 'restore-file');
 }
 function weeklySnapshot() {
   return weeklyFields().map(el => ({
