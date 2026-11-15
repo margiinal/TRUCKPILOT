@@ -91,6 +91,11 @@ nav,.actions{display:none!important}
 .fee{padding:2.5mm 1.5mm!important}
 .fee label{font-size:8.2pt!important}
 .fee b{font-size:10pt!important;margin-top:1.5mm!important}
+/* Séparateurs verticaux explicites pour chaque colonne */
+.metrics .metric{border-right:1px solid #777!important}
+.metrics .metric:last-child{border-right:0!important}
+.fees .fee{border-right:1px solid #777!important}
+.fees .fee:last-child{border-right:0!important}
 }</style></head><body><main>
 <nav><a class="back" href="index.html">←</a><a href="historique.html">Historique</a><span>›</span><span class="crumb">Détail de la journée</span></nav>
 <header class="hero"><svg class="truck-art" viewBox="0 0 120 60" aria-hidden="true"><path d="M4 39h6l8-13 22-10 18 1 12 13h8v14H4zM76 22h24l13 12v10H76zM83 25v9h25l-9-9z"/><circle cx="29" cy="45" r="8"/><circle cx="29" cy="45" r="4" fill="#fff"/><circle cx="91" cy="45" r="8"/><circle cx="91" cy="45" r="4" fill="#fff"/><path d="M5 49h111v3H5z"/></svg><div><strong>MY TRUCK MATE</strong><small>FICHE JOURNALIÈRE</small></div><svg class="truck-art" viewBox="0 0 120 60" aria-hidden="true"><path d="M4 39h6l8-13 22-10 18 1 12 13h8v14H4zM76 22h24l13 12v10H76zM83 25v9h25l-9-9z"/><circle cx="29" cy="45" r="8"/><circle cx="29" cy="45" r="4" fill="#fff"/><circle cx="91" cy="45" r="8"/><circle cx="91" cy="45" r="4" fill="#fff"/><path d="M5 49h111v3H5z"/></svg></header>
@@ -118,7 +123,7 @@ function show(e){
     <div class="transport-line">Châssis : <b>${esc(t.chassis||'—')}</b></div>
     <div class="transport-line">Taille : <b>${esc(t.size||'—')}</b></div>
     <div class="transport-line">Lieu : <b>${esc(t.city||t.place||'—')}</b></div>
-    <div class="transport-line">Import / Export : <b>${esc(t.io||'—')}</b></div>
+    <div class="transport-line">Import / Export : <b>${esc(t.io||t.importExport||t.import_export||t.importexport||t.type||t.operation||'—')}</b></div>
    </div>
   </div>`).join('');
  const fee=(name,yes)=>`<div class="fee ${yes?'yes':''}"><label>${name}</label><b>${yes?'Oui':'Non'}</b></div>`;
