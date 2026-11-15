@@ -69,11 +69,11 @@ nav{display:flex;align-items:center;gap:12px;height:42px;padding:0 10px;color:#1
 <div id="customFeeCards" style="display:contents"></div>
 </div></section>
 <div class="actions"><button class="save" id="save" type="button">✓ Enregistrer la journée</button><button id="clearSaved" type="button" style="width:100%;margin-top:9px;min-height:42px;border:1px solid #e17b7b;border-radius:12px;background:#351b25;color:#ffd7d7;font-weight:800">Effacer cette journée enregistrée</button><div class="status" id="status"></div><p class="smallnote">Enregistrement automatique sur cet appareil et synchronisation avec votre compte.</p></div>
-<datalist id="plates"><option>FN-769-YY</option></datalist>
-<datalist id="donors"><option>LPO Sogena</option><option>TFS France</option><option>TBI</option><option>Seyris</option><option>Tps Louis</option><option>Atlas Transit</option></datalist>
-<datalist id="clients"><option>Tang Frères</option><option>BARIAU</option><option>LAD</option></datalist>
+<datalist id="plates"></datalist>
+<datalist id="donors"></datalist>
+<datalist id="clients"></datalist>
 <datalist id="sizes"><option>20 D</option><option>20 HC</option><option>20 RE</option><option>20 OT</option><option>40 D</option><option>40 HC</option><option>40 RE</option><option>40 OT</option></datalist>
-<datalist id="chassis"><option>EQ 531 FL</option><option>EQ 647 FL</option><option>FR 653 SE</option></datalist>
+<datalist id="chassis"></datalist>
 </main>
 <script>
 const KEY='truckpilote_daily_entries_v1', $=id=>document.getElementById(id);
@@ -120,7 +120,17 @@ async function getUser(){const {data:{user},error}=await supabase.auth.getUser()
 window.addEventListener('truckpilote:daily-saved',async event=>{const e=event.detail;try{const user=await getUser();const {error}=await supabase.from('truckpilote_daily_entries').upsert({user_id:user.id,work_date:e.date,entry:e,updated_at:new Date().toISOString()},{onConflict:'user_id,work_date'});if(error)throw error;status.textContent=isMeaningful(e)?'Journée enregistrée et synchronisée en ligne ✓':'Journée effacée et suppression synchronisée sur votre compte ✓'}catch(error){status.textContent='Sauvegarde locale conservée. Synchronisation impossible : '+(error.message||'erreur réseau')}});
 async function sync(){try{const user=await getUser();const {data,error}=await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;const local=(()=>{try{return JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}')}catch{return {}}})();const merged={...local};(data||[]).forEach(row=>{merged[row.work_date]=row.entry||{date:row.work_date}});localStorage.setItem(LOCAL_KEY,JSON.stringify(merged));const selected=document.getElementById('date').value;if(merged[selected])window.loadDailyEntry?.(merged[selected]);status.textContent='Synchronisation terminée ✓'}catch(error){status.textContent='Données locales conservées. Synchronisation en attente.'}}
 
-try{const {data:{user}}=await supabase.auth.getUser();window.setCustomPrimeConfig(user?.user_metadata?.custom_primes||[])}catch{}
+try{
+ const {data:{user}}=await supabase.auth.getUser();
+ window.setCustomPrimeConfig(user?.user_metadata?.custom_primes||[]);
+ const lists=user?.user_metadata?.custom_lists||{};
+ const defaults={sizes:['20 D','20 HC','20 RE','20 OT','40 D','40 HC','40 RE','40 OT']};
+ Object.entries({plates:'plates',donors:'donors',clients:'clients',chassis:'chassis',sizes:'sizes'}).forEach(([key,id])=>{
+   const values=Array.isArray(lists[key])?lists[key]:(defaults[key]||[]);
+   const list=document.getElementById(id);list.replaceChildren();
+   values.forEach(value=>{const option=document.createElement('option');option.value=String(value);list.appendChild(option)});
+ });
+}catch{}
 await sync();
 </script>
 <script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));</script>
