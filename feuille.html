@@ -613,6 +613,7 @@ const weeklyStart = document.querySelector('.meta input[type="date"]');
 let weeklyUser = null;
 let weeklySaveTimer = null;
 let applyingCloudWeek = false;
+let loadingCloudWeek = false;
 
 function weeklyFields() {
   return Array.from(document.querySelectorAll('input, select, textarea'))
@@ -652,22 +653,28 @@ async function loadWeeklyCloud(announce = true) {
     if (announce && !weekStart) weeklySetStatus('Choisis la date de début de semaine pour activer la sauvegarde en ligne.');
     return;
   }
+  clearTimeout(weeklySaveTimer);
+  loadingCloudWeek = true;
   weeklySetStatus('Recherche de cette semaine dans le compte en ligne…');
-  const { data, error } = await weeklyCloud
-    .from('weekly_sheets')
-    .select('sheet_data, updated_at')
-    .eq('user_id', weeklyUser.id)
-    .eq('week_start', weekStart)
-    .maybeSingle();
-  if (error) {
-    weeklySetStatus('Sauvegarde locale active ; lecture en ligne impossible : ' + error.message, true);
-    return;
-  }
-  if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
-    applyWeeklySnapshot(data.sheet_data.fields);
-    weeklySetStatus('Feuille de cette semaine récupérée depuis le compte en ligne ✓');
-  } else if (announce) {
-    weeklySetStatus('Aucune feuille en ligne pour cette semaine. Les nouvelles saisies seront synchronisées automatiquement.');
+  try {
+    const { data, error } = await weeklyCloud
+      .from('weekly_sheets')
+      .select('sheet_data, updated_at')
+      .eq('user_id', weeklyUser.id)
+      .eq('week_start', weekStart)
+      .maybeSingle();
+    if (error) {
+      weeklySetStatus('Sauvegarde locale active ; lecture en ligne impossible : ' + error.message, true);
+      return;
+    }
+    if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
+      applyWeeklySnapshot(data.sheet_data.fields);
+      weeklySetStatus('Feuille de cette semaine récupérée depuis le compte en ligne ✓');
+    } else if (announce) {
+      weeklySetStatus('Aucune feuille en ligne pour cette semaine. Les nouvelles saisies seront synchronisées automatiquement.');
+    }
+  } finally {
+    loadingCloudWeek = false;
   }
 }
 async function saveWeeklyCloud() {
@@ -692,7 +699,7 @@ async function saveWeeklyCloud() {
   }
 }
 function queueWeeklyCloudSave() {
-  if (!weeklyUser || applyingCloudWeek || !weeklyStart?.value) return;
+  if (!weeklyUser || applyingCloudWeek || loadingCloudWeek || !weeklyStart?.value) return;
   clearTimeout(weeklySaveTimer);
   weeklySaveTimer = setTimeout(saveWeeklyCloud, 900);
 }
