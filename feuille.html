@@ -360,7 +360,7 @@ h1 {
 }
 
 </style></head><body>
-<div class="actions"><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
+<div class="actions"><label for="week-picker"><strong>Semaine :</strong></label><select id="week-picker" aria-label="Choisir une semaine" style="padding:9px;border:1px solid #9bb3c8;border-radius:5px;max-width:230px"><option value="">Semaine en cours</option></select><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
 <button type="button" onclick="exportWeek()">Sauvegarder ma semaine</button>
 <button type="button" onclick="document.getElementById('restore-file').click()">Restaurer ma semaine</button>
 <input id="restore-file" type="file" accept=".json,application/json" style="display:none" onchange="importWeek(event)"><small>Sur téléphone, fais glisser le tableau horizontalement pour voir les colonnes.</small><small id="save-status" class="save-status">Enregistrement automatique prêt</small></div>
@@ -610,7 +610,40 @@ const weeklyCloud = createClient(
 );
 const weeklyStatus = document.getElementById('save-status');
 const weeklyStart = document.querySelector('.meta input[type="date"]');
+const weeklyEnd = document.querySelectorAll('.meta input[type="date"]')[1];
+const weekPicker = document.getElementById('week-picker');
 let weeklyUser = null;
+let selectedWeekIsCurrent = true;
+function dateKey(date) { return date.toISOString().slice(0,10); }
+function mondayOf(date) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  return d;
+}
+function setWeekDates(start) {
+  if (!start) return;
+  const d = new Date(start + 'T12:00:00');
+  const end = new Date(d); end.setDate(end.getDate() + 6);
+  weeklyStart.value = start;
+  if (weeklyEnd) weeklyEnd.value = dateKey(end);
+}
+function currentWeekStart() { return dateKey(mondayOf(new Date())); }
+function updateWeekPicker(dates) {
+  if (!weekPicker) return;
+  const current = currentWeekStart();
+  const unique = [...new Set([current, ...dates])].sort((a,b)=>b.localeCompare(a));
+  weekPicker.innerHTML = '';
+  unique.forEach(start => {
+    const end = new Date(start + 'T12:00:00'); end.setDate(end.getDate()+6);
+    const opt = document.createElement('option');
+    opt.value = start;
+    opt.textContent = (start === current ? 'Semaine en cours — ' : 'Semaine du ') +
+      new Date(start + 'T12:00:00').toLocaleDateString('fr-FR') + ' au ' +
+      end.toLocaleDateString('fr-FR');
+    weekPicker.appendChild(opt);
+  });
+  weekPicker.value = weeklyStart.value || current;
+}
 let weeklySaveTimer = null;
 let applyingCloudWeek = false;
 let loadingCloudWeek = false;
@@ -669,9 +702,9 @@ async function loadWeeklyCloud(announce = true) {
     }
     if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
       applyWeeklySnapshot(data.sheet_data.fields);
-      weeklySetStatus('Feuille de cette semaine récupérée depuis le compte en ligne ✓');
+      weeklySetStatus('Feuille récupérée ✓ Tu peux l’imprimer.');
     } else if (announce) {
-      weeklySetStatus('Aucune feuille en ligne pour cette semaine. Les nouvelles saisies seront synchronisées automatiquement.');
+      weeklySetStatus('Aucune feuille sauvegardée pour cette semaine. Les données quotidiennes peuvent être ressaisies.');
     }
   } finally {
     loadingCloudWeek = false;
@@ -708,11 +741,30 @@ try {
   if (error) throw error;
   weeklyUser = user;
   if (weeklyUser) {
-    weeklyStart?.addEventListener('change', () => loadWeeklyCloud(true));
+    const { data: savedWeeks, error: weeksError } = await weeklyCloud
+      .from('weekly_sheets')
+      .select('week_start')
+      .eq('user_id', weeklyUser.id)
+      .order('week_start', { ascending: false });
+    if (weeksError) weeklySetStatus('Impossible de charger la liste des anciennes semaines : ' + weeksError.message, true);
+    const weeks = (savedWeeks || []).map(row => row.week_start).filter(Boolean);
+    const current = currentWeekStart();
+    setWeekDates(current);
+    updateWeekPicker(weeks);
+    if (weekPicker) weekPicker.value = current;
+    weekPicker?.addEventListener('change', async () => {
+      clearTimeout(weeklySaveTimer);
+      selectedWeekIsCurrent = weekPicker.value === currentWeekStart();
+      setWeekDates(weekPicker.value);
+      await loadWeeklyCloud(true);
+    });
+    weeklyStart?.addEventListener('change', () => {
+      if (weekPicker) weekPicker.value = weeklyStart.value;
+      loadWeeklyCloud(true);
+    });
     document.addEventListener('input', queueWeeklyCloudSave);
     document.addEventListener('change', queueWeeklyCloudSave);
-    if (weeklyStart?.value) await loadWeeklyCloud(false);
-    else weeklySetStatus('Connecté : choisis la date de début de semaine pour sauvegarder cette feuille en ligne.');
+    await loadWeeklyCloud(false);
   } else {
     weeklySetStatus('Sauvegarde locale active. Connecte-toi à ton compte pour retrouver cette feuille sur un autre téléphone.');
   }
