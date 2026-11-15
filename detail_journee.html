@@ -91,6 +91,9 @@ nav,.actions{display:none!important}
 .fee{padding:2.5mm 1.5mm!important}
 .fee label{font-size:8.2pt!important}
 .fee b{font-size:10pt!important;margin-top:1.5mm!important}
+.fee b{font-size:17pt!important;line-height:1!important;font-weight:900!important}
+.fee.yes b{color:#000!important}
+.fee.no b{color:#555!important}
 /* Séparateurs verticaux robustes : trait à gauche de chaque colonne sauf la première */
 .metrics .metric{border-right:0!important;border-left:1px solid #777!important}
 .metrics .metric:first-child{border-left:0!important}
@@ -126,7 +129,7 @@ function show(e){
     <div class="transport-line">Import / Export : <b>${esc(t.io||t.importExport||t.import_export||t.importexport||t.type||t.operation||'—')}</b></div>
    </div>
   </div>`).join('');
- const fee=(name,yes)=>`<div class="fee ${yes?'yes':''}"><label>${name}</label><b>${yes?'Oui':'Non'}</b></div>`;
+ const fee=(name,yes)=>`<div class="fee ${yes?'yes':'no'}"><label>${name}</label><b aria-label="${yes?'Oui':'Non'}">${yes?'✓':'×'}</b></div>`;
  $('content').innerHTML=`
   <div class="date">${icons.calendar}<span>${esc(date.charAt(0).toLocaleUpperCase('fr-FR')+date.slice(1))}</span></div>
   <div class="identity">
