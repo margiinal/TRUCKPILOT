@@ -465,6 +465,47 @@ header.top{position:relative!important}
 body{padding-bottom:calc(72px + env(safe-area-inset-bottom))!important}
 @media(min-width:601px){.bottom-nav{max-width:620px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;border:1px solid #254760!important;border-bottom:0!important;border-radius:14px 14px 0 0!important}}
 
+
+/* VIGNETTES ACCUEIL — format paysage uniforme, sans recadrage */
+@media(max-width:899px){
+ #appSection .grid{
+   display:grid!important;
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+   gap:10px!important;
+   align-items:stretch!important;
+ }
+ #appSection .grid>.tile{
+   grid-column:auto!important;
+   width:100%!important;
+   min-width:0!important;
+   min-height:0!important;
+   height:auto!important;
+   aspect-ratio:16 / 10!important;
+   padding:0!important;
+   overflow:hidden!important;
+   border-radius:14px!important;
+   background-size:100% 100%!important;
+   background-position:center center!important;
+   background-repeat:no-repeat!important;
+ }
+ #appSection .grid>.tile:before{display:none!important}
+ #appSection .grid>.tile.tile-day,
+ #appSection .grid>.tile.tile-week,
+ #appSection .grid>.tile.tile-fees,
+ #appSection .grid>.tile.tile-recap,
+ #appSection .grid>.tile.tile-history,
+ #appSection .grid>.tile.tile-profile{
+   background-size:100% 100%!important;
+   background-position:center center!important;
+   background-repeat:no-repeat!important;
+ }
+ #appSection .grid>.tile.tile-recap{grid-column:auto!important}
+}
+@media(max-width:380px){
+ #appSection .grid{gap:7px!important}
+ #appSection .grid>.tile{aspect-ratio:16 / 10!important}
+}
+
 </style>
 </head>
 <body>
