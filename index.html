@@ -13,8 +13,8 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 .top{position:relative;isolation:isolate;overflow:hidden;padding:0;border-bottom:1px solid #159bd0;background:#06182a;box-shadow:0 5px 24px #009fe522;line-height:0}
-.banner-image{display:block;width:100%;height:clamp(120px,12.5vw,256px);object-fit:cover;object-position:center}
-.banner-greeting{position:absolute;left:61%;top:20%;width:19%;height:58%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(2px,.45vw,9px);padding:4px 8px;text-align:center;line-height:1.15;border-radius:18px;background:linear-gradient(110deg,#06182beF,#041629f2);box-shadow:inset 0 1px 0 #ffffff12}
+.banner-image{display:block;width:100%;height:auto;max-width:none;object-fit:contain;object-position:center}
+.banner-greeting{position:absolute;left:64%;top:24%;width:21%;height:48%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(2px,.45vw,9px);padding:4px 8px;text-align:center;line-height:1.15;border-radius:18px;background:linear-gradient(110deg,#06182beF,#041629f2);box-shadow:inset 0 1px 0 #ffffff12}
 .banner-greeting .welcome-title{font-size:clamp(11px,1.55vw,29px);font-weight:950;letter-spacing:-.35px;color:#f5fbff;text-shadow:0 2px 8px #0009;white-space:nowrap}
 .banner-greeting .welcome-title span{color:#19d7ff}
 .banner-greeting .sub{font-size:clamp(7px,.72vw,14px);font-weight:650;color:#d4eaf8;line-height:1.25}
@@ -57,8 +57,8 @@ body{margin:0;background:var(--navy);color:var(--ink);font:15px Inter,system-ui,
 @media(max-width:600px){
  body{padding-bottom:calc(68px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#0b1e30 0,#071522 38%,#071522 100%)}
  .top{padding:0;border-bottom:1px solid #24506c}
- .banner-image{height:120px;object-position:center}
- .banner-greeting{left:59%;top:21%;width:25%;height:56%;padding:3px 4px;border-radius:10px;gap:3px}
+ .banner-image{height:auto;object-fit:contain;object-position:center}
+ .banner-greeting{left:63%;top:24%;width:23%;height:48%;padding:3px 4px;border-radius:10px;gap:3px}
  .banner-greeting .welcome-title{font-size:clamp(9px,2.3vw,13px);letter-spacing:-.2px}
  .banner-greeting .sub{font-size:clamp(6px,1.55vw,9px)}
  .wrap{padding:11px 12px 18px}.section-title{font-size:13px;margin:15px 2px 8px}
@@ -346,7 +346,7 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 </head>
 <body>
 <header class="top">
-  <img class="banner-image" src="mytruck_mate_header.jpg" alt="MYTRUCK MATE — le compagnon du routier">
+  <img class="banner-image" src="mytruck_mate_header.png" alt="MYTRUCK MATE — le compagnon du routier">
   <div class="banner-greeting"><div class="welcome-title">👋 Bonjour <span id="helloName">chauffeur</span></div><div class="sub">Ton compagnon au quotidien,<br>sur toutes les routes.</div></div>
 </header>
 
