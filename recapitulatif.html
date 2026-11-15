@@ -63,6 +63,29 @@ a{color:inherit;text-decoration:none}
 @media(max-width:1100px){.filters-card{grid-template-columns:1fr 1fr}.filter-heading{grid-column:1/-1}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.top{padding:9px 11px 0}.brand{font-size:16px}.brand-mark{width:38px;font-size:25px}.brand small{font-size:8px}.home{font-size:11px;padding:8px 10px}.hero{height:150px;min-height:150px;padding:0;margin-top:10px;border-radius:17px}.hero-art{background-size:auto 100%;background-position:center}.wrap{padding:7px 10px 25px}.card{border-radius:17px;padding:13px;margin:9px 0}.filters-card{grid-template-columns:1fr 1fr;gap:9px}.filter-heading{font-size:14px;grid-column:1/-1}.filter-icon{width:39px;height:39px;font-size:20px}.period-tabs{grid-column:1/-1}.period-tabs button{padding:10px 7px;font-size:13px}.field label{font-size:11px}.field select{font-size:12px;padding:9px 7px;min-height:40px}.btn{padding:10px 11px;font-size:12px}.stats{gap:8px;margin:10px 0}.stat{min-height:120px;padding:13px 7px 11px 62px;border-radius:16px}.stat-icon{left:9px;top:13px;width:43px;height:43px;font-size:21px}.stat-art{width:58%;opacity:.75}.stat-art-km,.stat-art-drive,.stat-art-amp,.stat-art-days{width:100%;opacity:1}.stat-label{font-size:9px;white-space:normal}.stat-value{font-size:21px;margin:8px 0 3px}.stat-sub{font-size:10px}.details-card{padding:14px 11px}.details-title{font-size:18px;gap:8px}.detail{grid-template-columns:32px 1fr auto;gap:7px;font-size:12px;padding:8px 0;min-height:42px}.detail-icon{font-size:20px}.detail strong{min-width:80px;padding:5px 6px;font-size:13px;border-radius:18px}}
 @media print{body{background:#fff;color:#111}.topbar .home,.filters-card .btn{display:none}.hero,.card,.stat{box-shadow:none;break-inside:avoid}.hero{background:#082c49!important;color:white}.wrap{padding:8px}.card,.stat{border:1px solid #777}.details-title:before,.details-title:after{background:#777}}
+
+/* Contrôle réglementaire sur deux semaines consécutives */
+.fortnight-card{border-color:#00cfff;box-shadow:0 0 22px #00baff44,inset 0 0 22px #008ac02b}
+.fortnight-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.fortnight-title{font-size:clamp(20px,2vw,28px);font-weight:1000;font-style:italic}
+.fortnight-sub{color:var(--muted);font-size:13px;margin-top:4px}
+.fortnight-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+.fortnight-controls .field{min-width:min(290px,100%)}
+.fortnight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fortnight-week{background:linear-gradient(145deg,#0a3554,#03182b);border:1px solid #087eaa;border-radius:17px;padding:16px}
+.fortnight-week strong{display:block;font-size:clamp(23px,2.5vw,32px);margin:8px 0 4px}
+.fortnight-week small{color:var(--muted)}
+.fortnight-meter{height:10px;border-radius:20px;background:#102e43;overflow:hidden;margin-top:12px}
+.fortnight-meter span{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#05c9ef,#13e7ff)}
+.fortnight-total{margin-top:14px;padding:17px;border:1px solid #087eaa;border-radius:17px;background:#031a2c}
+.fortnight-total-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fortnight-total strong{font-size:clamp(25px,3vw,38px)}
+.fortnight-alert{margin-top:12px;padding:12px 14px;border-radius:13px;background:#123a50;border:1px solid #1688ae;color:#dff8ff;font-weight:800}
+.fortnight-alert.warn{background:#493711;border-color:#d89b25;color:#fff0c2}
+.fortnight-alert.over{background:#4a1720;border-color:#ed5366;color:#ffe1e5}
+.fortnight-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
+@media(max-width:600px){.fortnight-grid{grid-template-columns:1fr}.fortnight-head{align-items:flex-start}.fortnight-controls{width:100%}.fortnight-controls .field{width:100%}.fortnight-controls .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -92,6 +115,25 @@ a{color:inherit;text-decoration:none}
 <div class="stat"><span class="stat-icon">◉</span><div class="stat-art stat-art-drive" aria-hidden="true"></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
 <div class="stat"><span class="stat-icon">◴</span><div class="stat-art stat-art-amp" aria-hidden="true"></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
 <div class="stat"><span class="stat-icon">▦</span><div class="stat-art stat-art-days" aria-hidden="true"></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div></section>
+
+  <section class="card fortnight-card" aria-label="Contrôle réglementaire des deux semaines consécutives">
+    <div class="fortnight-head">
+      <div><div class="fortnight-title">⚖️ Contrôle des 2 semaines consécutives</div><div class="fortnight-sub">Temps de conduite saisi dans « Ma journée » · semaine lundi à dimanche</div></div>
+      <div class="fortnight-controls">
+        <div class="field"><label for="fortnightWeek">Choisir la semaine de fin</label><select id="fortnightWeek"></select></div>
+      </div>
+    </div>
+    <div class="fortnight-grid">
+      <div class="fortnight-week"><span id="weekOneLabel">Semaine précédente</span><strong id="weekOneDrive">—</strong><small>Limite hebdomadaire : 56 h</small><div class="fortnight-meter"><span id="weekOneBar" style="width:0%"></span></div></div>
+      <div class="fortnight-week"><span id="weekTwoLabel">Semaine sélectionnée</span><strong id="weekTwoDrive">—</strong><small>Limite hebdomadaire : 56 h</small><div class="fortnight-meter"><span id="weekTwoBar" style="width:0%"></span></div></div>
+    </div>
+    <div class="fortnight-total">
+      <div class="fortnight-total-line"><span><b>Total sur 2 semaines</b><br><small style="color:var(--muted)">Limite réglementaire : 90 h</small></span><strong id="fortnightDrive">— / 90 h</strong></div>
+      <div class="fortnight-meter"><span id="fortnightBar" style="width:0%"></span></div>
+      <div id="fortnightAlert" class="fortnight-alert" role="status" aria-live="polite">Calcul en cours…</div>
+    </div>
+    <div class="fortnight-note">Contrôle indicatif basé sur les durées de conduite renseignées. Vérifie que toutes les journées des deux semaines sont saisies. Ce compteur ne remplace pas le contrôle du tachygraphe ni les autres règles (repos, pauses et limites journalières).</div>
+  </section>
   <section class="card details-card">
     <h2 class="details-title"><span>▥</span> Activité de la période</h2>
     <div class="details">
@@ -116,13 +158,36 @@ function fmt(n){return Number.isFinite(n)?n.toLocaleString('fr-FR'):'—'}
 function kmFor(e){const a=Number(e.kmstart),b=Number(e.kmend);return String(e.kmstart??'').trim()!==''&&String(e.kmend??'').trim()!==''&&Number.isFinite(a)&&Number.isFinite(b)&&b>=a?b-a:null}
 function ampFor(e){if(!e.start||!e.end)return null;let n=minutes(e.end)-minutes(e.start);if(n<0)n+=1440;return n>0?n:null}
 function validTransports(e){return (e.transports||[]).filter(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''))}
+
+/* Calcul des deux semaines consécutives */
+const DAY_MS=86400000;
+function dateOnly(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0,0)}
+function isoDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function mondayOf(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
+function plusDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function dateLabel(d){return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}
+function weekNumber(d){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));x.setUTCDate(x.getUTCDate()+4-(x.getUTCDay()||7));const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7)}
+function weekMinutes(start){let total=0,days=0;for(let i=0;i<7;i++){const key=isoDate(plusDays(start,i)),e=allEntries[key];if(e&&meaningful(e)){total+=minutes(e.drive);if(minutes(e.drive)>0)days++}}return {total,days}}
+function populateFortnightWeeks(){const sel=$('fortnightWeek');if(!sel)return;const current=mondayOf(today);for(let i=0;i<60;i++){const start=plusDays(current,-7*i),end=plusDays(start,6),o=document.createElement('option');o.value=isoDate(start);o.textContent='S'+String(weekNumber(start)).padStart(2,'0')+' · '+dateLabel(start)+' au '+dateLabel(end);sel.append(o)}sel.value=isoDate(current)}
+function renderFortnight(){const sel=$('fortnightWeek');if(!sel)return;const second=dateOnly(sel.value),first=plusDays(second,-7),a=weekMinutes(first),b=weekMinutes(second),total=a.total+b.total;
+$('weekOneLabel').textContent='Semaine '+String(weekNumber(first)).padStart(2,'0')+' · '+dateLabel(first)+' au '+dateLabel(plusDays(first,6));
+$('weekTwoLabel').textContent='Semaine '+String(weekNumber(second)).padStart(2,'0')+' · '+dateLabel(second)+' au '+dateLabel(plusDays(second,6));
+$('weekOneDrive').textContent=duration(a.total);$('weekTwoDrive').textContent=duration(b.total);$('fortnightDrive').textContent=duration(total)+' / 90 h';
+$('weekOneBar').style.width=Math.min(100,a.total/3360*100)+'%';$('weekTwoBar').style.width=Math.min(100,b.total/3360*100)+'%';$('fortnightBar').style.width=Math.min(100,total/5400*100)+'%';
+const alert=$('fortnightAlert');alert.className='fortnight-alert';let msg='Dans les limites sur cette période.';
+if(a.total>3360||b.total>3360||total>5400){alert.classList.add('over');msg='Dépassement détecté : vérifie les heures saisies et la conformité de la période.'}
+else if(a.total>=3240||b.total>=3240||total>=5100){alert.classList.add('warn');msg='Attention : tu approches d’une limite réglementaire.'}
+const missing=[...Array(14)].filter((_,i)=>!meaningful(allEntries[isoDate(plusDays(first,i))])).length;
+alert.textContent=msg+(missing?' · '+missing+' jour(s) sans saisie sur les 14 jours.':' · 14 jours renseignés ou vérifiés.');
+}
+
 function setup(){const ms=$('monthSelect'),ys=$('yearSelect');for(let y=today.getFullYear();y>=today.getFullYear()-10;y--){let o=document.createElement('option');o.value=String(y);o.textContent=String(y);ys.append(o)}for(let y=today.getFullYear();y>=today.getFullYear()-10;y--)for(let m=11;m>=0;m--){let v=y+'-'+String(m+1).padStart(2,'0'),o=document.createElement('option');o.value=v;o.textContent=months[m]+' '+y;ms.append(o)}ms.value=currentMonth;ys.value=String(today.getFullYear())}
 function selected(){const t=$('periodType').value;return Object.entries(allEntries).filter(([d,e])=>meaningful(e)&&(t==='month'?d.slice(0,7)===$('monthSelect').value:d.slice(0,4)===$('yearSelect').value)).sort(([a],[b])=>a.localeCompare(b))}
-function render(){const t=$('periodType').value;$('monthField').hidden=t!=='month';$('yearField').hidden=t!=='year';$('monthTab').classList.toggle('active',t==='month');$('yearTab').classList.toggle('active',t==='year');$('monthTab').setAttribute('aria-pressed',String(t==='month'));$('yearTab').setAttribute('aria-pressed',String(t==='year'));const rows=selected(),label=t==='month'?$('monthSelect').selectedOptions[0]?.textContent:$('yearSelect').value;$('periodLabel').textContent=label+' · '+rows.length+' journée(s) renseignée(s)';
+function render(){const t=$('periodType').value;renderFortnight();$('monthField').hidden=t!=='month';$('yearField').hidden=t!=='year';$('monthTab').classList.toggle('active',t==='month');$('yearTab').classList.toggle('active',t==='year');$('monthTab').setAttribute('aria-pressed',String(t==='month'));$('yearTab').setAttribute('aria-pressed',String(t==='year'));const rows=selected(),label=t==='month'?$('monthSelect').selectedOptions[0]?.textContent:$('yearSelect').value;$('periodLabel').textContent=label+' · '+rows.length+' journée(s) renseignée(s)';
 let km=0,dr=0,amp=0,kd=0,dd=0,ad=0,trans=0,trains=0;const clients=new Set();
 rows.forEach(([date,e])=>{const k=kmFor(e),d=minutes(e.drive),a=ampFor(e),ts=validTransports(e);if(k!==null){km+=k;kd++}if(d){dr+=d;dd++}if(a!==null){amp+=a;ad++}trans+=ts.length;if(e.train)trains++;ts.forEach(x=>{if(x.client&&String(x.client).trim())clients.add(String(x.client).trim().toLocaleLowerCase('fr-FR'))})});
 $('kmTotal').textContent=fmt(km)+' km';$('driveTotal').textContent=duration(dr);$('ampTotal').textContent=duration(amp);$('daysTotal').textContent=String(rows.length);$('transportTotal').textContent=String(trans);$('clientTotal').textContent=String(clients.size);$('kmAverage').textContent=kd?fmt(Math.round(km/kd*10)/10)+' km':'—';$('driveAverage').textContent=dd?duration(Math.round(dr/dd)):'—';$('ampAverage').textContent=ad?duration(Math.round(amp/ad)):'—';$('trainTotal').textContent=String(trains)}
-$('periodType').value='month';$('monthTab').addEventListener('click',()=>{$('periodType').value='month';render()});$('yearTab').addEventListener('click',()=>{$('periodType').value='year';render()});$('monthSelect').addEventListener('change',render);$('yearSelect').addEventListener('change',render);$('refreshBtn').addEventListener('click',()=>{allEntries=localEntries();render();syncCloud()});$('printBtn').onclick=()=>window.print();setup();allEntries=localEntries();render();
+$('periodType').value='month';populateFortnightWeeks();$('fortnightWeek').addEventListener('change',renderFortnight);$('monthTab').addEventListener('click',()=>{$('periodType').value='month';render()});$('yearTab').addEventListener('click',()=>{$('periodType').value='year';render()});$('monthSelect').addEventListener('change',render);$('yearSelect').addEventListener('change',render);$('refreshBtn').addEventListener('click',()=>{allEntries=localEntries();render();syncCloud()});$('printBtn').onclick=()=>window.print();setup();allEntries=localEntries();render();
 async function syncCloud(){try{const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');const sb=mod.createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');const auth=await sb.auth.getUser();if(auth.error)throw auth.error;if(!auth.data.user){$('syncStatus').textContent='Données affichées depuis cet appareil. Connecte-toi pour récupérer les journées synchronisées.';return}const res=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',auth.data.user.id).order('work_date',{ascending:true});if(res.error)throw res.error;const merged=localEntries();(res.data||[]).forEach(row=>{if(meaningful(row.entry))merged[row.work_date]=row.entry});allEntries=merged;localStorage.setItem(KEY,JSON.stringify(merged));render();$('syncStatus').textContent='Journées synchronisées avec ton compte en ligne ✓'}catch(e){$('syncStatus').textContent='Données locales affichées. Synchronisation en ligne indisponible : '+(e.message||'erreur réseau')}}
 syncCloud();
 </script>
