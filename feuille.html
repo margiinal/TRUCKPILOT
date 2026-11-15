@@ -697,6 +697,93 @@ function weeklySnapshot() {
     checked: el.type === 'checkbox' ? el.checked : undefined
   }));
 }
+async function loadDailyHistoryWeek(weekStart) {
+  const endDate = parseLocalDate(weekStart);
+  endDate.setDate(endDate.getDate()+6);
+  const endKey = dateKey(endDate);
+  const { data, error } = await weeklyCloud
+    .from('truckpilote_daily_entries')
+    .select('work_date, entry')
+    .eq('user_id', weeklyUser.id)
+    .gte('work_date', weekStart)
+    .lte('work_date', endKey)
+    .order('work_date', { ascending: true });
+  if (error) throw error;
+  const entries = (data || []).map(row => row.entry || {}).filter(entry => entry.date || entry.work_date);
+  if (!entries.length) return false;
+
+  const dayNames = ['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];
+  const hourRows = [...document.querySelectorAll('#hb tr.work')];
+  const transportRows = [...document.querySelectorAll('#tb tr')];
+  const dayIndexes = {LUNDI:0,MARDI:1,MERCREDI:2,JEUDI:3,VENDREDI:4,SAMEDI:5,DIMANCHE:5};
+  const setCell = (row, index, value) => {
+    const control = row?.cells?.[index]?.querySelector('input, select');
+    if (control) control.value = value == null ? '' : String(value);
+  };
+  const clearTable = () => {
+    weeklyFields().forEach(el => {
+      if (el.type === 'checkbox') el.checked = false;
+      else if (el.type !== 'file' && !el.classList.contains('day-choice')) el.value = '';
+    });
+    document.querySelectorAll('#transport .day-choice').forEach(el => el.value = 'SAMEDI');
+  };
+  clearTable();
+  entries.sort((a,b) => String(a.date || a.work_date).localeCompare(String(b.date || b.work_date)));
+  const transportsByDay = {};
+  let latestTractor = '';
+  entries.forEach(entry => {
+    const date = entry.date || entry.work_date;
+    if (!date) return;
+    const day = dayNames[parseLocalDate(date).getDay()];
+    const index = dayIndexes[day];
+    const hourRow = hourRows[index];
+    if (!hourRow) return;
+    const put = (selector, value) => { const el=hourRow.querySelector(selector); if(el) el.value=value ?? ''; };
+    put('.start',entry.start);
+    put('.end',entry.end);
+    put('.drive',entry.drive);
+    put('.ks',entry.kmstart);
+    put('.ke',entry.kmend);
+    const place = hourRow.cells[8]?.querySelector('input');
+    if (place) place.value = entry.place || '';
+    ['breakfast','lunch','dinner','night'].forEach(key => {
+      const el=hourRow.querySelector('.'+key);
+      if(el) el.checked = entry[key] === true;
+    });
+    if (entry.tractor) latestTractor = entry.tractor;
+    const validTransports = (entry.transports || []).filter(t =>
+      t && Object.values(t).some(value => String(value ?? '').trim() !== '')
+    );
+    transportsByDay[day] = validTransports;
+    const first = transportRows[index*2];
+    if (first) {
+      const train = first.querySelector('.train-check input');
+      if (train) train.checked = entry.train === true;
+    }
+    if (day === 'DIMANCHE') {
+      const choice = first?.querySelector('.day-choice');
+      if (choice) choice.value = 'DIMANCHE';
+    }
+  });
+  Object.entries(transportsByDay).forEach(([day, items]) => {
+    const index = dayIndexes[day];
+    const first = transportRows[index*2];
+    const second = transportRows[index*2+1];
+    items.slice(0,2).forEach((t, i) => {
+      const row = i === 0 ? first : second;
+      if (!row) return;
+      const offset = i === 0 ? 2 : 0;
+      const values = [t.donor,t.client,t.city,t.container,t.seal,t.size,t.chassis,t.io];
+      values.forEach((value,j) => setCell(row,offset+j,value));
+    });
+  });
+  const tractorInput = document.querySelector('.meta label:last-child input');
+  if (tractorInput && latestTractor) tractorInput.value = latestTractor;
+  updateTrainRows();
+  calc();
+  saveForm();
+  return true;
+}
 function weeklySetStatus(message, isError = false) {
   if (!weeklyStatus) return;
   weeklyStatus.textContent = message;
@@ -748,23 +835,23 @@ async function loadWeeklyCloud(announce = true) {
       (row.sheet_data.week_start || row.sheet_data.fields[1]?.value || row.week_start) === displayStart
     );
     const data = matching.sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0];
-    // Toujours repartir d'une feuille vide : aucune donnée de la semaine précédente ne doit rester visible.
-    weeklyFields().forEach(el=>{if(el.type==='checkbox')el.checked=false;else if(el.type!=='file')el.value='';});
-    if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
+    setWeekDates(displayStart);
+    // Source prioritaire : les journées du compte, filtrées strictement par leurs dates.
+    const hasDailyHistory = await loadDailyHistoryWeek(displayStart);
+    if (hasDailyHistory) {
+      weeklySetStatus('Feuille reconstruite depuis l’historique de ton compte ✓');
+      if (selectedWeekIsCurrent) await saveWeeklyCloud();
+    } else if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
+      // Compatibilité avec les anciennes semaines sauvegardées sans journée détaillée dans l’historique.
       applyWeeklySnapshot(data.sheet_data.fields);
       setWeekDates(displayStart);
-      weeklySetStatus('Feuille récupérée ✓ Tu peux l’imprimer.');
+      weeklySetStatus('Ancienne feuille récupérée depuis sa sauvegarde ✓');
     } else {
+      weeklyFields().forEach(el=>{if(el.type==='checkbox')el.checked=false;else if(el.type!=='file')el.value='';});
       setWeekDates(displayStart);
-      if (selectedWeekIsCurrent) {
-        importDailyEntriesForWeek(displayStart);
-        await saveWeeklyCloud();
-        weeklySetStatus('Semaine actuelle créée depuis les journées de cette semaine ✓');
-      } else if (announce) {
-        calc();
-        saveForm();
-        weeklySetStatus('Aucune feuille enregistrée pour cette semaine : tableau vide prêt à être rempli.');
-      }
+      calc();
+      saveForm();
+      weeklySetStatus('Aucune journée enregistrée pour cette semaine : tableau vide.');
     }
   } finally {
     loadingCloudWeek = false;
@@ -810,6 +897,15 @@ try {
       .order('week_start', { ascending: false });
     if (weeksError) weeklySetStatus('Impossible de charger la liste des anciennes semaines : ' + weeksError.message, true);
     const weeks = (savedWeeks || []).map(row => row.sheet_data?.week_start || row.sheet_data?.fields?.[1]?.value || row.week_start).filter(Boolean);
+    const { data: dailyDates, error: dailyDatesError } = await weeklyCloud
+      .from('truckpilote_daily_entries')
+      .select('work_date')
+      .eq('user_id', weeklyUser.id)
+      .order('work_date', { ascending: false });
+    if (dailyDatesError) weeklySetStatus('Historique des journées inaccessible : ' + dailyDatesError.message, true);
+    (dailyDates || []).forEach(row => {
+      if (row.work_date) weeks.push(dateKey(mondayOf(parseLocalDate(row.work_date))));
+    });
     const current = currentWeekStart();
     setWeekDates(current);
     updateWeekPicker(weeks);
