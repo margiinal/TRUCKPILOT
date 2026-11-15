@@ -342,6 +342,12 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
   .grid>.tile.tile-recap{min-height:145px!important}
 }
 
+
+/* Ajustement final du bandeau : annule les anciens paddings responsives du header */
+.top{width:100vw!important;max-width:none!important;margin-left:calc(50% - 50vw)!important;margin-right:0!important;padding:0!important;}
+.banner-image{display:block!important;width:100%!important;height:clamp(250px,20vw,310px)!important;max-width:none!important;object-fit:cover!important;object-position:center 38%!important;}
+.banner-greeting{left:auto!important;right:5%!important;top:22%!important;width:24%!important;height:43%!important;box-sizing:border-box!important;background:linear-gradient(110deg,#06182b78,#0416298c)!important;border:1px solid #28caff66!important;backdrop-filter:blur(2px)!important;}
+@media(max-width:600px){.banner-image{height:clamp(150px,40vw,205px)!important;object-position:center 38%!important}.banner-greeting{right:3%!important;left:auto!important;top:22%!important;width:30%!important;height:46%!important;padding:3px 4px!important}.banner-greeting .welcome-title{font-size:clamp(9px,2.3vw,13px)!important}.banner-greeting .sub{font-size:clamp(6px,1.55vw,9px)!important}}
 </style>
 </head>
 <body>
