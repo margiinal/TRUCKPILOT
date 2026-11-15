@@ -455,6 +455,29 @@ body{background:#071522;color:#f3f8fc}
   }
 }
 
+
+/* Titres de colonnes et noms des jours plus visibles */
+#hours thead th,
+#transport thead th,
+#hours tbody tr.work > td:first-child,
+#transport td.day,
+#transport .day-choice {
+  font-weight: 900 !important;
+  font-style: italic !important;
+}
+@media print {
+  #hours thead th,
+  #transport thead th,
+  #hours tbody tr.work > td:first-child,
+  #transport td.day,
+  #transport .day-choice {
+    font-weight: 900 !important;
+    font-style: italic !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
 </style></head><body>
 <header class="app-topbar"><div class="app-brand"><div class="app-brand-mark">🚛</div><div><div class="app-brand-title">MYTRUCK MATE</div><div class="app-brand-sub">DRIVER COMPANION</div></div></div><a class="app-home" href="index.html">← Retour à l’accueil</a></header>
 <div class="actions"><label for="week-picker"><strong>Semaine :</strong></label><select id="week-picker" aria-label="Choisir une semaine" style="padding:9px;border:1px solid #9bb3c8;border-radius:5px;max-width:230px"><option value="">Semaine en cours</option></select><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
