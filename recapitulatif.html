@@ -4,56 +4,62 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#061626">
 <title>MYTRUCK MATE — Mon récapitulatif</title>
 <style>
-:root{--bg:#041321;--panel:#08243a;--panel2:#0b2c46;--cyan:#13c9f5;--cyan2:#00a9ef;--ink:#f4f9ff;--muted:#a9c2d6;--line:#087da9}
+:root{--bg:#03101f;--navy:#041a30;--panel:#06243e;--cyan:#00d9ff;--blue:#078ee8;--white:#f7fbff;--muted:#b8d8ec}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% -15%,#123c5c 0,#061626 48%,#020b14 100%);color:var(--ink);font:15px Inter,system-ui,Arial,sans-serif;min-height:100vh}
-a{color:#75d8ff;text-decoration:none}
-.top{max-width:1280px;margin:auto;padding:13px 22px 0}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,#0b4165 0,#04182b 48%,#010a14 100%);color:var(--white);font:15px Inter,Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.top{max-width:1640px;margin:auto;padding:12px 26px 0}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.5px;font-size:19px;line-height:1.05}
-.brand-mark{width:42px;height:34px;display:grid;place-items:center;font-size:27px;filter:drop-shadow(0 0 7px #00c9ff)}
-.brand small{display:block;color:#18d5ff;font-size:9px;letter-spacing:2px;margin-top:4px}
-.home{border:1px solid #0aa9e7;border-radius:22px;padding:10px 17px;background:linear-gradient(110deg,#0b3552,#0a6c9c);color:#fff;font-weight:850;white-space:nowrap;box-shadow:0 0 15px #00aaff35}
-.hero{position:relative;isolation:isolate;overflow:hidden;margin-top:15px;min-height:174px;border:1px solid #00a9e8;border-radius:20px;background:linear-gradient(100deg,#06192a 0%,#082b46 48%,#061a2c 100%);box-shadow:0 0 17px #00baff45,inset 0 0 25px #0088c933;display:flex;align-items:center;padding:25px 30px}
-.hero:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 55% 50%,#0875a955,transparent 43%),linear-gradient(90deg,transparent 60%,#061626a8)}
-.hero-copy{position:relative;z-index:2;max-width:48%}
-.hero h1{font-size:clamp(27px,4vw,43px);font-weight:950;font-style:italic;letter-spacing:-1px;margin:0 0 8px;text-shadow:0 2px 12px #0008}
-.hero h1 span{color:#17d4ff}
-.hero p{margin:0;color:#d7edfa;font-size:clamp(13px,1.5vw,17px)}
-.hero-art{position:absolute;right:0;top:0;width:66%;height:100%;z-index:1;opacity:1;filter:drop-shadow(0 0 12px #00bfff55)}
-.hero-art svg{width:100%;height:100%;display:block;overflow:visible}
-.wrap{max-width:1280px;margin:auto;padding:13px 22px 38px}
-.card{background:linear-gradient(145deg,#0b2d47f5,#061c30f5);border:1px solid #087eae;border-radius:19px;padding:17px 20px;margin:12px 0;box-shadow:0 7px 25px #0005,0 0 13px #00aaff20,inset 0 0 18px #008ac01c}
-.filters-card{display:grid;grid-template-columns:auto minmax(210px,1fr) minmax(180px,.9fr) auto;gap:18px;align-items:center}
-.filter-heading{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:900;white-space:nowrap}
-.filter-icon{width:43px;height:43px;display:grid;place-items:center;border:1px solid #08b9f2;border-radius:50%;background:#073552;color:#2bdcff;font-size:22px;box-shadow:0 0 12px #00aaff44}
-.period-tabs{display:flex;gap:4px;padding:4px;border:1px solid #147da8;border-radius:15px;background:#061b2d}
-.period-tabs button{flex:1;border:0;border-radius:11px;padding:11px 13px;background:transparent;color:#e8f7ff;font:850 14px system-ui;cursor:pointer}
-.period-tabs button.active{background:linear-gradient(110deg,#16d7ff,#008ee8);color:#022238;box-shadow:0 0 14px #00bfff55}
-.field label{display:block;font-size:11px;color:#c4e2f2;font-weight:850;margin:0 0 5px}
-.field select{width:100%;padding:12px 13px;border:1px solid #1688b7;border-radius:12px;font:inherit;background:#071d30;color:#f3f8fc;min-height:45px;box-shadow:inset 0 0 10px #00aaff14}
-.btn{border:1px solid #20c8ff;border-radius:13px;background:linear-gradient(110deg,#08bfe9,#087ed0);color:#032137;padding:12px 18px;font:900 14px system-ui;cursor:pointer;white-space:nowrap;box-shadow:0 0 14px #00baff35}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0}
-.stat{position:relative;overflow:hidden;min-height:145px;padding:20px 17px 14px 82px;border:1px solid #078cbe;border-radius:18px;background:linear-gradient(130deg,#0d3654,#061a2d 70%);box-shadow:0 0 15px #00aaff28,inset 0 0 20px #008ac022}
-.stat:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a2c46 0%,#09263d88 52%,transparent 100%);pointer-events:none;z-index:1}.stat-art{position:absolute;z-index:2;right:0;bottom:0;width:57%;height:100%;opacity:1;pointer-events:none;filter:drop-shadow(0 0 12px #00baffaa);mask-image:linear-gradient(90deg,transparent 0%,#000 24%)}.stat-art svg{width:100%;height:100%;display:block}.stat-value,.stat-label,.stat-sub{position:relative;z-index:3}.stat-icon{position:absolute;z-index:4}.stat-label,.stat-value,.stat-sub{max-width:85%}
-.stat-icon{position:absolute;left:16px;top:20px;width:58px;height:58px;border:2px solid #08c7fa;border-radius:50%;display:grid;place-items:center;color:#48e0ff;font-size:26px;background:linear-gradient(145deg,#0b5276,#06233a);box-shadow:0 0 13px #00baff55}
-.stat-label{color:#c6f2ff;font-size:11px;font-weight:850;text-transform:uppercase;letter-spacing:.35px}
-.stat-value{font-size:clamp(23px,2.4vw,32px);font-weight:950;margin:9px 0 3px;white-space:nowrap;text-shadow:0 2px 10px #0008}
-.stat-sub{font-size:11px;color:#9fc4dc}
-.details-card{padding:20px 28px 23px;background:linear-gradient(145deg,#0b3554f5,#061a2df5);box-shadow:0 0 22px #00baff2b,inset 0 0 28px #00aaff16}
-.details-title{display:flex;align-items:center;justify-content:center;gap:15px;font-size:22px;font-weight:950;font-style:italic;margin:0 0 12px}
-.details-title:before,.details-title:after{content:"";height:2px;flex:1;max-width:260px;background:linear-gradient(90deg,transparent,#00caff,transparent);box-shadow:0 0 8px #00baff}
-.details{max-width:850px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:0}
-.detail{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:14px;padding:10px 7px;border-bottom:1px solid #12516e;font-size:15px}
+.brand{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:1000;font-style:italic;letter-spacing:.2px;line-height:1}
+.brand-mark{width:58px;height:42px;display:grid;place-items:center;font-size:36px;filter:drop-shadow(0 0 10px #00dcff)}
+.brand small{display:block;color:#00e2ff;font-size:12px;font-style:normal;letter-spacing:1.7px;margin-top:5px}
+.home{border:2px solid #00bff5;border-radius:28px;padding:11px 22px;background:linear-gradient(180deg,#0b4265,#05213a);font-size:15px;font-weight:900;box-shadow:0 0 18px #00cfff66,inset 0 0 14px #00baff22;white-space:nowrap}
+.hero{position:relative;isolation:isolate;overflow:hidden;margin-top:16px;min-height:205px;border:2px solid #00caff;border-radius:25px;background:linear-gradient(100deg,#03182d,#06304e 58%,#03172b);box-shadow:0 0 20px #00bfff88,inset 0 0 28px #00aaff3b;display:flex;align-items:center;padding:28px 34px}
+.hero:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 57% 52%,#087fc455,transparent 46%),linear-gradient(90deg,#03182d 0%,#03182dbb 37%,transparent 68%)}
+.hero-copy{position:relative;z-index:3;max-width:43%;padding-left:122px}
+.hero-copy:before{content:"";position:absolute;left:0;top:50%;width:102px;height:86px;transform:translateY(-50%);background:linear-gradient(180deg,#22edff,#008be8);clip-path:polygon(0 78%,18% 60%,31% 67%,47% 34%,61% 46%,79% 9%,77% 0,100% 0,88% 26%,85% 16%,64% 59%,49% 47%,34% 79%,19% 72%,0 94%);filter:drop-shadow(0 0 11px #00dfff)}
+.hero-copy:after{content:"";position:absolute;left:9px;bottom:3px;width:78px;height:29px;background:linear-gradient(90deg,#00baff,#2ceaff);clip-path:polygon(0 100%,0 72%,17% 72%,17% 45%,35% 45%,35% 27%,53% 27%,53% 0,72% 0,72% 100%);filter:drop-shadow(0 0 8px #00cfff)}
+.hero h1{font-size:clamp(34px,4vw,57px);font-weight:1000;font-style:italic;letter-spacing:-1.8px;margin:0 0 10px;text-shadow:0 2px 14px #0009;white-space:nowrap}
+.hero h1 span{color:#12dcff}
+.hero p{margin:0;color:#e4f5ff;font-size:clamp(15px,1.5vw,21px);white-space:nowrap}
+.hero-art{position:absolute;right:0;top:0;width:68%;height:100%;z-index:1;opacity:1;filter:drop-shadow(0 0 13px #00cfff66)}
+.hero-art svg{width:100%;height:100%;display:block}
+.wrap{max-width:1640px;margin:auto;padding:14px 26px 42px}
+.card{background:linear-gradient(145deg,#082d4bfa,#03182cf7);border:1.5px solid #00b8ed;border-radius:23px;padding:18px 24px;margin:14px 0;box-shadow:0 8px 26px #0007,0 0 18px #00baff39,inset 0 0 22px #008ac02b}
+.filters-card{display:grid;grid-template-columns:auto minmax(290px,1fr) minmax(250px,.9fr) auto;gap:22px;align-items:center;min-height:88px}
+.filter-heading{display:flex;align-items:center;gap:13px;font-size:20px;font-weight:950;white-space:nowrap}
+.filter-icon{width:58px;height:58px;display:grid;place-items:center;border:2px solid #00d6ff;border-radius:50%;background:linear-gradient(145deg,#0a557c,#031d35);color:#d9faff;font-size:28px;box-shadow:0 0 17px #00cfff88,inset 0 0 12px #00aaff44}
+.period-tabs{display:flex;gap:4px;padding:5px;border:1.5px solid #078dbd;border-radius:22px;background:#03172b;box-shadow:inset 0 0 14px #00aaff20}
+.period-tabs button{flex:1;border:0;border-radius:18px;padding:14px 17px;background:transparent;color:#f2fbff;font:900 17px system-ui;cursor:pointer}
+.period-tabs button.active{background:linear-gradient(110deg,#16edff,#0099ed);color:#00233a;box-shadow:0 0 18px #00d9ff99,inset 0 1px 5px #fff8}
+.field label{display:block;font-size:14px;color:#e1f6ff;font-weight:900;margin:0 0 5px}
+.field select{width:100%;padding:13px 16px;border:1.5px solid #00b9ec;border-radius:17px;font:17px system-ui;background:linear-gradient(180deg,#062944,#03182b);color:#fff;min-height:50px;box-shadow:0 0 12px #00aaff26,inset 0 0 10px #00aaff19}
+.btn{border:1.5px solid #13e1ff;border-radius:17px;background:linear-gradient(110deg,#0ce6fa,#008ee8);color:#00253c;padding:14px 23px;font:950 17px system-ui;cursor:pointer;white-space:nowrap;box-shadow:0 0 19px #00cfff88,inset 0 1px 5px #fff8}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:17px 0}
+.stat{position:relative;isolation:isolate;overflow:hidden;min-height:158px;padding:23px 15px 18px 110px;border:2px solid #00bdec;border-radius:25px;background:linear-gradient(120deg,#073452 0%,#041c33 58%,#03172a 100%);box-shadow:0 0 17px #00bfff72,inset 0 0 25px #00aaff30}
+.stat:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 82% 50%,#00bfff39,transparent 46%),linear-gradient(180deg,#0c3c5d66,transparent)}
+.stat:after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,#062945 0%,#062945e8 38%,#06294555 65%,transparent 100%);pointer-events:none}
+.stat-art{position:absolute;z-index:0;right:0;bottom:0;width:62%;height:100%;opacity:1;pointer-events:none;filter:drop-shadow(0 0 13px #00baff99)}
+.stat-art svg{width:100%;height:100%;display:block}
+.stat-icon{position:absolute;z-index:4;left:20px;top:23px;width:72px;height:72px;border:2.5px solid #00dfff;border-radius:50%;display:grid;place-items:center;color:#e6fbff;font-size:34px;background:radial-gradient(circle at 35% 25%,#12678f,#031b31 75%);box-shadow:0 0 20px #00d9ff99,inset 0 0 15px #00aaff55}
+.stat-label,.stat-value,.stat-sub{position:relative;z-index:3;max-width:100%;text-shadow:0 2px 8px #000b}
+.stat-label{color:#c9f4ff;font-size:14px;font-weight:950;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.stat-value{font-size:clamp(25px,2.4vw,38px);font-weight:1000;font-style:italic;margin:12px 0 5px;white-space:nowrap}
+.stat-sub{font-size:16px;color:#e4f6ff}
+.details-card{padding:21px 34px 24px;background:linear-gradient(145deg,#082d4bfa,#03172cf9);box-shadow:0 0 22px #00baff55,inset 0 0 28px #008ac02a}
+.details-title{display:flex;align-items:center;justify-content:center;gap:18px;font-size:clamp(24px,2.2vw,36px);font-weight:1000;font-style:italic;margin:0 auto 15px;max-width:1300px;text-shadow:0 0 12px #00bfff66}
+.details-title:before,.details-title:after{content:"";height:3px;flex:1;background:linear-gradient(90deg,transparent,#00dfff,transparent);box-shadow:0 0 11px #00cfff}
+.details{max-width:1030px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:0}
+.detail{display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:18px;padding:9px 8px;border-bottom:1px solid #087ba7;font-size:20px;min-height:49px}
 .detail:last-child{border-bottom:0}
-.detail-icon{font-size:26px;text-align:center;color:#22d9ff;text-shadow:0 0 9px #00baff}
-.detail span{color:#e5f3fc}
-.detail strong{text-align:center;min-width:112px;padding:8px 14px;border:1px solid #0d9dcc;border-radius:13px;background:linear-gradient(110deg,#0d4265,#082a44);font-size:17px;font-weight:950;box-shadow:0 0 10px #00aaff22}
-.note,.status{margin:10px 0 0;color:#9fc5dc;font-size:12px;line-height:1.5}
+.detail-icon{font-size:31px;text-align:center;color:#27e5ff;text-shadow:0 0 13px #00cfff;filter:drop-shadow(0 0 6px #00cfff)}
+.detail span{color:#f1faff}
+.detail strong{text-align:center;min-width:145px;padding:7px 18px;border:2px solid #00d5ff;border-radius:24px;background:linear-gradient(180deg,#0b4264,#031d35);font-size:22px;font-weight:1000;box-shadow:0 0 15px #00cfff77,inset 0 0 13px #00baff2c}
+.note,.status{margin:10px 0 0;color:#b6d8ed;font-size:13px;line-height:1.5}
 [hidden]{display:none!important}
-@media(max-width:850px){.stat-art{width:50%;opacity:.82}.filters-card{grid-template-columns:1fr 1fr}.filter-heading{grid-column:1/-1}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-copy{max-width:56%}.hero-art{width:58%;right:-5px}}
-@media(max-width:560px){.top{padding:10px 12px 0}.brand{font-size:15px}.brand-mark{width:34px;font-size:23px}.home{font-size:11px;padding:9px 11px}.hero{min-height:164px;padding:20px 16px;margin-top:11px}.hero-copy{max-width:68%}.hero h1{font-size:27px}.hero p{font-size:12px;max-width:230px}.hero-art{width:62%;right:-22px;opacity:.7}.wrap{padding:8px 11px 28px}.filters-card{grid-template-columns:1fr 1fr;gap:10px;padding:13px}.filter-heading{font-size:14px}.filter-icon{width:36px;height:36px}.period-tabs{grid-column:1/-1}.field{min-width:0}.field select{font-size:12px;padding:10px 8px}.btn{padding:11px 12px;font-size:12px}.stats{gap:8px}.stat{min-height:124px;padding:14px 8px 12px 65px}.stat-art{width:58%;opacity:.7}.stat-icon{left:10px;top:14px;width:44px;height:44px;font-size:21px}.stat-label{font-size:9px}.stat-value{font-size:21px}.stat-sub{font-size:9px}.details-card{padding:15px 12px}.details-title{font-size:18px;gap:8px}.detail{grid-template-columns:30px 1fr auto;gap:7px;font-size:12px;padding:9px 0}.detail-icon{font-size:19px}.detail strong{min-width:83px;padding:6px 7px;font-size:14px}}
-@media print{body{background:#fff;color:#111}.topbar .home,.filters-card .btn{display:none}.hero,.card,.stat{box-shadow:none;break-inside:avoid}.hero{background:#0b2d47!important;color:white}.wrap{padding:8px}.card,.stat{border:1px solid #777}.details-title:before,.details-title:after{background:#777}}
+@media(max-width:1100px){.filters-card{grid-template-columns:1fr 1fr}.filter-heading{grid-column:1/-1}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-copy{max-width:48%}.hero-art{width:66%}}
+@media(max-width:600px){.top{padding:9px 11px 0}.brand{font-size:16px}.brand-mark{width:38px;font-size:25px}.brand small{font-size:8px}.home{font-size:11px;padding:8px 10px}.hero{min-height:150px;padding:18px 13px;margin-top:10px;border-radius:17px}.hero-copy{max-width:100%;padding-left:0}.hero-copy:before,.hero-copy:after{display:none}.hero h1{font-size:27px;white-space:normal}.hero p{font-size:12px;white-space:normal;max-width:180px}.hero-art{width:70%;right:-16px;opacity:.65}.wrap{padding:7px 10px 25px}.card{border-radius:17px;padding:13px;margin:9px 0}.filters-card{grid-template-columns:1fr 1fr;gap:9px}.filter-heading{font-size:14px;grid-column:1/-1}.filter-icon{width:39px;height:39px;font-size:20px}.period-tabs{grid-column:1/-1}.period-tabs button{padding:10px 7px;font-size:13px}.field label{font-size:11px}.field select{font-size:12px;padding:9px 7px;min-height:40px}.btn{padding:10px 11px;font-size:12px}.stats{gap:8px;margin:10px 0}.stat{min-height:120px;padding:13px 7px 11px 62px;border-radius:16px}.stat-icon{left:9px;top:13px;width:43px;height:43px;font-size:21px}.stat-art{width:58%;opacity:.75}.stat-label{font-size:9px;white-space:normal}.stat-value{font-size:21px;margin:8px 0 3px}.stat-sub{font-size:10px}.details-card{padding:14px 11px}.details-title{font-size:18px;gap:8px}.detail{grid-template-columns:32px 1fr auto;gap:7px;font-size:12px;padding:8px 0;min-height:42px}.detail-icon{font-size:20px}.detail strong{min-width:80px;padding:5px 6px;font-size:13px;border-radius:18px}}
+@media print{body{background:#fff;color:#111}.topbar .home,.filters-card .btn{display:none}.hero,.card,.stat{box-shadow:none;break-inside:avoid}.hero{background:#082c49!important;color:white}.wrap{padding:8px}.card,.stat{border:1px solid #777}.details-title:before,.details-title:after{background:#777}}
 </style>
 </head>
 <body>
@@ -65,45 +71,27 @@ a{color:#75d8ff;text-decoration:none}
   <section class="hero" aria-label="Présentation du récapitulatif d'activité">
     <div class="hero-copy"><h1>Mon <span>récapitulatif</span></h1><p>Analysez votre activité sur la période de votre choix</p></div>
     <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="routeLine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#16e5ff"/><stop offset=".58" stop-color="#087ee8"/><stop offset="1" stop-color="#ffd36a"/></linearGradient>
-          <linearGradient id="panelGlass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0c5278" stop-opacity=".95"/><stop offset="1" stop-color="#041a2e" stop-opacity=".98"/></linearGradient>
-          <linearGradient id="barFill" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#0879d5"/><stop offset="1" stop-color="#22e5ff"/></linearGradient>
-          <filter id="neon"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-        <path d="M0 174 Q120 135 220 163 T430 145 T800 125" fill="none" stroke="#087bb5" stroke-width="1" opacity=".45"/>
-        <path d="M0 178 Q145 140 250 166 T465 145 T800 130" fill="none" stroke="url(#routeLine)" stroke-width="4" filter="url(#neon)"/>
-        <path d="M0 178 Q145 140 250 166 T465 145 T800 130" fill="none" stroke="#d9fbff" stroke-width="1.2" stroke-dasharray="8 9"/>
-        <g transform="translate(75 8)">
-          <circle cx="94" cy="80" r="72" fill="url(#panelGlass)" stroke="#05caff" stroke-width="2.5" filter="url(#neon)"/>
-          <circle cx="94" cy="80" r="60" fill="none" stroke="#67e9ff" stroke-width="1.5" stroke-dasharray="2 6"/>
-          <path d="M94 80 L115 31" stroke="#f1fcff" stroke-width="5" stroke-linecap="round"/><path d="M94 80 L135 64" stroke="#19dfff" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="94" cy="80" r="6" fill="#13dfff"/>
-          <g fill="#b8edff" font-size="10" font-weight="bold"><text x="88" y="18">12</text><text x="148" y="84">3</text><text x="90" y="147">6</text><text x="34" y="84">9</text></g>
-          <text x="94" y="169" text-anchor="middle" fill="#6edfff" font-size="10" letter-spacing="2">TEMPS</text>
-        </g>
-        <g transform="translate(245 108)" filter="url(#neon)">
-          <path d="M0 50 Q70 2 132 28 T260 -15" fill="none" stroke="url(#routeLine)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M0 50 Q70 2 132 28 T260 -15" fill="none" stroke="#d8fbff" stroke-width="1.3" stroke-dasharray="6 8"/>
-          <path d="M26 23 l-9 -17 18 0z M238 -1 l-9 -17 18 0z" fill="#ffd05c"/>
-          <circle cx="26" cy="6" r="8" fill="#ffc84c"/><circle cx="26" cy="6" r="3" fill="#fff"/>
-          <circle cx="238" cy="-18" r="8" fill="#ffc84c"/><circle cx="238" cy="-18" r="3" fill="#fff"/>
-        </g>
-        <g transform="translate(420 24)">
-          <rect width="154" height="151" rx="12" fill="url(#panelGlass)" stroke="#08caff" stroke-width="2.5"/>
-          <path d="M0 19 Q77 0 154 19" fill="none" stroke="#62eaff" opacity=".45"/>
-          <g fill="#f1fbff" font-size="14" font-weight="900"><text x="38" y="43">KM</text><text x="38" y="74">TEMPS</text><text x="38" y="105">CLIENTS</text><text x="38" y="136">TRANSPORTS</text></g>
-          <g stroke="#24e7a2" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 34 l6 6 12 -14 M15 65 l6 6 12 -14 M15 96 l6 6 12 -14 M15 127 l6 6 12 -14"/></g>
-        </g>
-        <g transform="translate(596 30)">
-          <rect width="82" height="80" rx="10" fill="url(#panelGlass)" stroke="#08caff" stroke-width="2"/>
-          <path d="M0 19 H82 M17 0 V12 M65 0 V12" stroke="#63eaff" stroke-width="3"/>
-          <g fill="#27d7ff"><rect x="14" y="30" width="11" height="11" rx="2"/><rect x="36" y="30" width="11" height="11" rx="2"/><rect x="58" y="30" width="11" height="11" rx="2"/><rect x="14" y="51" width="11" height="11" rx="2"/><rect x="36" y="51" width="11" height="11" rx="2"/><rect x="58" y="51" width="11" height="11" rx="2"/></g>
-        </g>
-        <g transform="translate(690 92)" filter="url(#neon)" fill="url(#barFill)"><rect x="0" y="56" width="14" height="31" rx="2"/><rect x="22" y="42" width="14" height="45" rx="2"/><rect x="44" y="24" width="14" height="63" rx="2"/><rect x="66" y="4" width="14" height="83" rx="2"/><path d="M0 48 L27 36 L49 17 L76 -4" fill="none" stroke="#e3fbff" stroke-width="3"/></g>
-      </svg>
-    </div>
+<svg viewBox="0 0 1000 220" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="road" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00eaff"/><stop offset=".55" stop-color="#087ce8"/><stop offset="1" stop-color="#ffb52f"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#12638b"/><stop offset="1" stop-color="#03182c"/></linearGradient>
+<linearGradient id="bars" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#0079cf"/><stop offset="1" stop-color="#35efff"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<path d="M0 194 Q150 157 280 181 T520 164 T1000 130" fill="none" stroke="#087db9" stroke-width="2" opacity=".5"/>
+<path d="M0 195 Q150 157 280 181 T520 164 T1000 130" fill="none" stroke="url(#road)" stroke-width="5" filter="url(#glow)"/>
+<path d="M0 195 Q150 157 280 181 T520 164 T1000 130" fill="none" stroke="#e7fcff" stroke-width="1.5" stroke-dasharray="9 12"/>
+<g transform="translate(35 8)" filter="url(#glow)">
+<circle cx="105" cy="89" r="81" fill="url(#glass)" stroke="#00dfff" stroke-width="3"/><circle cx="105" cy="89" r="68" fill="none" stroke="#b8f6ff" stroke-width="1.6" stroke-dasharray="2 7"/>
+<g fill="#d8f9ff" font-size="12" font-weight="bold"><text x="99" y="28">12</text><text x="165" y="94">3</text><text x="101" y="158">6</text><text x="38" y="94">9</text></g>
+<path d="M105 89 L132 34" stroke="#f4fcff" stroke-width="5" stroke-linecap="round"/><path d="M105 89 L152 70" stroke="#17e3ff" stroke-width="4" stroke-linecap="round"/><circle cx="105" cy="89" r="7" fill="#00eaff"/>
+<text x="105" y="185" fill="#72eaff" text-anchor="middle" font-size="11" letter-spacing="3">TEMPS</text>
+</g>
+<g transform="translate(270 125)" filter="url(#glow)"><path d="M0 45 Q85 -18 170 15 T365 -20" fill="none" stroke="url(#road)" stroke-width="7" stroke-linecap="round"/><path d="M0 45 Q85 -18 170 15 T365 -20" fill="none" stroke="#e5fbff" stroke-width="1.5" stroke-dasharray="7 9"/><g fill="#ffc64d"><path d="M58 7 l-12 -20 h24z"/><circle cx="58" cy="-13" r="8"/><path d="M302 -30 l-12 -20 h24z"/><circle cx="302" cy="-50" r="8"/></g><g fill="#fff"><circle cx="58" cy="-13" r="3"/><circle cx="302" cy="-50" r="3"/></g></g>
+<g transform="translate(575 28)" filter="url(#glow)"><rect width="190" height="158" rx="15" fill="url(#glass)" stroke="#00d9ff" stroke-width="3"/><path d="M0 20 Q95 -2 190 20" fill="none" stroke="#b4f7ff" opacity=".55"/><g fill="#f2fbff" font-size="17" font-weight="950"><text x="48" y="43">KM</text><text x="48" y="78">TEMPS</text><text x="48" y="113">CLIENTS</text><text x="48" y="148">TRANSPORTS</text></g><g stroke="#24efae" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 31 l8 8 15 -19 M17 66 l8 8 15 -19 M17 101 l8 8 15 -19 M17 136 l8 8 15 -19"/></g></g>
+<g transform="translate(790 35)" filter="url(#glow)"><rect width="105" height="93" rx="12" fill="url(#glass)" stroke="#00d9ff" stroke-width="3"/><path d="M0 23 H105 M22 0 V15 M82 0 V15" stroke="#9cefff" stroke-width="4"/><g fill="#20dfff"><rect x="16" y="36" width="14" height="13" rx="3"/><rect x="45" y="36" width="14" height="13" rx="3"/><rect x="74" y="36" width="14" height="13" rx="3"/><rect x="16" y="62" width="14" height="13" rx="3"/><rect x="45" y="62" width="14" height="13" rx="3"/><rect x="74" y="62" width="14" height="13" rx="3"/></g></g>
+<g transform="translate(900 100)" filter="url(#glow)" fill="url(#bars)"><rect x="0" y="55" width="17" height="45" rx="3"/><rect x="25" y="39" width="17" height="61" rx="3"/><rect x="50" y="19" width="17" height="81" rx="3"/><rect x="75" y="0" width="17" height="100" rx="3"/><path d="M0 48 L31 31 L56 12 L91 -10" fill="none" stroke="#e6fcff" stroke-width="3"/></g>
+</svg></div>
   </section>
 </header>
 <main class="wrap">
@@ -119,20 +107,18 @@ a{color:#75d8ff;text-decoration:none}
     <button class="btn" id="refreshBtn" type="button">↻ Actualiser</button>
     <div class="note" id="periodLabel" style="grid-column:1/-1;margin:0">Chargement…</div>
   </section>
-  <section class="stats" aria-label="Indicateurs principaux">
-    <div class="stat"><span class="stat-icon">⌁</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#14cfff" stroke-width="5"/><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#d9fbff" stroke-width="1.5" stroke-dasharray="7 8"/><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#0876c8" stroke-width="14" opacity=".2"/></svg></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
-    <div class="stat"><span class="stat-icon">◷</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><circle cx="88" cy="57" r="48" fill="#07324d" stroke="#0bbbe9" stroke-width="3"/><circle cx="88" cy="57" r="39" fill="none" stroke="#8beaff" stroke-dasharray="2 5"/><path d="M88 57 L106 24 M88 57 L120 48" stroke="#f2fcff" stroke-width="4" stroke-linecap="round"/><circle cx="88" cy="57" r="5" fill="#1adfff"/></svg></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
-    <div class="stat"><span class="stat-icon">◴</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><path d="M55 8 H96 M62 8 V18 L50 33 V82 Q50 92 60 92 H92 Q102 92 102 82 V33 L90 18 V8" fill="#06304a" stroke="#12cfff" stroke-width="3"/><path d="M53 62 Q76 53 99 62 V82 Q99 89 91 89 H61 Q53 89 53 82Z" fill="#ffb43b" opacity=".9"/><path d="M60 37 L92 37" stroke="#e5faff" stroke-width="2"/></svg></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
-    <div class="stat"><span class="stat-icon">▦</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><rect x="45" y="14" width="86" height="76" rx="8" fill="#082e49" stroke="#0bcfff" stroke-width="3"/><path d="M45 34 H131 M64 8 V24 M112 8 V24" stroke="#9cefff" stroke-width="4"/><g fill="#12bce9"><rect x="58" y="45" width="13" height="11" rx="2"/><rect x="81" y="45" width="13" height="11" rx="2"/><rect x="104" y="45" width="13" height="11" rx="2"/><rect x="58" y="65" width="13" height="11" rx="2"/><rect x="81" y="65" width="13" height="11" rx="2"/><rect x="104" y="65" width="13" height="11" rx="2"/></g></svg></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div>
-  </section>
+  <section class="stats" aria-label="Indicateurs principaux"><div class="stat"><span class="stat-icon">▤</span><div class="stat-art"><svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="roadA" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#28efff"/><stop offset=".5" stop-color="#087bd6"/><stop offset="1" stop-color="#ffb52e"/></linearGradient><linearGradient id="skyA" x2="0" y2="1"><stop stop-color="#0b79bb"/><stop offset="1" stop-color="#061e35"/></linearGradient><filter id="ga"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="260" height="160" fill="url(#skyA)"/><path d="M0 75 L45 33 78 60 124 17 177 70 215 30 260 60 V160 H0Z" fill="#125b80" opacity=".7"/><path d="M0 110 Q85 70 135 104 T260 72 V160 H0Z" fill="#07314d"/><path d="M-10 170 Q40 88 120 110 T270 40" fill="none" stroke="#032038" stroke-width="34"/><path d="M-10 170 Q40 88 120 110 T270 40" fill="none" stroke="url(#roadA)" stroke-width="23" filter="url(#ga)"/><path d="M-10 170 Q40 88 120 110 T270 40" fill="none" stroke="#e6fbff" stroke-width="2" stroke-dasharray="8 10"/><path d="M0 133 Q65 93 118 123 T260 60" fill="none" stroke="#0a5279" stroke-width="4"/></svg></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
+<div class="stat"><span class="stat-icon">◉</span><div class="stat-art"><svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="dialB"><stop stop-color="#12628c"/><stop offset="1" stop-color="#03172a"/></radialGradient><filter id="gb"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><circle cx="165" cy="93" r="83" fill="url(#dialB)" stroke="#0aaee8" stroke-width="3"/><circle cx="165" cy="93" r="69" fill="none" stroke="#b4efff" stroke-width="2" stroke-dasharray="2 7"/><path d="M108 133 A67 67 0 1 1 221 47" fill="none" stroke="#0ad7ff" stroke-width="5"/><path d="M165 93 L214 42" stroke="#ffb72d" stroke-width="5" stroke-linecap="round" filter="url(#gb)"/><circle cx="165" cy="93" r="8" fill="#11dfff"/><g fill="#eafaff" font-size="10" font-weight="bold"><text x="101" y="95">0</text><text x="160" y="31">60</text><text x="217" y="98">120</text></g><path d="M0 145 Q45 108 80 130 T130 95" fill="none" stroke="#0cb8ee" stroke-width="7" opacity=".55"/></svg></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
+<div class="stat"><span class="stat-icon">◴</span><div class="stat-art"><svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sandC" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe8a0"/><stop offset=".5" stop-color="#ff9c22"/><stop offset="1" stop-color="#ffdf71"/></linearGradient><filter id="gc"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g transform="translate(120 8)" filter="url(#gc)"><path d="M28 0 H116 M28 144 H116" stroke="#0de1ff" stroke-width="8" stroke-linecap="round"/><path d="M38 8 H106 Q102 38 73 67 Q102 94 106 136 H38 Q42 94 71 67 Q42 38 38 8Z" fill="#06223a" stroke="#22dfff" stroke-width="4"/><path d="M44 17 H100 Q96 38 73 59 Q50 38 44 17Z" fill="url(#sandC)"/><path d="M73 72 L90 103 H56Z" fill="url(#sandC)"/><path d="M44 128 Q72 116 100 128 L100 135 H44Z" fill="#ffb83b"/></g><path d="M0 148 Q65 120 115 150" fill="none" stroke="#08b9eb" stroke-width="4" opacity=".7"/></svg></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
+<div class="stat"><span class="stat-icon">▦</span><div class="stat-art"><svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="calD" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#19dcff"/><stop offset="1" stop-color="#075b9b"/></linearGradient><filter id="gd"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g transform="translate(75 16) rotate(7 80 68)" filter="url(#gd)"><rect x="12" y="10" width="150" height="125" rx="14" fill="#06213a" stroke="#0bdfff" stroke-width="4"/><rect x="12" y="10" width="150" height="30" rx="10" fill="url(#calD)"/><path d="M45 0 V26 M130 0 V26" stroke="#d9faff" stroke-width="8" stroke-linecap="round"/><g fill="#1adfff"><rect x="29" y="53" width="22" height="17" rx="4"/><rect x="64" y="53" width="22" height="17" rx="4"/><rect x="99" y="53" width="22" height="17" rx="4"/><rect x="29" y="82" width="22" height="17" rx="4"/><rect x="64" y="82" width="22" height="17" rx="4"/><rect x="99" y="82" width="22" height="17" rx="4"/></g><path d="M61 87 l12 12 24 -29 M100 87 l12 12 24 -29" fill="none" stroke="#3affae" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div></section>
   <section class="card details-card">
     <h2 class="details-title"><span>▥</span> Activité de la période</h2>
     <div class="details">
-      <div class="detail"><span class="detail-icon">🚚</span><span>Nombre de transports</span><strong id="transportTotal">—</strong></div>
+      <div class="detail"><span class="detail-icon">🚛</span><span>Nombre de transports</span><strong id="transportTotal">—</strong></div>
       <div class="detail"><span class="detail-icon">🤝</span><span>Clients différents</span><strong id="clientTotal">—</strong></div>
-      <div class="detail"><span class="detail-icon">⌖</span><span>Moyenne de kilomètres / jour</span><strong id="kmAverage">—</strong></div>
+      <div class="detail"><span class="detail-icon">📍</span><span>Moyenne de kilomètres / jour</span><strong id="kmAverage">—</strong></div>
       <div class="detail"><span class="detail-icon">◉</span><span>Moyenne de conduite / jour</span><strong id="driveAverage">—</strong></div>
-      <div class="detail"><span class="detail-icon">◴</span><span>Moyenne d’amplitude / jour</span><strong id="ampAverage">—</strong></div>
+      <div class="detail"><span class="detail-icon">◷</span><span>Moyenne d’amplitude / jour</span><strong id="ampAverage">—</strong></div>
       <div class="detail"><span class="detail-icon">🚆</span><span>Journées avec train</span><strong id="trainTotal">—</strong></div>
     </div>
   </section>
