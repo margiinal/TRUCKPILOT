@@ -26,11 +26,11 @@ a{color:inherit;text-decoration:none}
 
 .wrap{max-width:1640px;margin:auto;padding:14px 26px 42px}
 .card{background:linear-gradient(145deg,#082d4bfa,#03182cf7);border:1.5px solid #00b8ed;border-radius:23px;padding:18px 24px;margin:14px 0;box-shadow:0 8px 26px #0007,0 0 18px #00baff39,inset 0 0 22px #008ac02b}
-.filters-card{display:grid;grid-template-columns:auto minmax(290px,1fr) minmax(250px,.9fr) auto;gap:22px;align-items:center;min-height:88px}
+.filters-card{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(190px,260px) auto;gap:16px;align-items:center;min-height:88px;max-width:100%;overflow:hidden}
 .filter-heading{display:flex;align-items:center;gap:13px;font-size:20px;font-weight:950;white-space:nowrap}
 .filter-icon{width:58px;height:58px;display:grid;place-items:center;border:2px solid #00d6ff;border-radius:50%;background:linear-gradient(145deg,#0a557c,#031d35);color:#d9faff;font-size:28px;box-shadow:0 0 17px #00cfff88,inset 0 0 12px #00aaff44}
 .period-tabs{display:flex;gap:4px;padding:5px;border:1.5px solid #078dbd;border-radius:22px;background:#03172b;box-shadow:inset 0 0 14px #00aaff20}
-.period-tabs button{flex:1;border:0;border-radius:18px;padding:14px 17px;background:transparent;color:#f2fbff;font:900 17px system-ui;cursor:pointer}
+.period-tabs button{flex:1;min-width:0;border:0;border-radius:18px;padding:12px 10px;background:transparent;color:#f2fbff;font:900 15px system-ui;cursor:pointer;white-space:nowrap}
 .period-tabs button.active{background:linear-gradient(110deg,#16edff,#0099ed);color:#00233a;box-shadow:0 0 18px #00d9ff99,inset 0 1px 5px #fff8}
 .field label{display:block;font-size:14px;color:#e1f6ff;font-weight:900;margin:0 0 5px}
 .field select{width:100%;padding:13px 16px;border:1.5px solid #00b9ec;border-radius:17px;font:17px system-ui;background:linear-gradient(180deg,#062944,#03182b);color:#fff;min-height:50px;box-shadow:0 0 12px #00aaff26,inset 0 0 10px #00aaff19}
@@ -61,7 +61,7 @@ a{color:inherit;text-decoration:none}
 .note,.status{margin:10px 0 0;color:#b6d8ed;font-size:13px;line-height:1.5}
 [hidden]{display:none!important}
 @media(max-width:1100px){.filters-card{grid-template-columns:1fr 1fr}.filter-heading{grid-column:1/-1}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.top{padding:9px 11px 0}.brand{font-size:16px}.brand-mark{width:38px;font-size:25px}.brand small{font-size:8px}.home{font-size:11px;padding:8px 10px}.hero{height:150px;min-height:150px;padding:0;margin-top:10px;border-radius:17px}.hero-art{background-size:auto 100%;background-position:center}.wrap{padding:7px 10px 25px}.card{border-radius:17px;padding:13px;margin:9px 0}.filters-card{grid-template-columns:1fr 1fr;gap:9px}.filter-heading{font-size:14px;grid-column:1/-1}.filter-icon{width:39px;height:39px;font-size:20px}.period-tabs{grid-column:1/-1}.period-tabs button{padding:10px 7px;font-size:13px}.field label{font-size:11px}.field select{font-size:12px;padding:9px 7px;min-height:40px}.btn{padding:10px 11px;font-size:12px}.stats{gap:8px;margin:10px 0}.stat{min-height:120px;padding:13px 7px 11px 62px;border-radius:16px}.stat-icon{left:9px;top:13px;width:43px;height:43px;font-size:21px}.stat-art{width:58%;opacity:.75}.stat-art-km,.stat-art-drive,.stat-art-amp,.stat-art-days{width:100%;opacity:1}.stat-label{font-size:9px;white-space:normal}.stat-value{font-size:21px;margin:8px 0 3px}.stat-sub{font-size:10px}.details-card{padding:14px 11px}.details-title{font-size:18px;gap:8px}.detail{grid-template-columns:32px 1fr auto;gap:7px;font-size:12px;padding:8px 0;min-height:42px}.detail-icon{font-size:20px}.detail strong{min-width:80px;padding:5px 6px;font-size:13px;border-radius:18px}}
+@media(max-width:600px){.top{padding:9px 11px 0}.brand{font-size:16px}.brand-mark{width:38px;font-size:25px}.brand small{font-size:8px}.home{font-size:11px;padding:8px 10px}.hero{height:150px;min-height:150px;padding:0;margin-top:10px;border-radius:17px}.hero-art{background-size:auto 100%;background-position:center}.wrap{padding:7px 10px 25px}.card{border-radius:17px;padding:13px;margin:9px 0}.filters-card{grid-template-columns:1fr;gap:9px}.filter-heading{font-size:14px;grid-column:1/-1}.filter-icon{width:39px;height:39px;font-size:20px}.period-tabs{grid-column:1/-1;width:100%}.period-tabs button{padding:10px 4px;font-size:11px;white-space:normal}.filters-card>.field{grid-column:1/-1}.filters-card>.btn{width:100%}.field label{font-size:11px}.field select{font-size:12px;padding:9px 7px;min-height:40px}.btn{padding:10px 11px;font-size:12px}.stats{gap:8px;margin:10px 0}.stat{min-height:120px;padding:13px 7px 11px 62px;border-radius:16px}.stat-icon{left:9px;top:13px;width:43px;height:43px;font-size:21px}.stat-art{width:58%;opacity:.75}.stat-art-km,.stat-art-drive,.stat-art-amp,.stat-art-days{width:100%;opacity:1}.stat-label{font-size:9px;white-space:normal}.stat-value{font-size:21px;margin:8px 0 3px}.stat-sub{font-size:10px}.details-card{padding:14px 11px}.details-title{font-size:18px;gap:8px}.detail{grid-template-columns:32px 1fr auto;gap:7px;font-size:12px;padding:8px 0;min-height:42px}.detail-icon{font-size:20px}.detail strong{min-width:80px;padding:5px 6px;font-size:13px;border-radius:18px}}
 @media print{body{background:#fff;color:#111}.topbar .home,.filters-card .btn{display:none}.hero,.card,.stat{box-shadow:none;break-inside:avoid}.hero{background:#082c49!important;color:white}.wrap{padding:8px}.card,.stat{border:1px solid #777}.details-title:before,.details-title:after{background:#777}}
 
 /* Contrôle réglementaire sur deux semaines consécutives */
@@ -69,7 +69,7 @@ a{color:inherit;text-decoration:none}
 .fortnight-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
 .fortnight-title{font-size:clamp(20px,2vw,28px);font-weight:1000;font-style:italic}
 .fortnight-sub{color:var(--muted);font-size:13px;margin-top:4px}
-.fortnight-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+.fortnight-controls{display:none}
 .fortnight-controls .field{min-width:min(290px,100%)}
 .fortnight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .fortnight-week{background:linear-gradient(145deg,#0a3554,#03182b);border:1px solid #087eaa;border-radius:17px;padding:16px}
@@ -105,23 +105,24 @@ a{color:inherit;text-decoration:none}
     <div class="period-tabs" role="group" aria-label="Type de période">
       <button type="button" id="monthTab" class="active" aria-pressed="true">▦ Mois</button>
       <button type="button" id="yearTab" aria-pressed="false">▦ Année</button>
+      <button type="button" id="fortnightTab" aria-pressed="false">◷ 2 semaines</button>
     </div>
     <div class="field" id="monthField"><label for="monthSelect">Mois</label><select id="monthSelect"></select></div>
     <div class="field" id="yearField" hidden><label for="yearSelect">Année</label><select id="yearSelect"></select></div>
+    <div class="field" id="fortnightWeekField" hidden><label for="fortnightWeek">Semaine de fin des 2 semaines</label><select id="fortnightWeek"></select></div>
     <button class="btn" id="refreshBtn" type="button">↻ Actualiser</button>
     <div class="note" id="periodLabel" style="grid-column:1/-1;margin:0">Chargement…</div>
   </section>
+  <div id="standardReport">
   <section class="stats" aria-label="Indicateurs principaux"><div class="stat"><span class="stat-icon">▤</span><div class="stat-art stat-art-km" aria-hidden="true"></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
 <div class="stat"><span class="stat-icon">◉</span><div class="stat-art stat-art-drive" aria-hidden="true"></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
 <div class="stat"><span class="stat-icon">◴</span><div class="stat-art stat-art-amp" aria-hidden="true"></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
 <div class="stat"><span class="stat-icon">▦</span><div class="stat-art stat-art-days" aria-hidden="true"></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div></section>
 
-  <section class="card fortnight-card" aria-label="Contrôle réglementaire des deux semaines consécutives">
+  <section class="card fortnight-card" id="fortnightPanel" hidden aria-label="Contrôle réglementaire des deux semaines consécutives">
     <div class="fortnight-head">
       <div><div class="fortnight-title">⚖️ Contrôle des 2 semaines consécutives</div><div class="fortnight-sub">Temps de conduite saisi dans « Ma journée » · semaine lundi à dimanche</div></div>
-      <div class="fortnight-controls">
-        <div class="field"><label for="fortnightWeek">Choisir la semaine de fin</label><select id="fortnightWeek"></select></div>
-      </div>
+      <div class="fortnight-sub">Sélection de la période dans les filtres ci-dessus</div>
     </div>
     <div class="fortnight-grid">
       <div class="fortnight-week"><span id="weekOneLabel">Semaine précédente</span><strong id="weekOneDrive">—</strong><small>Limite hebdomadaire : 56 h</small><div class="fortnight-meter"><span id="weekOneBar" style="width:0%"></span></div></div>
@@ -145,6 +146,7 @@ a{color:inherit;text-decoration:none}
       <div class="detail"><span class="detail-icon">🚆</span><span>Journées avec train</span><strong id="trainTotal">—</strong></div>
     </div>
   </section>
+  </div>
   <div class="status" id="syncStatus" aria-live="polite"></div>
   <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn" id="printBtn" type="button">Imprimer le récapitulatif</button></div>
 </main>
@@ -183,11 +185,11 @@ alert.textContent=msg+(missing?' · '+missing+' jour(s) sans saisie sur les 14 j
 
 function setup(){const ms=$('monthSelect'),ys=$('yearSelect');for(let y=today.getFullYear();y>=today.getFullYear()-10;y--){let o=document.createElement('option');o.value=String(y);o.textContent=String(y);ys.append(o)}for(let y=today.getFullYear();y>=today.getFullYear()-10;y--)for(let m=11;m>=0;m--){let v=y+'-'+String(m+1).padStart(2,'0'),o=document.createElement('option');o.value=v;o.textContent=months[m]+' '+y;ms.append(o)}ms.value=currentMonth;ys.value=String(today.getFullYear())}
 function selected(){const t=$('periodType').value;return Object.entries(allEntries).filter(([d,e])=>meaningful(e)&&(t==='month'?d.slice(0,7)===$('monthSelect').value:d.slice(0,4)===$('yearSelect').value)).sort(([a],[b])=>a.localeCompare(b))}
-function render(){const t=$('periodType').value;renderFortnight();$('monthField').hidden=t!=='month';$('yearField').hidden=t!=='year';$('monthTab').classList.toggle('active',t==='month');$('yearTab').classList.toggle('active',t==='year');$('monthTab').setAttribute('aria-pressed',String(t==='month'));$('yearTab').setAttribute('aria-pressed',String(t==='year'));const rows=selected(),label=t==='month'?$('monthSelect').selectedOptions[0]?.textContent:$('yearSelect').value;$('periodLabel').textContent=label+' · '+rows.length+' journée(s) renseignée(s)';
+function render(){const t=$('periodType').value;const isFortnight=t==='fortnight';$('monthField').hidden=t!=='month';$('yearField').hidden=t!=='year';$('fortnightWeekField').hidden=!isFortnight;$('fortnightPanel').hidden=!isFortnight;$('standardReport').hidden=isFortnight;$('monthTab').classList.toggle('active',t==='month');$('yearTab').classList.toggle('active',t==='year');$('fortnightTab').classList.toggle('active',isFortnight);$('monthTab').setAttribute('aria-pressed',String(t==='month'));$('yearTab').setAttribute('aria-pressed',String(t==='year'));$('fortnightTab').setAttribute('aria-pressed',String(isFortnight));if(isFortnight){renderFortnight();$('periodLabel').textContent='Contrôle réglementaire · 2 semaines consécutives';return}const rows=selected(),label=t==='month'?$('monthSelect').selectedOptions[0]?.textContent:$('yearSelect').value;$('periodLabel').textContent=label+' · '+rows.length+' journée(s) renseignée(s)';
 let km=0,dr=0,amp=0,kd=0,dd=0,ad=0,trans=0,trains=0;const clients=new Set();
 rows.forEach(([date,e])=>{const k=kmFor(e),d=minutes(e.drive),a=ampFor(e),ts=validTransports(e);if(k!==null){km+=k;kd++}if(d){dr+=d;dd++}if(a!==null){amp+=a;ad++}trans+=ts.length;if(e.train)trains++;ts.forEach(x=>{if(x.client&&String(x.client).trim())clients.add(String(x.client).trim().toLocaleLowerCase('fr-FR'))})});
 $('kmTotal').textContent=fmt(km)+' km';$('driveTotal').textContent=duration(dr);$('ampTotal').textContent=duration(amp);$('daysTotal').textContent=String(rows.length);$('transportTotal').textContent=String(trans);$('clientTotal').textContent=String(clients.size);$('kmAverage').textContent=kd?fmt(Math.round(km/kd*10)/10)+' km':'—';$('driveAverage').textContent=dd?duration(Math.round(dr/dd)):'—';$('ampAverage').textContent=ad?duration(Math.round(amp/ad)):'—';$('trainTotal').textContent=String(trains)}
-$('periodType').value='month';populateFortnightWeeks();$('fortnightWeek').addEventListener('change',renderFortnight);$('monthTab').addEventListener('click',()=>{$('periodType').value='month';render()});$('yearTab').addEventListener('click',()=>{$('periodType').value='year';render()});$('monthSelect').addEventListener('change',render);$('yearSelect').addEventListener('change',render);$('refreshBtn').addEventListener('click',()=>{allEntries=localEntries();render();syncCloud()});$('printBtn').onclick=()=>window.print();setup();allEntries=localEntries();render();
+$('periodType').value='month';populateFortnightWeeks();$('fortnightWeek').addEventListener('change',renderFortnight);$('monthTab').addEventListener('click',()=>{$('periodType').value='month';render()});$('yearTab').addEventListener('click',()=>{$('periodType').value='year';render()});$('fortnightTab').addEventListener('click',()=>{$('periodType').value='fortnight';render()});$('monthSelect').addEventListener('change',render);$('yearSelect').addEventListener('change',render);$('refreshBtn').addEventListener('click',()=>{allEntries=localEntries();render();syncCloud()});$('printBtn').onclick=()=>window.print();setup();allEntries=localEntries();render();
 async function syncCloud(){try{const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');const sb=mod.createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');const auth=await sb.auth.getUser();if(auth.error)throw auth.error;if(!auth.data.user){$('syncStatus').textContent='Données affichées depuis cet appareil. Connecte-toi pour récupérer les journées synchronisées.';return}const res=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',auth.data.user.id).order('work_date',{ascending:true});if(res.error)throw res.error;const merged=localEntries();(res.data||[]).forEach(row=>{if(meaningful(row.entry))merged[row.work_date]=row.entry});allEntries=merged;localStorage.setItem(KEY,JSON.stringify(merged));render();$('syncStatus').textContent='Journées synchronisées avec ton compte en ligne ✓'}catch(e){$('syncStatus').textContent='Données locales affichées. Synchronisation en ligne indisponible : '+(e.message||'erreur réseau')}}
 syncCloud();
 </script>
