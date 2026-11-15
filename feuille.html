@@ -790,7 +790,6 @@ try {
     const current = currentWeekStart();
     setWeekDates(current);
     updateWeekPicker(weeks);
-    if (weekPicker) weekPicker.value = current;
     weekPicker?.addEventListener('change', async () => {
       clearTimeout(weeklySaveTimer);
       const option = weekPicker.selectedOptions[0];
