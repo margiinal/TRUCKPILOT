@@ -134,7 +134,7 @@ function show(e){
  $('content').innerHTML=`
   <div class="date">${icons.calendar}<span>${esc(date.charAt(0).toLocaleUpperCase('fr-FR')+date.slice(1))}</span></div>
   <div class="identity">
-   <span class="driver"><b>Chauffeur :</b> ${esc((()=>{try{const p=JSON.parse(localStorage.getItem('truckpilote_profile')||'{}');return [p.firstname,p.lastname].filter(Boolean).join(' ')||'—'}catch{return '—'}})())}</span>
+   <span class="driver"><b>Chauffeur :</b> ${esc((()=>{try{const p=JSON.parse(localStorage.getItem('truckpilote_profile')||'{}');return [p.firstname,p.lastname?String(p.lastname).toLocaleUpperCase('fr-FR'):''].filter(Boolean).join(' ')||'—'}catch{return '—'}})())}</span>
    <span>${icons.truck}<b>Immatriculation :</b> ${esc(e.tractor||'—')}</span>
    <span>${icons.box}<b>Lieu / Remarque :</b> ${esc(e.place||'—')}</span>
   </div>
