@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 360" role="img" aria-label="Quatre camions poids lourds sur une route au coucher du soleil : frigorifique, porte-conteneurs, bâché et benne">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#071a2b"/><stop offset=".58" stop-color="#174b70"/><stop offset="1" stop-color="#f28a43"/></linearGradient>
+ <radialGradient id="sun"><stop stop-color="#fff4b0"/><stop offset=".35" stop-color="#ffb34f" stop-opacity=".8"/><stop offset="1" stop-color="#ff8c35" stop-opacity="0"/></radialGradient>
+ <linearGradient id="road" x2="0" y2="1"><stop stop-color="#17344a"/><stop offset="1" stop-color="#06111d"/></linearGradient>
+ <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#4fe4ff"/><stop offset="1" stop-color="#102d46"/></linearGradient>
+ <linearGradient id="steel" x2="0" y2="1"><stop stop-color="#f5fbff"/><stop offset=".5" stop-color="#8faec0"/><stop offset="1" stop-color="#405d70"/></linearGradient>
+ <linearGradient id="blue" x2="0" y2="1"><stop stop-color="#28cfff"/><stop offset="1" stop-color="#07528c"/></linearGradient>
+ <linearGradient id="red" x2="0" y2="1"><stop stop-color="#f05b55"/><stop offset="1" stop-color="#7b1d2b"/></linearGradient>
+ <linearGradient id="yellow" x2="0" y2="1"><stop stop-color="#ffe36b"/><stop offset="1" stop-color="#bd7c12"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="7"/></filter>
+ <filter id="shadow"><feGaussianBlur stdDeviation="9"/></filter>
+</defs>
+<rect width="1680" height="360" fill="url(#sky)"/>
+<circle cx="840" cy="155" r="160" fill="url(#sun)"/>
+<path d="M0 215 Q190 155 350 204T690 190T1030 205T1360 178T1680 210V278H0Z" fill="#102d43" opacity=".8"/>
+<path d="M0 245 Q220 218 430 248T860 236T1260 245T1680 225V285H0Z" fill="#071a29" opacity=".8"/>
+<path d="M0 278H1680V360H0Z" fill="url(#road)"/>
+<path d="M0 286H1680" stroke="#00c9ff" stroke-width="3" opacity=".55"/>
+<path d="M0 339H1680" stroke="#0bbef5" stroke-width="2" opacity=".35"/>
+<path d="M0 318H1680" stroke="#c5e8f7" stroke-width="3" stroke-dasharray="54 38" opacity=".45"/>
+<!-- glow beneath the fleet -->
+<ellipse cx="850" cy="294" rx="710" ry="26" fill="#00bfff" opacity=".25" filter="url(#glow)"/>
+<!-- refrigerated truck -->
+<g transform="translate(105 65)">
+ <ellipse cx="180" cy="236" rx="188" ry="13" fill="#020a12" opacity=".7" filter="url(#shadow)"/>
+ <rect x="82" y="83" width="240" height="132" rx="8" fill="url(#steel)" stroke="#d7f5ff" stroke-width="3"/>
+ <rect x="93" y="94" width="218" height="12" rx="3" fill="#f7ffff" opacity=".7"/>
+ <path d="M105 120H295M105 132H295M105 144H295M105 156H295M105 168H295M105 180H295" stroke="#45677d" stroke-width="2" opacity=".65"/>
+ <rect x="16" y="139" width="85" height="77" rx="12" fill="url(#steel)" stroke="#d6f5ff" stroke-width="3"/>
+ <path d="M26 148H78L91 174H26Z" fill="url(#glass)" stroke="#d8f7ff" stroke-width="2"/>
+ <path d="M17 187H99V215H17Z" fill="#567b91"/>
+ <rect x="23" y="194" width="17" height="8" rx="3" fill="#fff2c0"/><rect x="79" y="194" width="15" height="8" rx="3" fill="#fff2c0"/>
+ <rect x="160" y="69" width="66" height="14" rx="5" fill="#d8eff8"/><path d="M168 72V81M179 72V81M190 72V81M201 72V81M212 72V81" stroke="#64879a" stroke-width="2"/>
+ <text x="203" y="159" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#17364b" text-anchor="middle">FRIGORIFIQUE</text>
+ <g fill="#07121d" stroke="#91b4c8" stroke-width="5"><circle cx="62" cy="222" r="20"/><circle cx="62" cy="222" r="8" fill="#a9c8d7"/><circle cx="268" cy="222" r="20"/><circle cx="268" cy="222" r="8" fill="#a9c8d7"/></g>
+ <path d="M5 216H322" stroke="#b9e8fa" stroke-width="4"/>
+</g>
+<!-- container truck -->
+<g transform="translate(445 47)">
+ <ellipse cx="195" cy="254" rx="212" ry="14" fill="#020a12" opacity=".7" filter="url(#shadow)"/>
+ <rect x="104" y="77" width="264" height="151" rx="5" fill="#a43c31" stroke="#ffb49a" stroke-width="3"/>
+ <path d="M122 82V223M144 82V223M166 82V223M188 82V223M210 82V223M232 82V223M254 82V223M276 82V223M298 82V223M320 82V223M342 82V223" stroke="#f5a18a" stroke-width="3" opacity=".55"/>
+ <rect x="16" y="148" width="104" height="80" rx="12" fill="url(#blue)" stroke="#a5edff" stroke-width="3"/>
+ <path d="M29 157H86L106 185H29Z" fill="url(#glass)" stroke="#d6faff" stroke-width="2"/>
+ <path d="M15 196H115V228H15Z" fill="#164d71"/>
+ <rect x="28" y="203" width="16" height="8" rx="3" fill="#fff3bf"/><rect x="91" y="203" width="16" height="8" rx="3" fill="#fff3bf"/>
+ <text x="237" y="157" font-family="Arial,sans-serif" font-size="17" font-weight="800" fill="#ffe5d6" text-anchor="middle">CONTENEUR</text>
+ <path d="M368 220H397" stroke="#c9e4ef" stroke-width="7"/>
+ <g fill="#07121d" stroke="#91b4c8" stroke-width="5"><circle cx="64" cy="236" r="20"/><circle cx="64" cy="236" r="8" fill="#a9c8d7"/><circle cx="320" cy="236" r="20"/><circle cx="320" cy="236" r="8" fill="#a9c8d7"/></g>
+</g>
+<!-- curtain-sided truck -->
+<g transform="translate(855 66)">
+ <ellipse cx="185" cy="237" rx="205" ry="13" fill="#020a12" opacity=".7" filter="url(#shadow)"/>
+ <rect x="83" y="83" width="252" height="132" rx="8" fill="#d6e1e8" stroke="#f5fbff" stroke-width="3"/>
+ <path d="M100 92V207M123 92V207M146 92V207M169 92V207M192 92V207M215 92V207M238 92V207M261 92V207M284 92V207M307 92V207" stroke="#8da8b7" stroke-width="2" opacity=".75"/>
+ <path d="M94 108H325" stroke="#f8ffff" stroke-width="6" opacity=".8"/>
+ <rect x="13" y="141" width="91" height="74" rx="12" fill="url(#red)" stroke="#ffc0b5" stroke-width="3"/>
+ <path d="M25 149H79L94 177H25Z" fill="url(#glass)" stroke="#e5fbff" stroke-width="2"/>
+ <path d="M13 185H101V215H13Z" fill="#6f2938"/>
+ <rect x="22" y="193" width="16" height="8" rx="3" fill="#fff3bf"/><rect x="83" y="193" width="15" height="8" rx="3" fill="#fff3bf"/>
+ <text x="210" y="160" font-family="Arial,sans-serif" font-size="16" font-weight="800" fill="#28465a" text-anchor="middle">BÂCHÉ</text>
+ <g fill="#07121d" stroke="#91b4c8" stroke-width="5"><circle cx="60" cy="222" r="20"/><circle cx="60" cy="222" r="8" fill="#a9c8d7"/><circle cx="293" cy="222" r="20"/><circle cx="293" cy="222" r="8" fill="#a9c8d7"/></g>
+</g>
+<!-- tipper truck -->
+<g transform="translate(1260 77)">
+ <ellipse cx="170" cy="226" rx="182" ry="13" fill="#020a12" opacity=".7" filter="url(#shadow)"/>
+ <path d="M104 87L315 87L335 201L115 201Z" fill="url(#yellow)" stroke="#fff0a1" stroke-width="3"/>
+ <path d="M120 101L302 101M124 119L306 119M128 137L310 137M132 155L314 155M136 173L318 173" stroke="#94631b" stroke-width="3" opacity=".55"/>
+ <path d="M15 145Q15 132 29 132H102L124 169V216H15Z" fill="url(#yellow)" stroke="#fff0a1" stroke-width="3"/>
+ <path d="M28 143H80L105 171H28Z" fill="url(#glass)" stroke="#e4fbff" stroke-width="2"/>
+ <path d="M15 185H119V216H15Z" fill="#8c5c17"/>
+ <rect x="23" y="192" width="17" height="8" rx="3" fill="#fff3bf"/><rect x="100" y="192" width="15" height="8" rx="3" fill="#fff3bf"/>
+ <text x="220" y="153" font-family="Arial,sans-serif" font-size="17" font-weight="800" fill="#493313" text-anchor="middle">BENNE</text>
+ <g fill="#07121d" stroke="#91b4c8" stroke-width="5"><circle cx="64" cy="223" r="20"/><circle cx="64" cy="223" r="8" fill="#a9c8d7"/><circle cx="294" cy="223" r="20"/><circle cx="294" cy="223" r="8" fill="#a9c8d7"/></g>
+</g>
+<path d="M0 16H1680" stroke="#1dd5ff" stroke-width="2" opacity=".55"/>
+</svg>
