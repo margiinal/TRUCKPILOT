@@ -19,7 +19,7 @@
 const KEY='truckpilote_daily_entries_v1',months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'], $=id=>document.getElementById(id),today=new Date();let allEntries={};const currentMonth=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0');
 function localEntries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
 function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!==''))return true;if(['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true))return true;return Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''))}
-function minutes(v){if(!/^\\d{2}:\\d{2}$/.test(String(v||'')))return 0;const a=v.split(':').map(Number);return a[0]*60+a[1]}
+function minutes(v){if(!/^\d{2}:\d{2}$/.test(String(v||'')))return 0;const a=v.split(':').map(Number);return a[0]*60+a[1]}
 function duration(n){if(!n)return '0 h';const h=Math.floor(n/60),m=n%60;return h?(m?h+' h '+String(m).padStart(2,'0'):h+' h'):m+' min'}
 function fmt(n){return Number.isFinite(n)?n.toLocaleString('fr-FR'):'—'}
 function kmFor(e){const a=Number(e.kmstart),b=Number(e.kmend);return String(e.kmstart??'').trim()!==''&&String(e.kmend??'').trim()!==''&&Number.isFinite(a)&&Number.isFinite(b)&&b>=a?b-a:null}
