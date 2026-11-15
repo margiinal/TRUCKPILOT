@@ -136,7 +136,7 @@ function show(e){
    <button class="more" onclick="location.href='ma_journee.html?date=${encodeURIComponent(e.date)}'">•••</button>
   </div>`;
 }
-const params=new URLSearchParams(location.search);let date=params.get('date');let all={};try{all=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}if(!date)date=Object.keys(all).sort().pop();show(all[date]);if(params.get('autoprint')==='1')setTimeout(()=>window.print(),500);
+const params=new URLSearchParams(location.search);let date=params.get('date');let all={};try{all=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}if(!date)date=Object.keys(all).sort().pop();show(all[date]);
 </script>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -147,7 +147,7 @@ const supabase=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publi
  const KEY='truckpilote_daily_entries_v1';
  let local={};
  try{local=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}
- if(local[date]) return;
+ if(local[date]){if(params.get('autoprint')==='1')setTimeout(()=>window.print(),350);return;}
  if(!date) return;
  try{
   const {data:{user},error:userError}=await supabase.auth.getUser();
