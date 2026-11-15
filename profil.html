@@ -40,7 +40,8 @@ try{
 document.getElementById('form').addEventListener('submit',async e=>{
  e.preventDefault();const out={};keys.forEach(k=>out[k]=document.getElementById(k).value.trim());localStorage.setItem('truckpilote_profile',JSON.stringify(out));
  if(!user){status.textContent='Profil local enregistré. Connecte-toi pour sauvegarder les primes.';return}
- const custom_lists={};Object.entries(listFields).forEach(([field,key])=>{custom_lists[key]=document.getElementById(field).value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter((x,i,a)=>a.findIndex(y=>y.toLocaleLowerCase()===x.toLocaleLowerCase())===i)});\n const primes=[];for(let i=1;i<=3;i++){const name=document.getElementById('prime'+i+'Name').value.trim();const rate=Math.max(0,Number(document.getElementById('prime'+i+'Rate').value)||0);const emoji=document.getElementById('prime'+i+'Emoji').value.trim();primes.push({id:'prime'+i,name,emoji,rate,enabled:document.getElementById('prime'+i+'Enabled').checked&&!!name})}
+ const custom_lists={};Object.entries(listFields).forEach(([field,key])=>{custom_lists[key]=document.getElementById(field).value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter((x,i,a)=>a.findIndex(y=>y.toLocaleLowerCase()===x.toLocaleLowerCase())===i)});
+ const primes=[];for(let i=1;i<=3;i++){const name=document.getElementById('prime'+i+'Name').value.trim();const rate=Math.max(0,Number(document.getElementById('prime'+i+'Rate').value)||0);const emoji=document.getElementById('prime'+i+'Emoji').value.trim();primes.push({id:'prime'+i,name,emoji,rate,enabled:document.getElementById('prime'+i+'Enabled').checked&&!!name})}
  status.textContent='Enregistrement…';const {error}=await sb.auth.updateUser({data:{custom_primes:primes,custom_lists}});
  status.textContent=error?'Erreur : '+error.message:'Profil et primes enregistrés sur ton compte ✓';
 });
