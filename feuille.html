@@ -743,10 +743,9 @@ async function loadWeeklyCloud(announce = true) {
     const matching = (allWeeks || []).filter(row =>
       row.sheet_data?.format === 'my-truck-mate-week-v1' &&
       Array.isArray(row.sheet_data.fields) &&
-      row.sheet_data.fields[0]?.value === displayStart
+      (row.sheet_data.week_start || row.sheet_data.fields[1]?.value || row.week_start) === displayStart
     );
-    const exact = (allWeeks || []).find(row => row.week_start === weekStart);
-    const data = matching.sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0] || exact;
+    const data = matching.sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0];
     if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
       applyWeeklySnapshot(data.sheet_data.fields);
       setWeekDates(displayStart);
@@ -766,6 +765,7 @@ async function saveWeeklyCloud() {
     week_start: weekStart,
     sheet_data: {
       format: 'my-truck-mate-week-v1',
+      week_start: weekStart,
       fields: weeklySnapshot()
     },
     updated_at: new Date().toISOString()
@@ -795,7 +795,7 @@ try {
       .eq('user_id', weeklyUser.id)
       .order('week_start', { ascending: false });
     if (weeksError) weeklySetStatus('Impossible de charger la liste des anciennes semaines : ' + weeksError.message, true);
-    const weeks = (savedWeeks || []).map(row => row.sheet_data?.fields?.[0]?.value || row.week_start).filter(Boolean);
+    const weeks = (savedWeeks || []).map(row => row.sheet_data?.week_start || row.sheet_data?.fields?.[1]?.value || row.week_start).filter(Boolean);
     const current = currentWeekStart();
     setWeekDates(current);
     updateWeekPicker(weeks);
