@@ -256,6 +256,8 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 .tile.tile-history:active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
 @media(max-width:600px){.tile.tile-history{min-height:158px;background-position:center center!important}}
 
+/* Tuile Mon récapitulatif */
+.tile.tile-recap{grid-column:span 2;min-height:178px!important;padding:0!important;overflow:hidden;background:radial-gradient(circle at 78% 20%,#0d92d0aa,transparent 34%),linear-gradient(135deg,#0b2941,#061727 78%)!important;border:1px solid #19bce9!important;display:flex;align-items:center;justify-content:center}.tile.tile-recap .recap-art{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;width:100%;height:100%;padding:15px;text-align:center}.tile.tile-recap .recap-art>span{display:grid;place-items:center;width:55px;height:55px;border:2px solid #0dcaf5;border-radius:16px;color:#13d5fa;font-size:35px;font-weight:900;box-shadow:0 0 20px #00bfff55}.tile.tile-recap strong{font-size:17px;color:#fff}.tile.tile-recap small{font-size:11px;color:#b8e8fb}@media(max-width:600px){.tile.tile-recap{min-height:158px!important}.tile.tile-recap strong{font-size:12px}.tile.tile-recap small{font-size:9px}.tile.tile-recap .recap-art>span{width:42px;height:42px;font-size:27px}}
 /* MYTRUCK MATE — accueil premium */
 :root{--cyan:#08c9f5;--electric:#078fe5;--line:#1b638b}
 body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -285,7 +287,7 @@ body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-
 .grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .tile{grid-column:span 2;min-height:180px!important;border-radius:17px!important;border:1px solid #159ce0!important;box-shadow:inset 0 1px #ffffff40,0 5px 0 #032a49,0 10px 18px #0007!important;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
 .tile:hover{transform:translateY(-3px);filter:brightness(1.08);box-shadow:inset 0 1px #ffffff60,0 6px 0 #032a49,0 13px 24px #0008,0 0 16px #00bfff3b!important}
-.tile.tile-history,.tile.tile-profile{grid-column:span 3}
+.tile.tile-history,.tile.tile-profile,.tile.tile-recap{grid-column:span 2}
 .tile.tile-day,.tile.tile-week,.tile.tile-fees,.tile.tile-history,.tile.tile-profile{background-size:cover!important;background-position:center!important}
 .accountbar-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:17px 0 10px;padding:12px 16px;border:1px solid #1473a5;border-radius:16px;background:linear-gradient(110deg,#123650,#091d30);box-shadow:0 7px 18px #0004}
 .account-identity{display:flex;align-items:center;gap:12px;min-width:0}
@@ -359,6 +361,7 @@ body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-
       <a class="tile tile-day" aria-label="Ma journée, ouvrir la saisie de journée" href="ma_journee.html"><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
       <a class="tile tile-week" href="feuille.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#week"></use></svg></div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
       <a class="tile tile-fees" href="frais.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#fees"></use></svg></div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
+      <a class="tile tile-recap" href="recapitulatif.html" aria-label="Mon récapitulatif, statistiques de mon activité"><div class="recap-art"><span>↗</span><strong>Mon récapitulatif</strong><small>Mes kilomètres et mon temps de travail</small></div></a>
       <a class="tile tile-history" href="historique.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#history"></use></svg></div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
       <a class="tile tile-profile" href="profil.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#profile"></use></svg></div><b>Mon profil</b><span>Mes informations personnelles</span></a>
     </div>
