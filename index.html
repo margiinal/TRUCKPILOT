@@ -295,6 +295,28 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 }
 
 @media(max-width:600px){.welcome{display:block;padding:17px 15px;min-height:112px;font-size:24px;line-height:1.2}.welcome:after{right:12px;top:8px;font-size:13px}.welcome #helloName{white-space:nowrap}.sub{margin-top:6px;padding-left:15px;font-size:10px}}
+
+/* FIX TABLEAU DE BORD — grille régulière et cartes non écrasées */
+@media (min-width:900px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+  .grid>.tile,
+  .grid>.tile.tile-recap,
+  .grid>.tile.tile-history,
+  .grid>.tile.tile-profile{grid-column:auto!important;min-width:0;width:100%;min-height:190px!important}
+  .tile:not(.tile-day){background-size:cover}
+}
+@media (min-width:601px) and (max-width:899px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .grid>.tile,
+  .grid>.tile.tile-recap,
+  .grid>.tile.tile-history,
+  .grid>.tile.tile-profile{grid-column:auto!important;min-width:0;width:100%;min-height:175px!important}
+}
+@media (max-width:600px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .grid>.tile.tile-recap{grid-column:auto!important}
+}
+
 </style>
 </head>
 <body>
