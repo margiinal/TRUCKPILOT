@@ -200,7 +200,7 @@ async function loadData(){
   const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
   const sb=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
   const {data:{user},error:authError}=await sb.auth.getUser();if(authError)throw authError;
-  if(user){window.customPrimeConfig=user.user_metadata?.custom_primes||[];const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{if(meaningful(r.entry))entries[r.work_date]=r.entry});localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));msg='Journées récupérées depuis Supabase ✓'}
+  if(user){window.customPrimeConfig=user.user_metadata?.custom_primes||[];const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{entries[r.work_date]=r.entry||{date:r.work_date}});localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));msg='Journées récupérées depuis Supabase ✓'}
   else msg='Mode local : connecte-toi à l’accueil pour récupérer les journées en ligne.';
  }catch(e){msg='Données locales affichées. Synchronisation en ligne indisponible : '+(e.message||'erreur')}
  $('dataStatus').textContent=msg;calculate();
