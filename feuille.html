@@ -721,9 +721,9 @@ async function loadDailyHistoryWeek(weekStart) {
     if (control) control.value = value == null ? '' : String(value);
   };
   const clearTable = () => {
-    weeklyFields().forEach(el => {
+    document.querySelectorAll('#hb input, #tb input, #tb select').forEach(el => {
       if (el.type === 'checkbox') el.checked = false;
-      else if (el.type !== 'file' && !el.classList.contains('day-choice')) el.value = '';
+      else if (!el.classList.contains('day-choice')) el.value = '';
     });
     document.querySelectorAll('#transport .day-choice').forEach(el => el.value = 'SAMEDI');
   };
