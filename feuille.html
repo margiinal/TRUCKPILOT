@@ -688,7 +688,7 @@ function importDailyEntriesForWeek(weekStart){
       const place=workRow.querySelector('td:nth-child(9) input');if(place)place.value=entry.place||'';
       ['breakfast','lunch','dinner','night'].forEach(k=>{const el=workRow.querySelector('.'+k);if(el)el.checked=!!entry[k]});
       const rows=transportsByDay[day]||(transportsByDay[day]=[]);
-      (entry.transports||[]).forEach(t=>rows.push({...t,train:!!entry.train}));
+      (entry.transports||[]).forEach(t=>rows.push({...t,train:!!t.train}));
     });
     Object.entries(transportsByDay).forEach(([day,items])=>{
       const allRows=[...document.querySelectorAll('#tb tr')];
@@ -701,7 +701,7 @@ function importDailyEntriesForWeek(weekStart){
         const inputs=[...row.querySelectorAll('input:not([type="checkbox"]), select')];
         const vals=[t.donor,t.client,t.city,t.container,t.seal,t.size,t.chassis,t.io];
         inputs.forEach((el,j)=>{if(j<vals.length)el.value=vals[j]||''});
-        const check=dayRows[0]?.querySelector('.train-check input');if(check&&t.train)check.checked=true;
+        const check=dayRows[0]?.querySelector('.train-check input');if(check)check.checked=items.filter(item=>item.train===true).length>=2;
       });
     });
     const saturdayChoice=document.querySelector('#transport .day-choice');
@@ -872,13 +872,13 @@ async function loadDailyHistoryWeek(weekStart) {
     });
     if (entry.tractor) latestTractor = entry.tractor;
     const validTransports = (entry.transports || []).filter(t =>
-      t && Object.values(t).some(value => String(value ?? '').trim() !== '')
+      t && Object.entries(t).some(([key,value]) => key !== 'train' && String(value ?? '').trim() !== '')
     );
     transportsByDay[day] = validTransports;
     const first = transportRows[index*2];
     if (first) {
       const train = first.querySelector('.train-check input');
-      if (train) train.checked = entry.train === true;
+      if (train) train.checked = entry.train === true || Number(entry.trainCount||0)>0 || validTransports.filter(t=>t.train===true).length>=2;
     }
     if (day === 'DIMANCHE') {
       const choice = first?.querySelector('.day-choice');
