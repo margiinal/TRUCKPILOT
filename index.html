@@ -256,8 +256,15 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 .tile.tile-history:active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 #03294a,0 5px 10px #0008}
 @media(max-width:600px){.tile.tile-history{min-height:158px;background-position:center center!important}}
 
-/* Tuile Mon récapitulatif */
-.tile.tile-recap{grid-column:span 2;min-height:178px!important;padding:0!important;overflow:hidden;background:radial-gradient(circle at 78% 20%,#0d92d0aa,transparent 34%),linear-gradient(135deg,#0b2941,#061727 78%)!important;border:1px solid #19bce9!important;display:flex;align-items:center;justify-content:center}.tile.tile-recap .recap-art{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;width:100%;height:100%;padding:15px;text-align:center}.tile.tile-recap .recap-art>span{display:grid;place-items:center;width:55px;height:55px;border:2px solid #0dcaf5;border-radius:16px;color:#13d5fa;font-size:35px;font-weight:900;box-shadow:0 0 20px #00bfff55}.tile.tile-recap strong{font-size:17px;color:#fff}.tile.tile-recap small{font-size:11px;color:#b8e8fb}@media(max-width:600px){.tile.tile-recap{min-height:158px!important}.tile.tile-recap strong{font-size:12px}.tile.tile-recap small{font-size:9px}.tile.tile-recap .recap-art>span{width:42px;height:42px;font-size:27px}}
+/* Tuile Mon récapitulatif — cockpit à gauche, intitulé à droite */
+.tile.tile-recap{grid-column:span 2;min-height:178px!important;padding:0!important;overflow:hidden;background-image:linear-gradient(90deg,transparent 0%,transparent 39%,#04152222 49%,#041522e8 66%,#041522 100%),url('assets/3d/recap-cockpit.svg')!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;border:1px solid #19bce9!important;display:flex;align-items:center;justify-content:flex-end;box-shadow:inset 0 1px #ffffff30,0 5px 0 #032a49,0 10px 18px #0007!important}
+.tile.tile-recap:before{background:none!important}
+.tile.tile-recap .recap-art{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:7px;width:49%;height:100%;padding:12px 16px 12px 4px;text-align:right}
+.tile.tile-recap .recap-art>span{display:none!important}
+.tile.tile-recap strong{font-size:clamp(15px,1.25vw,20px);line-height:1.08;color:#fff;font-weight:950;text-shadow:0 2px 8px #00111f,0 0 12px #00cfff55}
+.tile.tile-recap small{font-size:11px;line-height:1.3;color:#b8e8fb;text-shadow:0 1px 5px #00111f}
+.tile.tile-recap:active{transform:translateY(3px)}
+@media(max-width:600px){.tile.tile-recap{min-height:158px!important;background-position:center!important}.tile.tile-recap .recap-art{width:51%;padding-right:10px;gap:5px}.tile.tile-recap strong{font-size:12px}.tile.tile-recap small{font-size:9px}}
 /* MYTRUCK MATE — accueil premium */
 :root{--cyan:#08c9f5;--electric:#078fe5;--line:#1b638b}
 body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -361,7 +368,7 @@ body{background:radial-gradient(ellipse at 50% -20%,#123d5d 0,#071522 62%);font-
       <a class="tile tile-day" aria-label="Ma journée, ouvrir la saisie de journée" href="ma_journee.html"><b>Ma journée</b><span>Saisir horaires, transports et kilomètres</span></a>
       <a class="tile tile-week" href="feuille.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#week"></use></svg></div><b>Ma feuille de semaine</b><span>Consulter et imprimer mon suivi</span></a>
       <a class="tile tile-fees" href="frais.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#fees"></use></svg></div><b>Mes frais</b><span>Indemnités et récapitulatif mensuel</span></a>
-      <a class="tile tile-recap" href="recapitulatif.html" aria-label="Mon récapitulatif, statistiques de mon activité"><div class="recap-art"><span>↗</span><strong>Mon récapitulatif</strong><small>Mes kilomètres et mon temps de travail</small></div></a>
+      <a class="tile tile-recap" href="recapitulatif.html" aria-label="Mon récapitulatif, statistiques de mon activité"><div class="recap-art"><strong>Mon récapitulatif</strong><small>Mes kilomètres et mon temps de travail</small></div></a>
       <a class="tile tile-history" href="historique.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#history"></use></svg></div><b>Mon historique</b><span>Retrouver mes journées par période</span></a>
       <a class="tile tile-profile" href="profil.html"><div class="ico"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="assets/3d/dashboard-icons.svg#profile"></use></svg></div><b>Mon profil</b><span>Mes informations personnelles</span></a>
     </div>
