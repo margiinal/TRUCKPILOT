@@ -317,6 +317,24 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
   .grid>.tile.tile-recap{grid-column:auto!important}
 }
 
+
+/* Vignette « Mon récapitulatif » : afficher toute l'illustration, sans recadrage */
+.grid>.tile.tile-recap{
+  grid-column:auto!important;
+  min-width:0;
+  width:100%;
+  min-height:190px!important;
+  background-image:url('assets/3d/recapitulatif-vignette.svg')!important;
+  background-size:100% 100%!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  overflow:hidden;
+}
+.grid>.tile.tile-recap:before{display:none!important}
+@media(max-width:600px){
+  .grid>.tile.tile-recap{min-height:145px!important}
+}
+
 </style>
 </head>
 <body>
