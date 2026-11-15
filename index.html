@@ -382,6 +382,24 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 .banner-greeting{left:64%!important;right:auto!important;top:15%!important;width:23%!important;height:34%!important;box-sizing:border-box!important;background:linear-gradient(110deg,#06182b70,#04162980)!important;border:1px solid #28caff66!important;backdrop-filter:blur(2px)!important;z-index:4!important;}
 .wrap{position:relative!important;z-index:1!important;padding-top:28px!important;}
 @media(max-width:600px){.top{height:clamp(205px,57vw,275px)!important}.banner-image{height:auto!important;object-fit:contain!important;object-position:top center!important}.banner-greeting{left:69%!important;right:auto!important;top:13%!important;width:27%!important;height:34%!important;padding:3px 4px!important}.banner-greeting .welcome-title{font-size:clamp(9px,2.3vw,13px)!important}.banner-greeting .sub{font-size:clamp(6px,1.55vw,9px)!important}.wrap{padding-top:20px!important}}
+
+/* Correctif final prioritaire : le tableau de bord doit passer devant le fond du bandeau */
+@media(min-width:900px){
+ header.top{z-index:1!important}
+ main.wrap{position:relative!important;z-index:30!important;padding-top:0!important}
+ #appSection{position:relative!important;z-index:31!important;display:block!important;overflow:visible!important}
+ #appSection .dashboard-heading{display:block!important;position:relative!important;z-index:32!important;margin-top:-118px!important;margin-bottom:12px!important;visibility:visible!important}
+ #appSection .stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;position:relative!important;z-index:33!important;visibility:visible!important;opacity:1!important;margin:0 0 18px!important}
+ #appSection .stats>.stat{display:block!important;position:relative!important;z-index:34!important;visibility:visible!important;opacity:1!important}
+ #appSection .stat-fees,#appSection .stat-space{transform:translateY(-18px)!important}
+}
+@media(max-width:899px){
+ header.top{z-index:1!important}
+ main.wrap{position:relative!important;z-index:30!important;padding-top:12px!important}
+ #appSection{position:relative!important;z-index:31!important}
+ #appSection .dashboard-heading,#appSection .stats,#appSection .stats>.stat{visibility:visible!important;opacity:1!important}
+ #appSection .stats{display:grid!important;position:relative!important;z-index:32!important;margin:8px 0 14px!important}
+}
 </style>
 </head>
 <body>
