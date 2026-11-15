@@ -378,6 +378,40 @@ body{background:#071522;color:#f3f8fc}
 @media(max-width:650px){.app-topbar{padding:10px 12px}.app-brand-title{font-size:14px}.app-brand-sub{font-size:8px}.app-brand-mark{width:36px;height:36px}.app-home{padding:9px 11px;font-size:12px}.actions{padding:10px;gap:7px}.actions button{padding:9px 10px;font-size:11px}.stage{padding:12px 5px 24px}}
 @media print{.app-topbar{display:none!important}body{background:white!important;color:#182636!important}}
 
+
+/* Correctifs de lisibilité et de cadrage à l'écran — sans modifier le rendu A4 */
+@media screen {
+  .stage{overflow:auto!important;padding:18px 12px 34px!important}
+  .sheet{
+    height:auto!important;
+    min-height:202mm!important;
+    overflow:visible!important;
+    color:#182636!important;
+    background:#ffffff!important;
+    margin:0 auto 18px!important;
+  }
+  .sheet h1,.sheet .bar{color:#ffffff!important}
+  .sheet .meta,.sheet .meta label,.sheet .foot,.sheet .foot label{color:#182636!important}
+  .sheet table th{color:#ffffff!important}
+  .sheet table td,
+  .sheet table td.day,
+  .sheet table td.train-day,
+  .sheet table td.amp,
+  .sheet table td.km,
+  .sheet table td.calculated,
+  .sheet table tr.tot td{color:#182636!important}
+  .sheet table td input,
+  .sheet table td select,
+  .sheet table td textarea{color:#182636!important;-webkit-text-fill-color:#182636!important}
+  #hb td:first-child,
+  #transport td.day,
+  #transport td.train-day{color:#182636!important;font-weight:700!important}
+  #hb .amp,#hb .km,#hb #ampsum,#hb #kmsum,
+  #hb #bsum,#hb #lsum,#hb #dsum,#hb #nsum,
+  #drivesum{color:#173f5d!important;font-weight:800!important}
+  .foot strong{color:#173f5d!important}
+}
+
 </style></head><body>
 <header class="app-topbar"><div class="app-brand"><div class="app-brand-mark">🚛</div><div><div class="app-brand-title">MYTRUCK MATE</div><div class="app-brand-sub">DRIVER COMPANION</div></div></div><a class="app-home" href="index.html">← Retour à l’accueil</a></header>
 <div class="actions"><label for="week-picker"><strong>Semaine :</strong></label><select id="week-picker" aria-label="Choisir une semaine" style="padding:9px;border:1px solid #9bb3c8;border-radius:5px;max-width:230px"><option value="">Semaine en cours</option></select><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
