@@ -68,7 +68,7 @@ nav{display:flex;align-items:center;gap:12px;height:42px;padding:0 10px;color:#1
 <div class="fee"><div class="symbol">🛏</div><label>Nuit</label><div class="choices"><label><input type="radio" name="night" value="yes">Oui</label><label><input type="radio" name="night" value="no" checked>Non</label></div></div>
 <div class="fee"><div class="symbol">🚆</div><label>Train</label><div class="choices"><label><input type="radio" name="train" value="yes">Oui</label><label><input type="radio" name="train" value="no" checked>Non</label></div></div>
 </div></section>
-<div class="actions"><button class="save" id="save" type="button">▣ Enregistrer en PDF ou imprimer</button><div class="status" id="status"></div><p class="smallnote">Enregistrement automatique sur cet appareil et synchronisation avec votre compte.</p></div>
+<div class="actions"><button class="save" id="save" type="button">✓ Enregistrer la journée</button><div class="status" id="status"></div><p class="smallnote">Enregistrement automatique sur cet appareil et synchronisation avec votre compte.</p></div>
 <datalist id="plates"><option>FN-769-YY</option></datalist>
 <datalist id="donors"><option>LPO Sogena</option><option>TFS France</option><option>TBI</option><option>Seyris</option><option>Tps Louis</option><option>Atlas Transit</option></datalist>
 <datalist id="clients"><option>Tang Frères</option><option>BARIAU</option><option>LAD</option></datalist>
@@ -101,7 +101,7 @@ $('addTransport').onclick=()=>makeTransport();
 ['kmstart','kmend','start','end'].forEach(k=>$(k).addEventListener('input',updateStats));
 $('date').addEventListener('change',()=>{const e=entries()[$('date').value];if(e)load(e);else clearForm()});
 const current=entries()[$('date').value];if(current)load(current);
-$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries(),previous=all[e.date];let rates={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};try{rates={...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}}catch{}e.feeRates=previous?.feeRates||rates;all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée ✓ Ouverture de la fiche PDF / impression…';window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}));setTimeout(()=>location.href='detail_journee.html?date='+encodeURIComponent(e.date),350)};
+$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries(),previous=all[e.date];let rates={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};try{rates={...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}}catch{}e.feeRates=previous?.feeRates||rates;all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée ✓';window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}));};
 if(historyMode){document.querySelectorAll('input,select').forEach(el=>el.disabled=true);$('addTransport').hidden=true;document.querySelectorAll('.remove').forEach(el=>el.hidden=true);$('save').textContent='▣ Imprimer / Enregistrer en PDF';$('save').onclick=()=>window.print();$('status').textContent='Consultation de la journée enregistrée — mode lecture seule. Utilisez le bouton ci-dessous pour imprimer ou enregistrer en PDF.';}
 </script>
 <script type="module">
