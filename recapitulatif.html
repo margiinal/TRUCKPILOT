@@ -113,13 +113,7 @@ a{color:inherit;text-decoration:none}
     <button class="btn" id="refreshBtn" type="button">↻ Actualiser</button>
     <div class="note" id="periodLabel" style="grid-column:1/-1;margin:0">Chargement…</div>
   </section>
-  <div id="standardReport">
-  <section class="stats" aria-label="Indicateurs principaux"><div class="stat"><span class="stat-icon">▤</span><div class="stat-art stat-art-km" aria-hidden="true"></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
-<div class="stat"><span class="stat-icon">◉</span><div class="stat-art stat-art-drive" aria-hidden="true"></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
-<div class="stat"><span class="stat-icon">◴</span><div class="stat-art stat-art-amp" aria-hidden="true"></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
-<div class="stat"><span class="stat-icon">▦</span><div class="stat-art stat-art-days" aria-hidden="true"></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div></section>
-
-  <section class="card fortnight-card" id="fortnightPanel" hidden aria-label="Contrôle réglementaire des deux semaines consécutives">
+    <section class="card fortnight-card" id="fortnightPanel" hidden aria-label="Contrôle réglementaire des deux semaines consécutives">
     <div class="fortnight-head">
       <div><div class="fortnight-title">⚖️ Contrôle des 2 semaines consécutives</div><div class="fortnight-sub">Temps de conduite saisi dans « Ma journée » · semaine lundi à dimanche</div></div>
       <div class="fortnight-sub">Sélection de la période dans les filtres ci-dessus</div>
@@ -135,6 +129,13 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="fortnight-note">Contrôle indicatif basé sur les durées de conduite renseignées. Vérifie que toutes les journées des deux semaines sont saisies. Ce compteur ne remplace pas le contrôle du tachygraphe ni les autres règles (repos, pauses et limites journalières).</div>
   </section>
+  <div id="standardReport">
+  <section class="stats" aria-label="Indicateurs principaux"><div class="stat"><span class="stat-icon">▤</span><div class="stat-art stat-art-km" aria-hidden="true"></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
+<div class="stat"><span class="stat-icon">◉</span><div class="stat-art stat-art-drive" aria-hidden="true"></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
+<div class="stat"><span class="stat-icon">◴</span><div class="stat-art stat-art-amp" aria-hidden="true"></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
+<div class="stat"><span class="stat-icon">▦</span><div class="stat-art stat-art-days" aria-hidden="true"></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div></section>
+
+
   <section class="card details-card">
     <h2 class="details-title"><span>▥</span> Activité de la période</h2>
     <div class="details">
