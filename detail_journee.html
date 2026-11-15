@@ -19,7 +19,46 @@ nav{height:30px;display:flex;align-items:center;gap:8px;color:#25d5ff;font-weigh
 .actions{display:flex;gap:9px;padding:3px 4px 0}.print{flex:1;border:0;border-radius:9px;background:linear-gradient(180deg,#53ddff,#08a6df);color:#00263a;font-weight:950;font-size:15px;padding:10px;box-shadow:0 3px 0 #00618c}.more{width:43px;border:1px solid #247da1;border-radius:9px;background:#031c2d;color:#a9eaff;font-size:20px}
 .empty{color:#b6d6e8;text-align:center;padding:28px 15px}.empty a{color:#32d8ff}
 @media(max-width:390px){body{padding:4px}main{padding:8px;border-radius:19px}.date{font-size:16px}.metric label{font-size:9px}.metric strong{font-size:14px}.transport-line{font-size:10px}.fee label{font-size:9px}.fee b{font-size:12px}}
-@page{size:A4 portrait;margin:8mm}\n@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}html,body{width:100%;height:auto;margin:0;padding:0;background:#fff!important;color:#111!important;font-family:Arial,Helvetica,sans-serif}body{font-size:9pt}main{width:100%;max-width:none;min-height:0;margin:0;padding:4mm;border:1px solid #222;border-radius:0;background:#fff!important;color:#111!important;box-shadow:none}nav,.actions{display:none!important}.hero{height:17mm;margin:0 0 2mm;background:#fff!important;border:0;border-bottom:2px solid #111;filter:grayscale(1);color:#111!important}.hero strong{font-size:18pt;color:#111!important;text-shadow:none}.hero small{font-size:8pt;color:#111!important}.date{font-size:12pt;padding:2mm 1mm 2mm;color:#111!important}.date svg{width:15px;color:#111!important}.identity{background:#fff!important;color:#111!important;border:1px solid #333;border-radius:2mm;padding:2mm 3mm;margin-bottom:2mm;font-size:8pt}.identity b{font-size:8pt}.section{margin:2mm 0;border:1px solid #333;border-radius:2mm;background:#fff!important;color:#111!important;box-shadow:none;break-inside:avoid}.heading{height:auto;min-height:7mm;padding:1mm 2mm;background:#e8e8e8!important;color:#111!important;border-bottom:1px solid #333;font-size:9pt}.heading svg{width:13px;height:13px;color:#111!important}.metrics{gap:1.5mm;padding:2mm}.metric{min-height:13mm;padding:1.5mm;border:1px solid #777;border-radius:1.5mm;background:#fff!important;color:#111!important}.metric label{font-size:7pt;color:#333!important}.metric strong{font-size:11pt;color:#111!important}.metric .accent{color:#111!important}.transport{margin:1.5mm;padding:2mm;border:1px solid #555;border-radius:1.5mm;background:#fff!important;color:#111!important;break-inside:avoid}.transport-title{display:block;margin:-2mm -2mm 1.5mm;padding:1mm 2mm;border-radius:0;background:#e8e8e8!important;color:#111!important;border-bottom:1px solid #555;font-size:8pt}.transport-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1mm 2mm}.transport-line{font-size:7pt;line-height:1.2;color:#111!important}.transport-line svg{width:10px;height:10px;color:#111!important}.transport-line b{color:#111!important}.fees{gap:1.5mm;padding:2mm}.fee{padding:1.5mm;border:1px solid #777;border-radius:1.5mm;background:#fff!important;color:#111!important}.fee svg{width:12px;height:12px;color:#111!important}.fee label{font-size:7pt;color:#111!important}.fee b{font-size:9pt;color:#111!important}.fee.yes b,.fee.yes svg{color:#111!important;font-weight:900}.empty{color:#111!important}}
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  *{box-sizing:border-box!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{width:100%!important;min-height:0!important;margin:0!important;padding:0!important;background:#fff!important;color:#000!important;font-family:Arial,Helvetica,sans-serif!important}
+  body{font-size:9pt!important}
+  main{display:block!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;color:#000!important;box-shadow:none!important}
+  nav,.actions{display:none!important}
+  .hero{height:auto!important;min-height:15mm!important;margin:0 0 3mm!important;padding:2mm 0!important;display:flex!important;justify-content:flex-start!important;text-align:left!important;background:#fff!important;border:0!important;border-bottom:2px solid #000!important;filter:none!important;color:#000!important}
+  .hero strong{font-size:19pt!important;font-style:normal!important;text-shadow:none!important;color:#000!important;letter-spacing:.5px}
+  .hero small{font-size:8pt!important;color:#000!important;letter-spacing:1.5px}
+  .date{font-size:12pt!important;font-weight:800!important;padding:2mm 0 3mm!important;color:#000!important}
+  .date svg{width:14px!important;color:#000!important}
+  .identity{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3mm!important;margin:0 0 3mm!important;padding:2.5mm 3mm!important;border:1px solid #000!important;border-radius:0!important;background:#fff!important;color:#000!important;font-size:8.5pt!important}
+  .identity span{display:block!important;color:#000!important}
+  .identity svg{display:none!important}
+  .identity b{font-size:9pt!important;color:#000!important}
+  .section{margin:0 0 3mm!important;border:1px solid #000!important;border-radius:0!important;background:#fff!important;color:#000!important;box-shadow:none!important;overflow:visible!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  .heading{height:auto!important;min-height:7mm!important;padding:1.5mm 2.5mm!important;background:#e6e6e6!important;color:#000!important;border-bottom:1px solid #000!important;font-size:9pt!important;font-weight:900!important}
+  .heading svg{width:13px!important;height:13px!important;color:#000!important}
+  .metrics{gap:2mm!important;padding:2.5mm!important}
+  .four{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .three{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .metric{min-height:14mm!important;padding:2mm 1mm!important;border:1px solid #777!important;border-radius:0!important;background:#fff!important;color:#000!important}
+  .metric label{font-size:7.5pt!important;color:#222!important}
+  .metric strong{font-size:12pt!important;color:#000!important}
+  .metric .accent{color:#000!important}
+  .transport{margin:2mm!important;padding:2.5mm!important;border:1px solid #555!important;border-radius:0!important;background:#fff!important;color:#000!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  .transport-title{display:block!important;margin:-2.5mm -2.5mm 2mm!important;padding:1.5mm 2.5mm!important;border-radius:0!important;border-bottom:1px solid #777!important;background:#eee!important;color:#000!important;font-size:8.5pt!important}
+  .transport-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:2mm 3mm!important}
+  .transport-line{font-size:7.5pt!important;line-height:1.25!important;color:#000!important}
+  .transport-line svg{display:none!important}
+  .transport-line b{color:#000!important}
+  .fees{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:2mm!important;padding:2.5mm!important}
+  .fee{padding:2mm 1mm!important;border:1px solid #777!important;border-radius:0!important;background:#fff!important;color:#000!important}
+  .fee svg{display:none!important}
+  .fee label{font-size:7.5pt!important;color:#000!important}
+  .fee b{font-size:10pt!important;color:#000!important}
+  .fee.yes b,.fee.yes svg{color:#000!important;font-weight:900!important}
+  .empty{color:#000!important}
+}
 </style></head><body><main>
 <nav><a class="back" href="index.html">←</a><a href="historique.html">Historique</a><span>›</span><span class="crumb">Détail de la journée</span></nav>
 <header class="hero"><div><strong>MY TRUCK MATE</strong><small>FICHE JOURNALIÈRE</small></div></header>
