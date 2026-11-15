@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260">
+<defs>
+ <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#0a4265"/><stop offset="1" stop-color="#03172b"/></linearGradient>
+ <linearGradient id="neon" x2="1" y2="1"><stop stop-color="#00f0ff"/><stop offset=".55" stop-color="#078ce8"/><stop offset="1" stop-color="#ffb832"/></linearGradient>
+ <linearGradient id="glass" x2="0" y2="1"><stop stop-color="#0d5278"/><stop offset="1" stop-color="#03182d"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1200" height="260" fill="url(#bg)" opacity=".45"/>
+<path d="M0 220 Q200 160 370 205 T700 175 T1200 125" fill="none" stroke="#075d90" stroke-width="2"/>
+<path d="M0 220 Q200 160 370 205 T700 175 T1200 125" fill="none" stroke="url(#neon)" stroke-width="6" filter="url(#glow)"/>
+<path d="M0 220 Q200 160 370 205 T700 175 T1200 125" fill="none" stroke="#e8fdff" stroke-width="1.5" stroke-dasharray="10 12"/>
+<g transform="translate(48 20)" filter="url(#glow)">
+ <circle cx="115" cy="100" r="91" fill="url(#glass)" stroke="#00dfff" stroke-width="4"/>
+ <circle cx="115" cy="100" r="76" fill="none" stroke="#a4f4ff" stroke-width="2" stroke-dasharray="2 7"/>
+ <g fill="#e8fbff" font-family="Arial" font-size="14" font-weight="bold"><text x="108" y="30">12</text><text x="183" y="105">3</text><text x="110" y="178">6</text><text x="36" y="105">9</text></g>
+ <path d="M115 100 L147 43" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M115 100 L163 79" stroke="#14e5ff" stroke-width="4" stroke-linecap="round"/><circle cx="115" cy="100" r="8" fill="#00eaff"/>
+ <text x="115" y="218" fill="#7eeaff" text-anchor="middle" font-family="Arial" font-size="13" letter-spacing="3">TEMPS</text>
+</g>
+<g transform="translate(290 165)" filter="url(#glow)">
+ <path d="M0 55 Q100 -20 205 22 T480 -35" fill="none" stroke="url(#neon)" stroke-width="9" stroke-linecap="round"/>
+ <path d="M0 55 Q100 -20 205 22 T480 -35" fill="none" stroke="#f1fdff" stroke-width="2" stroke-dasharray="8 10"/>
+ <g fill="#ffc849"><path d="M80 10 l-13 -25 h26z"/><circle cx="80" cy="-15" r="9"/><path d="M390 -40 l-13 -25 h26z"/><circle cx="390" cy="-65" r="9"/></g>
+ <g fill="#fff"><circle cx="80" cy="-15" r="3"/><circle cx="390" cy="-65" r="3"/></g>
+</g>
+<g transform="translate(790 28)" filter="url(#glow)">
+ <rect width="205" height="194" rx="18" fill="url(#glass)" stroke="#00dfff" stroke-width="4"/>
+ <path d="M0 24 Q100 0 205 24" fill="none" stroke="#c3f8ff" opacity=".6"/>
+ <g fill="#f5fcff" font-family="Arial" font-size="21" font-weight="bold"><text x="58" y="52">KM</text><text x="58" y="96">TEMPS</text><text x="58" y="140">CLIENTS</text><text x="58" y="182">TRANSPORTS</text></g>
+ <g stroke="#27f0ad" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 38 l10 10 19 -24 M18 82 l10 10 19 -24 M18 126 l10 10 19 -24 M18 168 l10 10 19 -24"/></g>
+</g>
+<g transform="translate(1020 48)" filter="url(#glow)">
+ <rect width="125" height="110" rx="15" fill="url(#glass)" stroke="#00dfff" stroke-width="4"/>
+ <path d="M0 27 H125 M25 0 V18 M100 0 V18" stroke="#b9f5ff" stroke-width="5"/>
+ <g fill="#20dfff"><rect x="17" y="42" width="17" height="16" rx="3"/><rect x="54" y="42" width="17" height="16" rx="3"/><rect x="91" y="42" width="17" height="16" rx="3"/><rect x="17" y="75" width="17" height="16" rx="3"/><rect x="54" y="75" width="17" height="16" rx="3"/><rect x="91" y="75" width="17" height="16" rx="3"/></g>
+</g>
+<g transform="translate(1125 165)" fill="#17dfff" filter="url(#glow)"><rect x="0" y="42" width="18" height="48" rx="3"/><rect x="27" y="28" width="18" height="62" rx="3"/><rect x="54" y="10" width="18" height="80" rx="3"/><path d="M0 35 L33 19 L61 0" fill="none" stroke="#eaffff" stroke-width="4"/></g>
+</svg>
