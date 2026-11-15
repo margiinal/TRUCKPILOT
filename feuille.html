@@ -579,7 +579,7 @@ restoreForm();
           // Les deux lignes natives restent prioritaires ; les transports supplémentaires sont conservés dans le formulaire journalier.
           return;
         }
-        const inputs=[...row.querySelectorAll('input')].filter(el=>!el.classList.contains('train-check'));
+        const inputs=[...row.querySelectorAll('input:not([type="checkbox"]), select')];
         const vals=[t.donor,t.client,t.city,t.container,t.seal,t.size,t.chassis,t.io];
         inputs.forEach((el,j)=>{if(j<vals.length)el.value=vals[j]||''});
         const check=dayRows[0]?.querySelector('.train-check input');if(check&&t.train)check.checked=true;
