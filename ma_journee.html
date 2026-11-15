@@ -93,6 +93,7 @@ function read(){return {date:$('date').value,tractor:$('tractor').value,place:$(
 function entries(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
 function load(e){if(!e)return;['date','tractor','place','start','end','drive','kmstart','kmend'].forEach(k=>{if($(k))$(k).value=e[k]??''});['breakfast','lunch','dinner','night','train'].forEach(k=>setRadio(k,!!e[k]));$('transports').innerHTML='';(e.transports?.length?e.transports:[{},{}]).forEach(makeTransport);updateStats()}
 function updateStats(){const a=$('kmstart').value,b=$('kmend').value;$('distance').textContent=a!==''&&b!==''&&Number(b)>=Number(a)?(Number(b)-Number(a)).toLocaleString('fr-FR')+' km':'— km';const s=$('start').value,e=$('end').value;if(!s||!e){$('amplitude').textContent='—';return}let [h1,m1]=s.split(':').map(Number),[h2,m2]=e.split(':').map(Number),n=h2*60+m2-h1*60-m1;if(n<0)n+=1440;$('amplitude').textContent=Math.floor(n/60)+' h '+String(n%60).padStart(2,'0')}
+window.loadDailyEntry=load;
 function clearForm(){['tractor','place','start','end','drive','kmstart','kmend'].forEach(k=>$(k).value='');['breakfast','lunch','dinner','night','train'].forEach(k=>setRadio(k,false));$('transports').innerHTML='';makeTransport();makeTransport();updateStats()}
 $('date').value=new Date().toISOString().slice(0,10);makeTransport();makeTransport();
 $('addTransport').onclick=()=>makeTransport();
@@ -109,7 +110,7 @@ const isMeaningful=e=>{if(!e||typeof e!=='object')return false;const fields=['tr
 async function getUser(){const {data:{user},error}=await supabase.auth.getUser();if(error)throw error;if(!user)throw new Error('Connexion nécessaire : retournez à l’accueil et connectez-vous.');return user}
 window.addEventListener('truckpilote:daily-saved',async event=>{const e=event.detail;try{const user=await getUser();if(!isMeaningful(e)){status.textContent='Journée vide enregistrée localement.';return}const {error}=await supabase.from('truckpilote_daily_entries').upsert({user_id:user.id,work_date:e.date,entry:e,updated_at:new Date().toISOString()},{onConflict:'user_id,work_date'});if(error)throw error;status.textContent='Journée enregistrée et synchronisée en ligne ✓'}catch(error){status.textContent='Sauvegarde locale conservée. Synchronisation impossible : '+(error.message||'erreur réseau')}});
 async function sync(){try{const user=await getUser();const {data,error}=await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;const local=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}})();const merged={...local};(data||[]).forEach(row=>{if(isMeaningful(row.entry))merged[row.work_date]=row.entry});localStorage.setItem(KEY,JSON.stringify(merged));const selected=document.getElementById('date').value;if(merged[selected]&&isMeaningful(merged[selected]))window.loadDailyEntry?.(merged[selected]);status.textContent='Synchronisation terminée ✓'}catch(error){status.textContent='Données locales conservées. Synchronisation en attente.'}}
-window.loadDailyEntry=entry=>{window._loadDailyEntry?.(entry)};
+
 await sync();
 </script>
 <script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));</script>
