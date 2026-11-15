@@ -614,35 +614,73 @@ const weeklyEnd = document.querySelectorAll('.meta input[type="date"]')[1];
 const weekPicker = document.getElementById('week-picker');
 let weeklyUser = null;
 let selectedWeekIsCurrent = true;
-function dateKey(date) { return date.toISOString().slice(0,10); }
+function dateKey(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+d;
+}
+function parseLocalDate(key) {
+  const parts = key.split('-').map(Number);
+  return new Date(parts[0],parts[1]-1,parts[2],12);
+}
 function mondayOf(date) {
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
   return d;
 }
+function isoWeekNumber(date) {
+  const d = new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate()));
+  d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return Math.ceil((((d-yearStart)/86400000)+1)/7);
+}
+function displayWeekStart(storedKey) {
+  const d = parseLocalDate(storedKey);
+  // Les anciennes versions enregistraient le lundi sous la date du dimanche précédent.
+  if (d.getDay() === 0) d.setDate(d.getDate()+1);
+  return dateKey(d);
+}
+function weekLabel(start, isCurrent) {
+  const monday = parseLocalDate(start);
+  const sunday = new Date(monday); sunday.setDate(sunday.getDate()+6);
+  const range = 'Semaine '+isoWeekNumber(monday)+' — du '+
+    monday.toLocaleDateString('fr-FR')+' au '+sunday.toLocaleDateString('fr-FR');
+  return isCurrent ? 'Semaine en cours — '+range : range;
+}
 function setWeekDates(start) {
   if (!start) return;
-  const d = new Date(start + 'T12:00:00');
+  const d = parseLocalDate(start);
   const end = new Date(d); end.setDate(end.getDate() + 6);
   weeklyStart.value = start;
   if (weeklyEnd) weeklyEnd.value = dateKey(end);
 }
 function currentWeekStart() { return dateKey(mondayOf(new Date())); }
-function updateWeekPicker(dates) {
+let selectedDbWeekKey = null;
+function updateWeekPicker(savedKeys) {
   if (!weekPicker) return;
   const current = currentWeekStart();
-  const unique = [...new Set([current, ...dates])].sort((a,b)=>b.localeCompare(a));
+  const normalized = new Map();
+  (savedKeys || []).forEach(key => {
+    const displayStart = displayWeekStart(key);
+    if (!normalized.has(displayStart) || key === displayStart) normalized.set(displayStart,key);
+  });
+  const starts = [...new Set([current,...normalized.keys()])].sort((a,b)=>b.localeCompare(a));
   weekPicker.innerHTML = '';
-  unique.forEach(start => {
-    const end = new Date(start + 'T12:00:00'); end.setDate(end.getDate()+6);
+  starts.forEach(start => {
+    const isCurrent = start === current;
     const opt = document.createElement('option');
-    opt.value = start;
-    opt.textContent = (start === current ? 'Semaine en cours — ' : 'Semaine du ') +
-      new Date(start + 'T12:00:00').toLocaleDateString('fr-FR') + ' au ' +
-      end.toLocaleDateString('fr-FR');
+    opt.value = normalized.get(start) || start;
+    opt.dataset.weekStart = start;
+    opt.textContent = weekLabel(start,isCurrent);
     weekPicker.appendChild(opt);
   });
-  weekPicker.value = weeklyStart.value || current;
+  const currentOption = [...weekPicker.options].find(o=>o.dataset.weekStart===current);
+  if (currentOption) {
+    weekPicker.value = currentOption.value;
+    selectedDbWeekKey = currentOption.value;
+    setWeekDates(current);
+  }
 }
 let weeklySaveTimer = null;
 let applyingCloudWeek = false;
@@ -681,7 +719,7 @@ function applyWeeklySnapshot(fields) {
   }
 }
 async function loadWeeklyCloud(announce = true) {
-  const weekStart = weeklyStart?.value;
+  const weekStart = selectedDbWeekKey || weeklyStart?.value;
   if (!weeklyUser || !weekStart) {
     if (announce && !weekStart) weeklySetStatus('Choisis la date de début de semaine pour activer la sauvegarde en ligne.');
     return;
@@ -702,6 +740,7 @@ async function loadWeeklyCloud(announce = true) {
     }
     if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
       applyWeeklySnapshot(data.sheet_data.fields);
+      setWeekDates(weekPicker?.selectedOptions?.[0]?.dataset?.weekStart || weeklyStart.value);
       weeklySetStatus('Feuille récupérée ✓ Tu peux l’imprimer.');
     } else if (announce) {
       weeklySetStatus('Aucune feuille sauvegardée pour cette semaine. Les données quotidiennes peuvent être ressaisies.');
@@ -711,8 +750,8 @@ async function loadWeeklyCloud(announce = true) {
   }
 }
 async function saveWeeklyCloud() {
-  const weekStart = weeklyStart?.value;
-  if (!weeklyUser || !weekStart || applyingCloudWeek) return;
+  const weekStart = selectedDbWeekKey || weeklyStart?.value;
+  if (!weeklyUser || !weekStart || applyingCloudWeek || !selectedWeekIsCurrent) return;
   const payload = {
     user_id: weeklyUser.id,
     week_start: weekStart,
@@ -732,7 +771,7 @@ async function saveWeeklyCloud() {
   }
 }
 function queueWeeklyCloudSave() {
-  if (!weeklyUser || applyingCloudWeek || loadingCloudWeek || !weeklyStart?.value) return;
+  if (!weeklyUser || applyingCloudWeek || loadingCloudWeek || !weeklyStart?.value || !selectedWeekIsCurrent) return;
   clearTimeout(weeklySaveTimer);
   weeklySaveTimer = setTimeout(saveWeeklyCloud, 900);
 }
@@ -754,12 +793,20 @@ try {
     if (weekPicker) weekPicker.value = current;
     weekPicker?.addEventListener('change', async () => {
       clearTimeout(weeklySaveTimer);
-      selectedWeekIsCurrent = weekPicker.value === currentWeekStart();
-      setWeekDates(weekPicker.value);
+      const option = weekPicker.selectedOptions[0];
+      selectedDbWeekKey = weekPicker.value;
+      const displayStart = option?.dataset?.weekStart || displayWeekStart(weekPicker.value);
+      selectedWeekIsCurrent = displayStart === currentWeekStart();
+      setWeekDates(displayStart);
       await loadWeeklyCloud(true);
     });
     weeklyStart?.addEventListener('change', () => {
-      if (weekPicker) weekPicker.value = weeklyStart.value;
+      selectedDbWeekKey = weeklyStart.value;
+      selectedWeekIsCurrent = weeklyStart.value === currentWeekStart();
+      if (weekPicker) {
+        const option = [...weekPicker.options].find(o=>o.dataset.weekStart===weeklyStart.value);
+        if (option) weekPicker.value = option.value;
+      }
       loadWeeklyCloud(true);
     });
     document.addEventListener('input', queueWeeklyCloudSave);
