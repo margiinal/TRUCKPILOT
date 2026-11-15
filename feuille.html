@@ -719,14 +719,6 @@ try {
 } catch (error) {
   weeklySetStatus('Sauvegarde locale active ; connexion au compte impossible : ' + (error.message || 'erreur'), true);
 }
-weeklyCloud.auth.onAuthStateChange((_event, session) => {
-  weeklyUser = session?.user || null;
-  if (weeklyUser) {
-    if (weeklyStart?.value) loadWeeklyCloud(true);
-    else weeklySetStatus('Connecté : choisis la date de début de semaine pour sauvegarder cette feuille en ligne.');
-  } else {
-    weeklySetStatus('Sauvegarde locale active. Connecte-toi à ton compte pour retrouver cette feuille sur un autre téléphone.');
-  }
-});
+
 </script>
 </body></html>
