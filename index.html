@@ -457,7 +457,7 @@ async function showSignedIn(user) {
     const {data,error}=await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id);
     if(!error){
       const merged=localDailyEntries();
-      (data||[]).forEach(row=>{if(row.entry)merged[row.work_date]=row.entry});
+      (data||[]).forEach(row=>{merged[row.work_date]=row.entry||{date:row.work_date}});
       localStorage.setItem('truckpilote_daily_entries_v1',JSON.stringify(merged));
       updateHomeFees(merged);
     }
@@ -536,7 +536,7 @@ const { data: { session } } = await supabase.auth.getSession();
 if (session?.user) {
   try {
     const {data} = await supabase.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',session.user.id);
-    const merged=localDailyEntries();(data||[]).forEach(row=>{merged[row.work_date]=row.entry});
+    const merged=localDailyEntries();(data||[]).forEach(row=>{merged[row.work_date]=row.entry||{date:row.work_date}});
     localStorage.setItem('truckpilote_daily_entries_v1',JSON.stringify(merged));updateHomeFees(merged);
   } catch { updateHomeFees(localDailyEntries()); }
 } else updateHomeFees(localDailyEntries());
