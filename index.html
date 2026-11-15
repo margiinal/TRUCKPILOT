@@ -411,6 +411,24 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
  .banner-greeting{left:63%!important;top:22%!important;width:25%!important;height:40%!important;padding:4px 5px!important;justify-content:center!important;align-items:center!important}
  .banner-greeting .welcome-title,.banner-greeting .sub{width:100%!important;text-align:center!important}
 }
+
+/* Message de bienvenue : calage sur la zone lumineuse de l'image, sans second cadre */
+header.top{position:relative!important}
+.banner-image{width:100%!important;height:100%!important;object-fit:fill!important;object-position:center!important}
+.banner-greeting{position:absolute!important;left:62%!important;right:auto!important;top:15%!important;width:22%!important;height:32%!important;transform:none!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;gap:clamp(3px,.45vw,8px)!important;padding:0!important;margin:0!important;text-align:center!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;z-index:4!important}
+.banner-greeting .welcome-title,.banner-greeting .sub{width:100%!important;margin:0!important;text-align:center!important;white-space:normal!important}
+.banner-greeting .welcome-title{font-size:clamp(10px,1.45vw,27px)!important;line-height:1.15!important}
+.banner-greeting .sub{font-size:clamp(7px,.68vw,13px)!important;line-height:1.25!important}
+@media(max-width:899px){
+ .banner-greeting{left:62%!important;top:15%!important;width:22%!important;height:32%!important;gap:2px!important}
+ .banner-greeting .welcome-title{font-size:clamp(8px,1.65vw,14px)!important}
+ .banner-greeting .sub{font-size:clamp(6px,1.1vw,9px)!important}
+}
+@media(max-width:520px){
+ .banner-greeting{left:61%!important;top:15%!important;width:24%!important;height:32%!important}
+ .banner-greeting .welcome-title{font-size:clamp(7px,2vw,10px)!important}
+ .banner-greeting .sub{font-size:clamp(5px,1.35vw,7px)!important}
+}
 </style>
 </head>
 <body>
