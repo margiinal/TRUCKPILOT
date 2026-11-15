@@ -13,7 +13,7 @@
 </div></section>
 <section class="card"><h2 class="title">Détails de l'activité</h2><div class="details">
 <div class="detail"><span>Transports réalisés</span><strong id="transportTotal">—</strong></div><div class="detail"><span>Clients différents</span><strong id="clientTotal">—</strong></div><div class="detail"><span>Moyenne kilomètres / jour</span><strong id="kmAverage">—</strong></div><div class="detail"><span>Moyenne conduite / jour</span><strong id="driveAverage">—</strong></div><div class="detail"><span>Moyenne amplitude / jour</span><strong id="ampAverage">—</strong></div><div class="detail"><span>Journées avec train</span><strong id="trainTotal">—</strong></div>
-</div></section><section class="card"><h2 class="title">Détail jour par jour</h2><div class="table-wrap" id="dailyTable"></div></section><div style="display:flex;justify-content:flex-end"><button class="btn" id="printBtn" type="button">Imprimer le récapitulatif</button></div>
+</div></section><div style="display:flex;justify-content:flex-end"><button class="btn" id="printBtn" type="button">Imprimer le récapitulatif</button></div>
 </main>
 <script>
 const KEY='truckpilote_daily_entries_v1',months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'], $=id=>document.getElementById(id),today=new Date();let allEntries={};const currentMonth=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0');
