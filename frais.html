@@ -148,8 +148,8 @@ function calculate(){
   if(e.train===true){sums.train++;amounts.train+=TRAIN_RATE;}
   Object.entries(e.customPrimeCounts||{}).forEach(([id,count])=>{
    const qty=Math.max(0,Number(count)||0);if(!qty)return;
-   const snap=e.customPrimeRates?.[id]||{};const name=snap.name||id;const rate=Number(snap.rate)||0;
-   if(!custom[id])custom[id]={id,name,rate,count:0,amount:0};
+   const snap=e.customPrimeRates?.[id]||{};const name=snap.name||id;const rate=Number(snap.rate)||0;const emoji=snap.emoji||'＋';
+   if(!custom[id])custom[id]={id,name,rate,emoji,count:0,amount:0};
    custom[id].count+=qty;custom[id].amount+=qty*rate;
   });
  });
@@ -165,10 +165,10 @@ function calculate(){
  Object.values(custom).forEach((p,i)=>{
   const color=['#10b9a5','#e15b9b','#d0a52b'][i%3];
   const card=document.createElement('article');card.className='stat';
-  card.innerHTML='<div class="stat-head">＋</div><h3></h3><strong class="rate"></strong><div class="qty"><span></span> × <strong></strong></div><small class="share"></small>';
-  card.querySelector('h3').textContent=p.name;card.querySelector('.rate').textContent=euro(p.rate);card.querySelector('.qty span').textContent=p.count;card.querySelector('.qty strong').textContent=euro(p.amount);
+  card.innerHTML='<div class="stat-head"></div><h3></h3><strong class="rate"></strong><div class="qty"><span></span> × <strong></strong></div><small class="share"></small>';
+  card.querySelector('.stat-head').textContent=p.emoji||'＋';card.querySelector('h3').textContent=p.name;card.querySelector('.rate').textContent=euro(p.rate);card.querySelector('.qty span').textContent=p.count;card.querySelector('.qty strong').textContent=euro(p.amount);
   card.querySelector('.share').textContent='';$('customStats').append(card);
-  const row=document.createElement('div');row.className='legend-row';const sw=document.createElement('i');sw.className='swatch';sw.style.background=color;const label=document.createElement('span');label.textContent=p.name;const pct=document.createElement('b');pct.id='custom-share-'+p.id;row.append(sw,label,pct);$('customLegend').append(row);
+  const row=document.createElement('div');row.className='legend-row';const sw=document.createElement('i');sw.className='swatch';sw.style.background=color;const label=document.createElement('span');label.textContent=(p.emoji||'＋')+' '+p.name;const pct=document.createElement('b');pct.id='custom-share-'+p.id;row.append(sw,label,pct);$('customLegend').append(row);
  });
  const total=Object.values(amounts).reduce((a,b)=>a+b,0);
  $('daysCount').textContent=days;$('grandTotal').textContent=euro(total);$('totalCenter').textContent=euro(total);$('totalFooter').textContent=euro(total);
