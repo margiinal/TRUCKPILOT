@@ -35,7 +35,7 @@ a{color:#75d8ff;text-decoration:none}
 .btn{border:1px solid #20c8ff;border-radius:13px;background:linear-gradient(110deg,#08bfe9,#087ed0);color:#032137;padding:12px 18px;font:900 14px system-ui;cursor:pointer;white-space:nowrap;box-shadow:0 0 14px #00baff35}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0}
 .stat{position:relative;overflow:hidden;min-height:126px;padding:17px 17px 14px 82px;border:1px solid #078cbe;border-radius:18px;background:linear-gradient(130deg,#0d3654,#061a2d 70%);box-shadow:0 0 15px #00aaff28,inset 0 0 20px #008ac022}
-.stat:after{content:"";position:absolute;width:140px;height:100px;right:-35px;top:-30px;background:radial-gradient(ellipse,#00baff24,transparent 70%);pointer-events:none}
+.stat:after{content:"";position:absolute;width:140px;height:100px;right:-35px;top:-30px;background:radial-gradient(ellipse,#00baff24,transparent 70%);pointer-events:none}.stat-art{position:absolute;right:7px;bottom:0;width:43%;height:92%;opacity:.58;pointer-events:none;filter:drop-shadow(0 0 9px #00baff55)}.stat-art svg{width:100%;height:100%;display:block}.stat-value,.stat-label,.stat-sub,.stat-icon{position:relative;z-index:2}.stat-label,.stat-value,.stat-sub{max-width:85%}
 .stat-icon{position:absolute;left:16px;top:17px;width:54px;height:54px;border:2px solid #08c7fa;border-radius:50%;display:grid;place-items:center;color:#48e0ff;font-size:26px;background:linear-gradient(145deg,#0b5276,#06233a);box-shadow:0 0 13px #00baff55}
 .stat-label{color:#b8eaff;font-size:11px;font-weight:850;text-transform:uppercase;letter-spacing:.35px}
 .stat-value{font-size:clamp(22px,2.3vw,31px);font-weight:950;margin:9px 0 3px;white-space:nowrap;text-shadow:0 2px 10px #0008}
@@ -65,43 +65,43 @@ a{color:#75d8ff;text-decoration:none}
   <section class="hero" aria-label="Présentation du récapitulatif d'activité">
     <div class="hero-copy"><h1>Mon <span>récapitulatif</span></h1><p>Analysez votre activité sur la période de votre choix</p></div>
     <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 720 190" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="road" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00d9ff"/><stop offset=".5" stop-color="#087fd4"/><stop offset="1" stop-color="#ffd16b"/></linearGradient>
-          <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0a638b" stop-opacity=".9"/><stop offset="1" stop-color="#061b30" stop-opacity=".95"/></linearGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="routeLine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#16e5ff"/><stop offset=".58" stop-color="#087ee8"/><stop offset="1" stop-color="#ffd36a"/></linearGradient>
+          <linearGradient id="panelGlass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0c5278" stop-opacity=".95"/><stop offset="1" stop-color="#041a2e" stop-opacity=".98"/></linearGradient>
+          <linearGradient id="barFill" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#0879d5"/><stop offset="1" stop-color="#22e5ff"/></linearGradient>
+          <filter id="neon"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
-        <path d="M0 158 Q130 130 235 153 T470 146 T720 125" fill="none" stroke="#0875a8" stroke-width="1" opacity=".5"/>
-        <path d="M0 171 Q160 143 275 160 T520 148 T720 139" fill="none" stroke="url(#road)" stroke-width="3" filter="url(#glow)"/>
-        <path d="M25 178 Q155 150 260 167 T500 154 T700 145" fill="none" stroke="#9defff" stroke-width="1" stroke-dasharray="9 10" opacity=".8"/>
-        <g transform="translate(205 6)">
-          <circle cx="75" cy="73" r="68" fill="url(#glass)" stroke="#08c9ff" stroke-width="2" filter="url(#glow)"/>
-          <circle cx="75" cy="73" r="55" fill="none" stroke="#5fe7ff" stroke-width="1.5" stroke-dasharray="2 5"/>
-          <path d="M75 73 L92 35" stroke="#e8fbff" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="73" r="5" fill="#19d9ff"/>
-          <g fill="#a8eaff" font-size="9" font-weight="bold"><text x="69" y="18">12</text><text x="122" y="76">3</text><text x="72" y="133">6</text><text x="20" y="76">9</text></g>
-          <text x="75" y="157" text-anchor="middle" fill="#8bdfff" font-size="10" letter-spacing="2">TEMPS</text>
+        <path d="M0 174 Q120 135 220 163 T430 145 T800 125" fill="none" stroke="#087bb5" stroke-width="1" opacity=".45"/>
+        <path d="M0 178 Q145 140 250 166 T465 145 T800 130" fill="none" stroke="url(#routeLine)" stroke-width="4" filter="url(#neon)"/>
+        <path d="M0 178 Q145 140 250 166 T465 145 T800 130" fill="none" stroke="#d9fbff" stroke-width="1.2" stroke-dasharray="8 9"/>
+        <g transform="translate(75 8)">
+          <circle cx="94" cy="80" r="72" fill="url(#panelGlass)" stroke="#05caff" stroke-width="2.5" filter="url(#neon)"/>
+          <circle cx="94" cy="80" r="60" fill="none" stroke="#67e9ff" stroke-width="1.5" stroke-dasharray="2 6"/>
+          <path d="M94 80 L115 31" stroke="#f1fcff" stroke-width="5" stroke-linecap="round"/><path d="M94 80 L135 64" stroke="#19dfff" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="94" cy="80" r="6" fill="#13dfff"/>
+          <g fill="#b8edff" font-size="10" font-weight="bold"><text x="88" y="18">12</text><text x="148" y="84">3</text><text x="90" y="147">6</text><text x="34" y="84">9</text></g>
+          <text x="94" y="169" text-anchor="middle" fill="#6edfff" font-size="10" letter-spacing="2">TEMPS</text>
         </g>
-        <g transform="translate(337 83)" filter="url(#glow)">
-          <path d="M0 70 Q60 28 105 42 T205 5" fill="none" stroke="url(#road)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M0 70 Q60 28 105 42 T205 5" fill="none" stroke="#d5faff" stroke-width="1.2" stroke-dasharray="5 7"/>
-          <path d="M13 55 l-8 -15 16 0z M190 17 l-8 -15 16 0z" fill="#ffd16b"/>
-          <circle cx="14" cy="38" r="7" fill="#ffc94a"/><circle cx="14" cy="38" r="3" fill="#fff"/>
-          <circle cx="193" cy="2" r="7" fill="#ffc94a"/><circle cx="193" cy="2" r="3" fill="#fff"/>
+        <g transform="translate(245 108)" filter="url(#neon)">
+          <path d="M0 50 Q70 2 132 28 T260 -15" fill="none" stroke="url(#routeLine)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M0 50 Q70 2 132 28 T260 -15" fill="none" stroke="#d8fbff" stroke-width="1.3" stroke-dasharray="6 8"/>
+          <path d="M26 23 l-9 -17 18 0z M238 -1 l-9 -17 18 0z" fill="#ffd05c"/>
+          <circle cx="26" cy="6" r="8" fill="#ffc84c"/><circle cx="26" cy="6" r="3" fill="#fff"/>
+          <circle cx="238" cy="-18" r="8" fill="#ffc84c"/><circle cx="238" cy="-18" r="3" fill="#fff"/>
         </g>
-        <g transform="translate(440 13)">
-          <rect x="0" y="0" width="145" height="145" rx="10" fill="url(#glass)" stroke="#0bcaff" stroke-width="2"/>
-          <path d="M0 18 Q70 0 145 18" fill="none" stroke="#65eaff" opacity=".4"/>
-          <g font-size="13" font-weight="900" fill="#f2fbff">
-            <text x="18" y="42">✓  KM</text><text x="18" y="72">✓  TEMPS</text><text x="18" y="102">✓  CLIENTS</text><text x="18" y="132">✓  TRANSPORTS</text>
-          </g>
-          <g stroke="#24e6a0" stroke-width="3" fill="none"><path d="M15 32 l5 5 10 -12 M15 62 l5 5 10 -12 M15 92 l5 5 10 -12 M15 122 l5 5 10 -12"/></g>
+        <g transform="translate(420 24)">
+          <rect width="154" height="151" rx="12" fill="url(#panelGlass)" stroke="#08caff" stroke-width="2.5"/>
+          <path d="M0 19 Q77 0 154 19" fill="none" stroke="#62eaff" opacity=".45"/>
+          <g fill="#f1fbff" font-size="14" font-weight="900"><text x="38" y="43">KM</text><text x="38" y="74">TEMPS</text><text x="38" y="105">CLIENTS</text><text x="38" y="136">TRANSPORTS</text></g>
+          <g stroke="#24e7a2" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 34 l6 6 12 -14 M15 65 l6 6 12 -14 M15 96 l6 6 12 -14 M15 127 l6 6 12 -14"/></g>
         </g>
-        <g transform="translate(600 31)">
-          <rect x="0" y="0" width="74" height="75" rx="9" fill="url(#glass)" stroke="#0bcaff" stroke-width="2"/>
-          <path d="M0 17 H74 M15 0 V12 M59 0 V12" stroke="#61ddff" stroke-width="3"/>
-          <g fill="#55dfff"><rect x="13" y="28" width="10" height="10" rx="2"/><rect x="31" y="28" width="10" height="10" rx="2"/><rect x="49" y="28" width="10" height="10" rx="2"/><rect x="13" y="47" width="10" height="10" rx="2"/><rect x="31" y="47" width="10" height="10" rx="2"/><rect x="49" y="47" width="10" height="10" rx="2"/></g>
+        <g transform="translate(596 30)">
+          <rect width="82" height="80" rx="10" fill="url(#panelGlass)" stroke="#08caff" stroke-width="2"/>
+          <path d="M0 19 H82 M17 0 V12 M65 0 V12" stroke="#63eaff" stroke-width="3"/>
+          <g fill="#27d7ff"><rect x="14" y="30" width="11" height="11" rx="2"/><rect x="36" y="30" width="11" height="11" rx="2"/><rect x="58" y="30" width="11" height="11" rx="2"/><rect x="14" y="51" width="11" height="11" rx="2"/><rect x="36" y="51" width="11" height="11" rx="2"/><rect x="58" y="51" width="11" height="11" rx="2"/></g>
         </g>
-        <g transform="translate(600 119)" fill="#16cfff" filter="url(#glow)"><rect x="0" y="34" width="13" height="23" rx="2"/><rect x="20" y="24" width="13" height="33" rx="2"/><rect x="40" y="12" width="13" height="45" rx="2"/><rect x="60" y="0" width="13" height="57" rx="2"/><path d="M0 28 L24 19 L43 8 L67 -5" fill="none" stroke="#d9faff" stroke-width="3"/></g>
+        <g transform="translate(690 92)" filter="url(#neon)" fill="url(#barFill)"><rect x="0" y="56" width="14" height="31" rx="2"/><rect x="22" y="42" width="14" height="45" rx="2"/><rect x="44" y="24" width="14" height="63" rx="2"/><rect x="66" y="4" width="14" height="83" rx="2"/><path d="M0 48 L27 36 L49 17 L76 -4" fill="none" stroke="#e3fbff" stroke-width="3"/></g>
       </svg>
     </div>
   </section>
@@ -120,10 +120,10 @@ a{color:#75d8ff;text-decoration:none}
     <div class="note" id="periodLabel" style="grid-column:1/-1;margin:0">Chargement…</div>
   </section>
   <section class="stats" aria-label="Indicateurs principaux">
-    <div class="stat"><span class="stat-icon">⌁</span><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
-    <div class="stat"><span class="stat-icon">◷</span><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
-    <div class="stat"><span class="stat-icon">◴</span><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
-    <div class="stat"><span class="stat-icon">▦</span><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div>
+    <div class="stat"><span class="stat-icon">⌁</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#14cfff" stroke-width="5"/><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#d9fbff" stroke-width="1.5" stroke-dasharray="7 8"/><path d="M15 100 Q42 55 80 62 T145 5" fill="none" stroke="#0876c8" stroke-width="14" opacity=".2"/></svg></div><div class="stat-label">Kilomètres parcourus</div><div class="stat-value" id="kmTotal">—</div><div class="stat-sub">Distance totale</div></div>
+    <div class="stat"><span class="stat-icon">◷</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><circle cx="88" cy="57" r="48" fill="#07324d" stroke="#0bbbe9" stroke-width="3"/><circle cx="88" cy="57" r="39" fill="none" stroke="#8beaff" stroke-dasharray="2 5"/><path d="M88 57 L106 24 M88 57 L120 48" stroke="#f2fcff" stroke-width="4" stroke-linecap="round"/><circle cx="88" cy="57" r="5" fill="#1adfff"/></svg></div><div class="stat-label">Temps de conduite</div><div class="stat-value" id="driveTotal">—</div><div class="stat-sub">Durée cumulée</div></div>
+    <div class="stat"><span class="stat-icon">◴</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><path d="M55 8 H96 M62 8 V18 L50 33 V82 Q50 92 60 92 H92 Q102 92 102 82 V33 L90 18 V8" fill="#06304a" stroke="#12cfff" stroke-width="3"/><path d="M53 62 Q76 53 99 62 V82 Q99 89 91 89 H61 Q53 89 53 82Z" fill="#ffb43b" opacity=".9"/><path d="M60 37 L92 37" stroke="#e5faff" stroke-width="2"/></svg></div><div class="stat-label">Amplitude totale</div><div class="stat-value" id="ampTotal">—</div><div class="stat-sub">Début à fin de journée</div></div>
+    <div class="stat"><span class="stat-icon">▦</span><div class="stat-art" aria-hidden="true"><svg viewBox="0 0 150 100"><rect x="45" y="14" width="86" height="76" rx="8" fill="#082e49" stroke="#0bcfff" stroke-width="3"/><path d="M45 34 H131 M64 8 V24 M112 8 V24" stroke="#9cefff" stroke-width="4"/><g fill="#12bce9"><rect x="58" y="45" width="13" height="11" rx="2"/><rect x="81" y="45" width="13" height="11" rx="2"/><rect x="104" y="45" width="13" height="11" rx="2"/><rect x="58" y="65" width="13" height="11" rx="2"/><rect x="81" y="65" width="13" height="11" rx="2"/><rect x="104" y="65" width="13" height="11" rx="2"/></g></svg></div><div class="stat-label">Journées renseignées</div><div class="stat-value" id="daysTotal">—</div><div class="stat-sub">Journées enregistrées</div></div>
   </section>
   <section class="card details-card">
     <h2 class="details-title"><span>▥</span> Activité de la période</h2>
