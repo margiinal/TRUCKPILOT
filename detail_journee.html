@@ -136,6 +136,6 @@ function show(e){
    <button class="more" onclick="location.href='ma_journee.html?date=${encodeURIComponent(e.date)}'">•••</button>
   </div>`;
 }
-const params=new URLSearchParams(location.search);let date=params.get('date');let all={};try{all=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}let selected=null;try{selected=JSON.parse(sessionStorage.getItem('truckpilote_selected_print_entry')||'null')}catch{}if(selected&&selected.date===date){all[date]=selected;try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}sessionStorage.removeItem('truckpilote_selected_print_entry')}const entry=all[date]||selected;try{show(entry)}catch(error){$('content').innerHTML='<div class="empty">Erreur lors de la préparation de la fiche : '+esc(error.message||error)+'</div>';console.error(error)}
+const params=new URLSearchParams(location.search);let date=params.get('date');let all={};try{all=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}let selected=null;try{selected=JSON.parse(sessionStorage.getItem('truckpilote_selected_print_entry')||'null')}catch{}if(selected&&selected.date===date){all[date]=selected;try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}sessionStorage.removeItem('truckpilote_selected_print_entry')}const entry=all[date]||selected;try{show(entry)}catch(error){$('content').innerHTML='<div class="empty">Erreur lors de la préparation de la fiche : '+esc(error.message||error)+'</div>';console.error(error)}if(params.get('autoprint')==='1'&&entry)setTimeout(()=>window.print(),700);
 </script>
 </body></html>
