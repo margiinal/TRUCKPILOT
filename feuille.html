@@ -442,7 +442,7 @@ document.querySelectorAll('#hb tr.work').forEach(row => {
 });
 document.addEventListener('input',calc);document.addEventListener('change',calc);
 const SAVE_KEY = 'suivi_chauffeur_hebdo_v1';
-function formFields(){ return Array.from(document.querySelectorAll('input, select, textarea')).filter(el => !el.classList.contains('name') && el.id !== 'week-picker'); }
+function formFields(){ return Array.from(document.querySelectorAll('input, select, textarea')).filter(el => !el.classList.contains('name') && el.id !== 'week-picker' && el.id !== 'restore-file'); }
 function saveForm(){
   try {
     const data = formFields().map(el => ({value: el.value, checked: el.type === 'checkbox' ? el.checked : undefined}));
@@ -546,17 +546,20 @@ function clearAll(){
 }
 restoreForm();
 
-// Importer les saisies quotidiennes dans les cellules du tableau existant.
-(function importDailyEntries(){
+// Importer uniquement les journées comprises dans la semaine demandée.
+function importDailyEntriesForWeek(weekStart){
   const DAILY_KEY='truckpilote_daily_entries_v1';
   try {
     const entries=JSON.parse(localStorage.getItem(DAILY_KEY)||'{}');
+    const startDate=new Date(weekStart+'T12:00:00');
+    const endDate=new Date(startDate); endDate.setDate(endDate.getDate()+6);
+    const endKey=endDate.getFullYear()+'-'+String(endDate.getMonth()+1).padStart(2,'0')+'-'+String(endDate.getDate()).padStart(2,'0');
     const names=['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];
     const transportsByDay={};
     Object.values(entries).forEach(entry=>{
-      if(!entry || !entry.date) return;
-      const day=names[new Date(entry.date+'T12:00:00').getDay()];
-      if(day==='DIMANCHE') return; // Le tableau actuel contient six jours, avec choix samedi/dimanche.
+      if(!entry || !entry.date || entry.date<weekStart || entry.date>endKey) return;
+      let day=names[new Date(entry.date+'T12:00:00').getDay()];
+      if(day==='DIMANCHE') day='SAMEDI';
       const workRow=[...document.querySelectorAll('#hb tr.work')].find(r=>r.cells[0]?.textContent.trim()===day);
       if(!workRow) return;
       const set=(selector,value)=>{const el=workRow.querySelector(selector);if(el)el.value=value??''};
@@ -574,20 +577,18 @@ restoreForm();
       if(firstIndex<0)return;
       const dayRows=allRows.slice(firstIndex,firstIndex+2);
       items.forEach((t,i)=>{
-        let row=dayRows[i];
-        if(!row){
-          // Les deux lignes natives restent prioritaires ; les transports supplémentaires sont conservés dans le formulaire journalier.
-          return;
-        }
+        const row=dayRows[i]; if(!row)return;
         const inputs=[...row.querySelectorAll('input:not([type="checkbox"]), select')];
         const vals=[t.donor,t.client,t.city,t.container,t.seal,t.size,t.chassis,t.io];
         inputs.forEach((el,j)=>{if(j<vals.length)el.value=vals[j]||''});
         const check=dayRows[0]?.querySelector('.train-check input');if(check&&t.train)check.checked=true;
       });
     });
-    if(Object.keys(transportsByDay).length){updateTrainRows();calc();saveForm();}
+    const saturdayChoice=document.querySelector('#transport .day-choice');
+    if(saturdayChoice && Object.values(entries).some(e=>e?.date>=weekStart&&e?.date<=endKey&&new Date(e.date+'T12:00:00').getDay()===0)) saturdayChoice.value='DIMANCHE';
+    updateTrainRows();calc();saveForm();
   } catch(e){console.warn('Import quotidien non appliqué',e);}
-})();
+}
 
 document.querySelectorAll('#hb tr.work').forEach(updateAutoMeals);
 calc();
@@ -747,12 +748,23 @@ async function loadWeeklyCloud(announce = true) {
       (row.sheet_data.week_start || row.sheet_data.fields[1]?.value || row.week_start) === displayStart
     );
     const data = matching.sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0];
+    // Toujours repartir d'une feuille vide : aucune donnée de la semaine précédente ne doit rester visible.
+    weeklyFields().forEach(el=>{if(el.type==='checkbox')el.checked=false;else if(el.type!=='file')el.value='';});
     if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
       applyWeeklySnapshot(data.sheet_data.fields);
       setWeekDates(displayStart);
       weeklySetStatus('Feuille récupérée ✓ Tu peux l’imprimer.');
-    } else if (announce) {
-      weeklySetStatus('Aucune feuille sauvegardée pour cette semaine. Les données quotidiennes peuvent être ressaisies.');
+    } else {
+      setWeekDates(displayStart);
+      if (selectedWeekIsCurrent) {
+        importDailyEntriesForWeek(displayStart);
+        await saveWeeklyCloud();
+        weeklySetStatus('Semaine actuelle créée depuis les journées de cette semaine ✓');
+      } else if (announce) {
+        calc();
+        saveForm();
+        weeklySetStatus('Aucune feuille enregistrée pour cette semaine : tableau vide prêt à être rempli.');
+      }
     }
   } finally {
     loadingCloudWeek = false;
