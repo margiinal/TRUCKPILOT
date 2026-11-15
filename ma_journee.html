@@ -91,7 +91,7 @@ const existing=entries()[$('date').value];if(existing)load(existing);
 $('kmstart').addEventListener('input',updateDistance);$('kmend').addEventListener('input',updateDistance);
 function updateDistance(){const a=Number($('kmstart').value),b=Number($('kmend').value);$('distance').textContent=$('kmstart').value!==''&&$('kmend').value!==''&&b>=a?(b-a).toLocaleString('fr-FR')+' km':'— km'}
 const originalLoad=window.loadDailyEntry;window.loadDailyEntry=(entry)=>{originalLoad(entry);updateDistance()};
-$('preview').onclick=()=>{const e=read();const rows=[['Date',e.date],['Tracteur',e.tractor],['Horaires',e.start+' – '+e.end],['Conduite',e.drive],['Kilomètres',e.kmstart+' – '+e.kmend],['Lieu fin de journée',e.place],['Frais de route',[e.breakfast&&'Petit-déjeuner',e.lunch&&'Déjeuner',e.dinner&&'Dîner',e.night&&'Découché'].filter(Boolean).join(', ')],['Transports',e.transports.length]].map(([k,v])=>'<p><strong>'+k+' :</strong> '+(v||'—')+'</p>').join('');const w=window.open('','_blank');if(w){w.document.write('<!doctype html><html lang="fr"><meta charset="utf-8"><title>Prévisualisation</title><body style="font:15px system-ui;max-width:700px;margin:30px auto;color:#142b41"><h1>MYTRUCK MATE — Ma journée</h1>'+rows+'</body></html>');w.document.close()}};
+$('preview').onclick=()=>{const e=read();const all=entries();all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));location.href='detail_journee.html?date='+encodeURIComponent(e.date)};
 </script>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
