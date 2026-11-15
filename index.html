@@ -343,6 +343,22 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 }
 
 
+
+/* Fusion visuelle : les trois cartes s'intègrent dans la base du bandeau */
+@media(min-width:900px){
+ .top{height:clamp(380px,33vw,590px)!important}
+ .wrap{position:relative!important;z-index:5!important;padding-top:0!important}
+ .dashboard-heading{position:relative!important;z-index:6!important;margin-top:-148px!important;margin-bottom:12px!important;padding-left:2px!important;text-shadow:0 2px 8px #061522}
+ .stats{position:relative!important;z-index:6!important;margin-top:0!important;margin-bottom:18px!important;align-items:start!important}
+ .stat-fees,.stat-space{transform:translateY(-24px)!important}
+ .stat{background:linear-gradient(145deg,rgba(18,48,70,.96),rgba(8,30,48,.97))!important;border-color:#1689b7!important;box-shadow:0 8px 24px #0005,inset 0 1px 0 #ffffff12!important}
+}
+@media(max-width:899px){
+ .wrap{z-index:5!important;padding-top:16px!important}
+ .dashboard-heading{margin-top:0!important}
+ .stat-fees,.stat-space{transform:none!important}
+}
+
 /* Bandeau intégré : l'écusson descend dans l'espace supérieur du tableau de bord */
 .top{width:100vw!important;max-width:none!important;height:clamp(380px,33vw,590px)!important;margin-left:calc(50% - 50vw)!important;margin-right:0!important;padding:0!important;overflow:visible!important;position:relative!important;z-index:3!important;background:linear-gradient(180deg,#06182a,#071522)!important;border:0!important;box-shadow:none!important;}
 .banner-image{display:block!important;position:absolute!important;top:0!important;left:0!important;width:100%!important;height:auto!important;max-width:none!important;object-fit:contain!important;object-position:top center!important;}
