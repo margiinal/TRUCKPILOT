@@ -791,11 +791,11 @@ try {
   if (weeklyUser) {
     const { data: savedWeeks, error: weeksError } = await weeklyCloud
       .from('weekly_sheets')
-      .select('week_start')
+      .select('week_start, sheet_data')
       .eq('user_id', weeklyUser.id)
       .order('week_start', { ascending: false });
     if (weeksError) weeklySetStatus('Impossible de charger la liste des anciennes semaines : ' + weeksError.message, true);
-    const weeks = (savedWeeks || []).map(row => row.week_start).filter(Boolean);
+    const weeks = (savedWeeks || []).map(row => row.sheet_data?.fields?.[0]?.value || row.week_start).filter(Boolean);
     const current = currentWeekStart();
     setWeekDates(current);
     updateWeekPicker(weeks);
