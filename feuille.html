@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feuille chauffeur A4</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#20527d"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ma feuille de semaine — MYTRUCK MATE</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#20527d"><link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
 *{box-sizing:border-box}.sheet.is-loading{visibility:hidden}body{margin:0;background:#e9edf2;font:11px Arial,sans-serif;color:#182636}
 .actions{padding:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.actions button{padding:10px;background:#20527d;color:white;border:0;border-radius:5px}.actions small{font-size:12px}
@@ -359,7 +359,27 @@ h1 {
   #transport input:-ms-input-placeholder { color: transparent !important; }
 }
 
+
+/* Habillage MYTRUCK MATE — uniquement à l'écran, la feuille A4 reste inchangée */
+.app-topbar{background:linear-gradient(110deg,#071522,#102e47 55%,#071522);border-bottom:1px solid #147eb2;box-shadow:0 5px 22px #0004;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#f3f8fc}
+.app-brand{display:flex;align-items:center;gap:12px;min-width:0}
+.app-brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#087fc9,#034b7d);border:1px solid #4dbaff;font-size:23px;box-shadow:0 0 16px #009fe544}
+.app-brand-title{font-size:17px;font-weight:950;letter-spacing:.5px}
+.app-brand-sub{font-size:9px;color:#80d8ff;font-weight:850;letter-spacing:1.5px;margin-top:2px}
+.app-home{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;border:1px solid #26b9f0;border-radius:10px;background:linear-gradient(110deg,#087fc9,#079fe9);color:white;text-decoration:none;font-size:13px;font-weight:850;white-space:nowrap;box-shadow:0 4px 14px #008de533}
+body{background:#071522;color:#f3f8fc}
+.actions{background:#0c2134;border-bottom:1px solid #234760;padding:12px max(14px,calc((100% - 1400px)/2));gap:9px;color:#f3f8fc}
+.actions label{color:#dceefa}
+.actions button{padding:10px 13px;background:linear-gradient(110deg,#087fc9,#0867ad);border:1px solid #269ee5;border-radius:9px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px #0003}
+.actions button:hover,.app-home:hover{filter:brightness(1.12)}
+.actions select{background:#102a40!important;color:#f3f8fc;border:1px solid #2a668a!important}
+.actions small{color:#9fc9e2}
+.stage{padding:18px 10px 30px}
+@media(max-width:650px){.app-topbar{padding:10px 12px}.app-brand-title{font-size:14px}.app-brand-sub{font-size:8px}.app-brand-mark{width:36px;height:36px}.app-home{padding:9px 11px;font-size:12px}.actions{padding:10px;gap:7px}.actions button{padding:9px 10px;font-size:11px}.stage{padding:12px 5px 24px}}
+@media print{.app-topbar{display:none!important}body{background:white!important;color:#182636!important}}
+
 </style></head><body>
+<header class="app-topbar"><div class="app-brand"><div class="app-brand-mark">🚛</div><div><div class="app-brand-title">MYTRUCK MATE</div><div class="app-brand-sub">DRIVER COMPANION</div></div></div><a class="app-home" href="index.html">← Retour à l’accueil</a></header>
 <div class="actions"><label for="week-picker"><strong>Semaine :</strong></label><select id="week-picker" aria-label="Choisir une semaine" style="padding:9px;border:1px solid #9bb3c8;border-radius:5px;max-width:230px"><option value="">Semaine en cours</option></select><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
 <button type="button" onclick="exportWeek()">Sauvegarder ma semaine</button>
 <button type="button" onclick="document.getElementById('restore-file').click()">Restaurer ma semaine</button>
