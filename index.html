@@ -400,6 +400,17 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
  #appSection .dashboard-heading,#appSection .stats,#appSection .stats>.stat{visibility:visible!important;opacity:1!important}
  #appSection .stats{display:grid!important;position:relative!important;z-index:32!important;margin:8px 0 14px!important}
 }
+
+/* Finition accueil : titre mieux respirant et bienvenue centré dans son cadre lumineux */
+@media(min-width:900px){
+ #appSection .dashboard-heading{margin-top:-108px!important;margin-bottom:14px!important}
+ .banner-greeting{left:65%!important;top:24%!important;width:22%!important;height:38%!important;padding:6px 12px!important;justify-content:center!important;align-items:center!important;text-align:center!important}
+ .banner-greeting .welcome-title,.banner-greeting .sub{width:100%!important;text-align:center!important}
+}
+@media(max-width:899px){
+ .banner-greeting{left:63%!important;top:22%!important;width:25%!important;height:40%!important;padding:4px 5px!important;justify-content:center!important;align-items:center!important}
+ .banner-greeting .welcome-title,.banner-greeting .sub{width:100%!important;text-align:center!important}
+}
 </style>
 </head>
 <body>
