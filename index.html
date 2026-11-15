@@ -506,6 +506,37 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))!important}
  #appSection .grid>.tile{aspect-ratio:16 / 10!important}
 }
 
+
+/* Téléphones et tablettes tactiles : le bandeau garde sa hauteur naturelle */
+@media screen and (max-width:899px),screen and (pointer:coarse) and (max-width:1100px){
+ header.top{
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   overflow:hidden!important;
+   padding:0!important;
+   line-height:0!important;
+ }
+ header.top>.banner-image{
+   display:block!important;
+   position:relative!important;
+   inset:auto!important;
+   width:100%!important;
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   object-fit:contain!important;
+   object-position:center top!important;
+ }
+ header.top>.banner-greeting{
+   left:62%!important;
+   top:15%!important;
+   width:24%!important;
+   height:32%!important;
+ }
+ main.wrap{padding-top:18px!important}
+}
+
 </style>
 </head>
 <body>
