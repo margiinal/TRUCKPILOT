@@ -93,6 +93,7 @@ tfoot td:first-child{border-radius:0 0 0 9px}tfoot td:last-child{border-radius:0
    <article class="stat"><div class="stat-head">🍴</div><h3>Dîner</h3><strong class="rate" id="rate-dinner">16,36 €</strong><div class="qty"><span id="count-dinner">0</span> × <strong id="amount-dinner">0,00 €</strong></div><small class="share" id="share-dinner">0 %</small></article>
    <article class="stat"><div class="stat-head">🛏</div><h3>Nuit / Découché</h3><strong class="rate" id="rate-night">52,31 €</strong><div class="qty"><span id="count-night">0</span> × <strong id="amount-night">0,00 €</strong></div><small class="share" id="share-night">0 %</small></article>
    <article class="stat"><div class="stat-head">🚆</div><h3>Prime de train</h3><strong class="rate" id="rate-train">30,00 €</strong><div class="qty"><span id="count-train">0</span> × <strong id="amount-train">0,00 €</strong></div><small class="share" id="share-train">0 %</small></article>
+   <div id="customStats" style="display:contents"></div>
   </section>
   <section class="lower">
    <article class="panel"><h2>Répartition du mois</h2><div class="chart-layout"><div class="donut" id="donut"><div class="donut-center"><span id="totalCenter">0,00 €</span><small>Total</small></div></div><div class="legend">
@@ -101,6 +102,7 @@ tfoot td:first-child{border-radius:0 0 0 9px}tfoot td:last-child{border-radius:0
     <div class="legend-row"><i class="swatch" style="background:#ff9418"></i><span>Dîner</span><b id="share-dinner-legend">0 %</b></div>
     <div class="legend-row"><i class="swatch" style="background:#9748f5"></i><span>Nuit / Découché</span><b id="share-night-legend">0 %</b></div>
     <div class="legend-row"><i class="swatch" style="background:#ffd21a"></i><span>Prime de train</span><b id="share-train-legend">0 %</b></div>
+    <div id="customLegend" style="display:contents"></div>
    </div></div></article>
    <article class="panel"><h2>Détail des indemnités</h2><div class="table-wrap"><table><thead><tr><th>Type</th><th>Quantité</th><th>Tarif</th><th>Montant</th></tr></thead><tbody id="totals"></tbody><tfoot><tr><td colspan="3">TOTAL DU MOIS</td><td id="totalFooter">0,00 €</td></tr></tfoot></table></div><div class="status" id="dataStatus">Chargement des journées…</div><div class="warning" id="legacyWarning" hidden></div></article>
   </section>
@@ -135,7 +137,7 @@ function calculate(){
  const current=getRates();
  const sums={breakfast:0,lunch:0,dinner:0,night:0,train:0};
  const amounts={breakfast:0,lunch:0,dinner:0,night:0,train:0};
- let days=0;legacyCount=0;
+ const custom={};let days=0;legacyCount=0;
  Object.entries(entries).forEach(([date,e])=>{
   if(!date.startsWith(ym)||!meaningful(e))return;
   days++;
@@ -144,37 +146,48 @@ function calculate(){
   if(e.night===true){sums.night++;amounts.night+=Number(e.feeRates?.night??current.night);if(e.feeRates?.night==null)legacyCount++;}
   else if(e.dinner===true){sums.dinner++;amounts.dinner+=Number(e.feeRates?.dinner??current.dinner);if(e.feeRates?.dinner==null)legacyCount++;}
   if(e.train===true){sums.train++;amounts.train+=TRAIN_RATE;}
+  Object.entries(e.customPrimeCounts||{}).forEach(([id,count])=>{
+   const qty=Math.max(0,Number(count)||0);if(!qty)return;
+   const snap=e.customPrimeRates?.[id]||{};const name=snap.name||id;const rate=Number(snap.rate)||0;
+   if(!custom[id])custom[id]={id,name,rate,count:0,amount:0};
+   custom[id].count+=qty;custom[id].amount+=qty*rate;
+  });
  });
- const total=Object.values(amounts).reduce((a,b)=>a+b,0);
- $('daysCount').textContent=days;
- $('grandTotal').textContent=euro(total);
- $('totalCenter').textContent=euro(total);
- $('totalFooter').textContent=euro(total);
- $('daysBadge').textContent=days+' journée'+(days>1?'s':'')+' renseignée'+(days>1?'s':'');
  const meta=[
   ['breakfast','Petit-déjeuner',current.breakfast,'#0b9df5'],
   ['lunch','Déjeuner',current.lunch,'#19d93d'],
   ['dinner','Dîner',current.dinner,'#ff9418'],
   ['night','Nuit / Découché',current.night,'#9748f5'],
-  ['train','Prime de train',TRAIN_RATE,'#ffd21a']
+  ['train','Ancienne prime Train',TRAIN_RATE,'#ffd21a']
  ];
+ Object.values(custom).forEach((p,i)=>{sums[p.id]=p.count;amounts[p.id]=p.amount;meta.push([p.id,p.name,p.rate,['#10b9a5','#e15b9b','#d0a52b'][i%3]])});
+ $('customStats').innerHTML='';$('customLegend').innerHTML='';
+ Object.values(custom).forEach((p,i)=>{
+  const color=['#10b9a5','#e15b9b','#d0a52b'][i%3];
+  const card=document.createElement('article');card.className='stat';
+  card.innerHTML='<div class="stat-head">＋</div><h3></h3><strong class="rate"></strong><div class="qty"><span></span> × <strong></strong></div><small class="share"></small>';
+  card.querySelector('h3').textContent=p.name;card.querySelector('.rate').textContent=euro(p.rate);card.querySelector('.qty span').textContent=p.count;card.querySelector('.qty strong').textContent=euro(p.amount);
+  card.querySelector('.share').textContent='';$('customStats').append(card);
+  const row=document.createElement('div');row.className='legend-row';const sw=document.createElement('i');sw.className='swatch';sw.style.background=color;const label=document.createElement('span');label.textContent=p.name;const pct=document.createElement('b');pct.id='custom-share-'+p.id;row.append(sw,label,pct);$('customLegend').append(row);
+ });
+ const total=Object.values(amounts).reduce((a,b)=>a+b,0);
+ $('daysCount').textContent=days;$('grandTotal').textContent=euro(total);$('totalCenter').textContent=euro(total);$('totalFooter').textContent=euro(total);
+ $('daysBadge').textContent=days+' journée'+(days>1?'s':'')+' renseignée'+(days>1?'s':'');
  let offset=0;const segments=[];
  meta.forEach(([k,label,rate,color])=>{
-  const amount=amounts[k],pct=total>0?amount/total*100:0;
-  const start=offset;offset+=pct*3.6;
-  segments.push(color+' '+start+'deg '+offset+'deg');
-  $('count-'+k).textContent=sums[k];
-  $('amount-'+k).textContent=euro(amount);
-  $('rate-'+k).textContent=euro(rate);
+  const amount=amounts[k]||0,pct=total>0?amount/total*100:0;const begin=offset;offset+=pct*3.6;segments.push(color+' '+begin+'deg '+offset+'deg');
+  if($('count-'+k))$('count-'+k).textContent=sums[k]||0;
+  if($('amount-'+k))$('amount-'+k).textContent=euro(amount);
+  if($('rate-'+k))$('rate-'+k).textContent=euro(rate);
   const share=pct.toLocaleString('fr-FR',{maximumFractionDigits:1})+' %';
-  $('share-'+k).textContent=share;
-  $('share-'+k+'-legend').textContent=share;
+  if($('share-'+k))$('share-'+k).textContent=share;
+  if($('share-'+k+'-legend'))$('share-'+k+'-legend').textContent=share;
+  if($('custom-share-'+k))$('custom-share-'+k).textContent=share;
  });
  $('donut').style.background=total>0?'conic-gradient('+segments.join(',')+')':'conic-gradient(#24445e 0deg 360deg)';
  $('totals').innerHTML='';
  meta.forEach(([k,label,rate,color])=>{
-  const tr=document.createElement('tr');
-  const vals=[label,String(sums[k]),euro(rate),euro(amounts[k])];
+  const tr=document.createElement('tr');const vals=[label,String(sums[k]||0),euro(rate),euro(amounts[k]||0)];
   vals.forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===0){const dot=document.createElement('i');dot.className='dot';dot.style.background=color;td.prepend(dot)}tr.append(td)});
   $('totals').append(tr);
  });
@@ -187,7 +200,7 @@ async function loadData(){
   const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
   const sb=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
   const {data:{user},error:authError}=await sb.auth.getUser();if(authError)throw authError;
-  if(user){const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{if(meaningful(r.entry))entries[r.work_date]=r.entry});localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));msg='Journées récupérées depuis Supabase ✓'}
+  if(user){window.customPrimeConfig=user.user_metadata?.custom_primes||[];const {data,error}=await sb.from('truckpilote_daily_entries').select('work_date,entry').eq('user_id',user.id).order('work_date',{ascending:true});if(error)throw error;(data||[]).forEach(r=>{if(meaningful(r.entry))entries[r.work_date]=r.entry});localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));msg='Journées récupérées depuis Supabase ✓'}
   else msg='Mode local : connecte-toi à l’accueil pour récupérer les journées en ligne.';
  }catch(e){msg='Données locales affichées. Synchronisation en ligne indisponible : '+(e.message||'erreur')}
  $('dataStatus').textContent=msg;calculate();
