@@ -728,19 +728,28 @@ async function loadWeeklyCloud(announce = true) {
   loadingCloudWeek = true;
   weeklySetStatus('Recherche de cette semaine dans le compte en ligne…');
   try {
-    const { data, error } = await weeklyCloud
+    const displayStart = weekPicker?.selectedOptions?.[0]?.dataset?.weekStart || weeklyStart.value;
+    const { data: allWeeks, error } = await weeklyCloud
       .from('weekly_sheets')
-      .select('sheet_data, updated_at')
+      .select('week_start, sheet_data, updated_at')
       .eq('user_id', weeklyUser.id)
-      .eq('week_start', weekStart)
-      .maybeSingle();
+      .order('week_start', { ascending: false });
     if (error) {
       weeklySetStatus('Sauvegarde locale active ; lecture en ligne impossible : ' + error.message, true);
       return;
     }
+    // Les anciennes versions ont parfois enregistré une feuille sous la clé de la semaine voisine.
+    // On identifie donc la vraie semaine avec les dates conservées dans la feuille elle-même.
+    const matching = (allWeeks || []).filter(row =>
+      row.sheet_data?.format === 'my-truck-mate-week-v1' &&
+      Array.isArray(row.sheet_data.fields) &&
+      row.sheet_data.fields[0]?.value === displayStart
+    );
+    const exact = (allWeeks || []).find(row => row.week_start === weekStart);
+    const data = matching.sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0] || exact;
     if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
       applyWeeklySnapshot(data.sheet_data.fields);
-      setWeekDates(weekPicker?.selectedOptions?.[0]?.dataset?.weekStart || weeklyStart.value);
+      setWeekDates(displayStart);
       weeklySetStatus('Feuille récupérée ✓ Tu peux l’imprimer.');
     } else if (announce) {
       weeklySetStatus('Aucune feuille sauvegardée pour cette semaine. Les données quotidiennes peuvent être ressaisies.');
@@ -750,7 +759,7 @@ async function loadWeeklyCloud(announce = true) {
   }
 }
 async function saveWeeklyCloud() {
-  const weekStart = selectedDbWeekKey || weeklyStart?.value;
+  const weekStart = weekPicker?.selectedOptions?.[0]?.dataset?.weekStart || weeklyStart?.value;
   if (!weeklyUser || !weekStart || applyingCloudWeek || !selectedWeekIsCurrent) return;
   const payload = {
     user_id: weeklyUser.id,
