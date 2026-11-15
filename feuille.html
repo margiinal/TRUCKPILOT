@@ -442,7 +442,7 @@ document.querySelectorAll('#hb tr.work').forEach(row => {
 });
 document.addEventListener('input',calc);document.addEventListener('change',calc);
 const SAVE_KEY = 'suivi_chauffeur_hebdo_v1';
-function formFields(){ return Array.from(document.querySelectorAll('input, select, textarea')).filter(el => !el.classList.contains('name') && el.id !== 'week-picker' && el.id !== 'restore-file'); }
+function formFields(){ return Array.from(document.querySelectorAll('input, select, textarea')).filter(el => !el.classList.contains('name') && el.id !== 'week-picker'); }
 function saveForm(){
   try {
     const data = formFields().map(el => ({value: el.value, checked: el.type === 'checkbox' ? el.checked : undefined}));
@@ -689,7 +689,7 @@ let loadingCloudWeek = false;
 
 function weeklyFields() {
   return Array.from(document.querySelectorAll('input, select, textarea'))
-    .filter(el => !el.classList.contains('name') && el.id !== 'week-picker' && el.id !== 'restore-file');
+    .filter(el => !el.classList.contains('name') && el.id !== 'week-picker');
 }
 function weeklySnapshot() {
   return weeklyFields().map(el => ({
