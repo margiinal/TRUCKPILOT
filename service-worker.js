@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v70';
+const CACHE = 'truckpilote-chauffeur-v71';
 
 const APP_FILES = [
   './',
@@ -37,7 +37,8 @@ const APP_FILES = [
   './assets/recap-amplitude.svg',
   './assets/recap-amplitude-mytruck-mate.png',
   './assets/recap-journees.svg',
-  './assets/recap-journees-mytruck-mate.png'
+  './assets/recap-journees-mytruck-mate.png',
+  './assets/recap-activite-periode-mytruck-mate.png'
 ];
 
 self.addEventListener('install', event => {
