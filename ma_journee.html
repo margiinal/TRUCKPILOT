@@ -40,7 +40,7 @@ a{color:#75d8ff;text-decoration:none}.top{max-width:1120px;margin:auto;padding:1
 <div class="field"><label for="start">Heure début journée</label><input id="start" type="time"></div>
 <div class="field"><label for="end">Heure fin journée</label><input id="end" type="time"></div>
 <div class="field"><label for="drive">Temps de conduite total</label><input id="drive" type="time"></div>
-<div class="field"><label for="place">Lieu de conduite fin de journée</label><input id="place"></div>
+<div class="field"><label for="place">Lieux fin de journée</label><input id="place"></div>
 <div class="field"><label for="kmstart">Kilomètres début</label><input id="kmstart" type="number" inputmode="numeric"></div>
 <div class="field"><label for="kmend">Kilomètres fin</label><input id="kmend" type="number" inputmode="numeric"></div>
 <div class="mileage"><div><span>KILOMÈTRES PARCOURUS</span><br><strong id="distance">— km</strong></div><span>↗</span></div>
@@ -49,7 +49,7 @@ a{color:#75d8ff;text-decoration:none}.top{max-width:1120px;margin:auto;padding:1
 <label><input id="breakfast" type="checkbox"> Petit-déjeuner</label><label><input id="lunch" type="checkbox"> Déjeuner</label><label><input id="dinner" type="checkbox"> Dîner</label><label><input id="night" type="checkbox"> Découché / Nuit</label>
 </div></section>
 <section class="card"><div class="transport-head"><h2 class="title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l3 4v7H3zM16 7v4h6M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM17 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>Transports de la journée</h2><label class="train-toggle"><input id="train" type="checkbox"> Journée avec train</label></div><div id="transports"></div><div class="actions"><button class="btn alt" id="addTransport" type="button">＋ Ajouter un transport</button></div><p class="note">Deux transports sont proposés au départ. Vous pouvez en ajouter autant que nécessaire.</p></section>
-<section class="card"><div class="actions save-actions"><button class="btn alt" id="clear" type="button">✕ Effacer le formulaire</button><button class="btn alt" id="preview" type="button">▤ Prévisualiser</button><button class="btn" id="save" type="button">▣ Enregistrer ma journée</button></div><div id="status" class="status"></div><p class="note">Les données sont enregistrées sur cet appareil et synchronisées avec votre compte lorsque vous êtes connecté.</p></section>
+<section class="card"><div class="actions"><button class="btn" id="save" type="button" style="width:100%;min-height:54px;font-size:16px">▣ Enregistrer en PDF ou imprimer</button></div><div id="status" class="status"></div><p class="note">Enregistrez la journée, puis choisissez « Enregistrer au format PDF » ou votre imprimante.</p></section>
 </main>
 <script>
 const KEY='truckpilote_daily_entries_v1';
@@ -83,15 +83,15 @@ makeTransport();makeTransport();
 $('date').addEventListener('change',()=>{const e=entries()[$('date').value];if(e)load(e);else clearFields()});
 $('addTransport').onclick=()=>makeTransport();
 $('night').addEventListener('change',()=>{if($('night').checked)$('dinner').checked=true});
-$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries();const previous=all[e.date];let rates={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};try{rates={...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}}catch{}e.feeRates=previous?.feeRates||rates;all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée sur cet appareil ✓ — '+days[new Date(e.date+'T12:00:00').getDay()];window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}))};
-$('clear').onclick=()=>{if(!confirm('Effacer les champs de cette journée ?'))return;clearFields();$('status').textContent='Formulaire vidé. La journée déjà enregistrée n’est pas supprimée.'};
+$('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries();const previous=all[e.date];let rates={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};try{rates={...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}}catch{}e.feeRates=previous?.feeRates||rates;all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée ✓ Ouverture de la fiche pour impression / PDF…';window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}));setTimeout(()=>{location.href='detail_journee.html?date='+encodeURIComponent(e.date)},350)};
+
 const lists=[['donors',['LPO Sogena','TFS France','TBI','Seyris','Tps Louis','Atlas Transit']],['clients',['Tang Frères','BARIAU','LAD']],['sizes',['20 D','20 HC','20 RE','20 OT','40 D','40 HC','40 RE','40 OT']],['chassis',['EQ 531 FL','EQ 647 FL','FR 653 SE']]];
 lists.forEach(([id,vals])=>{const d=document.createElement('datalist');d.id=id;vals.forEach(v=>{const o=document.createElement('option');o.value=v;d.appendChild(o)});document.body.appendChild(d)});
 const existing=entries()[$('date').value];if(existing)load(existing);
 $('kmstart').addEventListener('input',updateDistance);$('kmend').addEventListener('input',updateDistance);
 function updateDistance(){const a=Number($('kmstart').value),b=Number($('kmend').value);$('distance').textContent=$('kmstart').value!==''&&$('kmend').value!==''&&b>=a?(b-a).toLocaleString('fr-FR')+' km':'— km'}
 const originalLoad=window.loadDailyEntry;window.loadDailyEntry=(entry)=>{originalLoad(entry);updateDistance()};
-$('preview').onclick=()=>{const e=read();const all=entries();all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));location.href='detail_journee.html?date='+encodeURIComponent(e.date)};
+
 </script>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
