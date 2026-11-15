@@ -95,11 +95,13 @@ function load(e){if(!e)return;['date','tractor','place','start','end','drive','k
 function updateStats(){const a=$('kmstart').value,b=$('kmend').value;$('distance').textContent=a!==''&&b!==''&&Number(b)>=Number(a)?(Number(b)-Number(a)).toLocaleString('fr-FR')+' km':'— km';const s=$('start').value,e=$('end').value;if(!s||!e){$('amplitude').textContent='—';return}let [h1,m1]=s.split(':').map(Number),[h2,m2]=e.split(':').map(Number),n=h2*60+m2-h1*60-m1;if(n<0)n+=1440;$('amplitude').textContent=Math.floor(n/60)+' h '+String(n%60).padStart(2,'0')}
 window.loadDailyEntry=load;
 function clearForm(){['tractor','place','start','end','drive','kmstart','kmend'].forEach(k=>$(k).value='');['breakfast','lunch','dinner','night','train'].forEach(k=>setRadio(k,false));$('transports').innerHTML='';makeTransport();makeTransport();updateStats()}
-$('date').value=new Date().toISOString().slice(0,10);makeTransport();makeTransport();
+const params=new URLSearchParams(location.search),historyMode=params.get('mode')==='history',requestedDate=params.get('date');
+$('date').value=requestedDate||new Date().toISOString().slice(0,10);makeTransport();makeTransport();
 $('addTransport').onclick=()=>makeTransport();
 ['kmstart','kmend','start','end'].forEach(k=>$(k).addEventListener('input',updateStats));
 $('date').addEventListener('change',()=>{const e=entries()[$('date').value];if(e)load(e);else clearForm()});
 const current=entries()[$('date').value];if(current)load(current);
+if(historyMode){document.querySelectorAll('input,select').forEach(el=>el.disabled=true);$('addTransport').hidden=true;document.querySelectorAll('.remove').forEach(el=>el.hidden=true);$('save').textContent='← Retour à l’historique';$('save').onclick=()=>location.href='historique.html';$('status').textContent='Consultation de la journée enregistrée — mode lecture seule.';}
 $('save').onclick=()=>{const e=read();if(!e.date){$('status').textContent='Choisissez une date.';return}const all=entries(),previous=all[e.date];let rates={breakfast:8.87,lunch:16.36,dinner:16.36,night:52.31};try{rates={...rates,...JSON.parse(localStorage.getItem('truckpilote_fee_rates_v1')||'{}')}}catch{}e.feeRates=previous?.feeRates||rates;all[e.date]=e;localStorage.setItem(KEY,JSON.stringify(all));$('status').textContent='Journée enregistrée ✓ Ouverture de la fiche PDF / impression…';window.dispatchEvent(new CustomEvent('truckpilote:daily-saved',{detail:e}));setTimeout(()=>location.href='detail_journee.html?date='+encodeURIComponent(e.date),350)};
 </script>
 <script type="module">
