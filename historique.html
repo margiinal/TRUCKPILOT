@@ -59,6 +59,59 @@ h2{font-size:18px;margin:0 0 12px;color:#f3f8fc}.muted{color:var(--muted);font-s
  .sheet-total{color:#111!important}
  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* Présentation alignée sur la maquette validée */
+.detail-head{display:block;margin:0 0 14px}
+.detail-head>div:first-child{width:100%}
+.detail-brand{height:116px;background:url('./assets/fiche-entete-app.svg') center/cover no-repeat;border:1px solid #087eb8;border-radius:13px;display:flex;align-items:flex-end;justify-content:center;padding:0 10px 8px;color:#fff;font-size:0}
+.detail-date{font-size:25px;margin:12px 0 14px;text-transform:capitalize}
+.print-action{width:100%;padding:15px 18px;font-size:17px;border-radius:12px}
+.sheet-section{margin-top:14px;border:1px solid #087eb8;border-radius:14px;background:linear-gradient(145deg,#063958,#031a2c);overflow:hidden}
+.sheet-section h3{background:linear-gradient(90deg,#07517b,#087fba);color:#fff;padding:10px 15px;font-size:18px}
+.sheet-section .detailgrid{padding:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.sheet-section .detail{background:linear-gradient(145deg,#061b2d,#0a2940);border:1px solid #087eaf;border-radius:11px;text-align:center;padding:10px 8px;min-width:0}
+.sheet-section .detail b{font-size:11px;color:#aeeaff}
+.sheet-section .detail span{font-size:16px;font-weight:800;overflow-wrap:anywhere}
+.sheet-section .detail.highlight span{color:#16dfff}
+.sheet-section.info-grid{background:transparent;border:0;overflow:visible}
+.info-grid>.detailgrid{padding:0}
+.info-grid>.detailgrid>.detail{grid-column:span 2}
+.info-grid>.detailgrid>.detail:nth-child(n+3){grid-column:span 1}
+.transport-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
+.transport-sheet{margin:0;border:1px solid #1687b6;border-radius:12px;overflow:hidden;background:#031b2c;break-inside:avoid}
+.transport-sheet h4{margin:0;background:linear-gradient(90deg,#13dfff,#078fe5);color:#032238;padding:7px 12px;font-size:15px;font-weight:900}
+.transport-sheet .detailgrid{padding:9px;display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.transport-sheet .detail{background:#09263b;border:0;border-bottom:1px solid #23506b;border-radius:0;padding:6px 4px}
+.transport-sheet .detail b{color:#91dfff;font-size:10px}
+.transport-sheet .detail span{font-size:13px;font-weight:700}
+.meal-grid .detail{min-height:75px;display:flex;flex-direction:column;justify-content:center}
+@media(max-width:600px){.detail-brand{height:92px}.detail-date{font-size:20px}.sheet-section .detailgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.transport-list{grid-template-columns:1fr}.info-grid>.detailgrid>.detail{grid-column:span 1}.info-grid>.detailgrid>.detail:nth-child(n+3){grid-column:span 1}}
+@page{size:A4 portrait;margin:10mm}
+@media print{
+ html,body{background:#fff!important;color:#111!important;font:9.5pt Arial,sans-serif!important}
+ header,.crumb,#status,.back,.print-action{display:none!important}
+ main{max-width:none!important;padding:0!important;margin:0!important}
+ main>.card{background:#fff!important;color:#111!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+ .detail-head{margin:0 0 8px}
+ .detail-brand{height:82px;background:url('./assets/fiche-entete-impression.svg') center/contain no-repeat;border:0;border-radius:0}
+ .detail-date{background:#333!important;color:#fff!important;padding:8px 12px;margin:7px 0;font-size:16pt}
+ .sheet-section{background:#fff!important;border:1px solid #333!important;border-radius:5px!important;margin-top:8px;overflow:visible}
+ .sheet-section h3{background:#333!important;color:#fff!important;padding:6px 9px;font-size:11pt}
+ .sheet-section .detailgrid{padding:5px;gap:0}
+ .sheet-section .detail{background:#fff!important;color:#111!important;border:1px solid #999!important;border-radius:0!important;padding:6px 5px}
+ .sheet-section .detail b,.sheet-section .detail span{color:#111!important}
+ .sheet-section .detail b{font-size:8pt}.sheet-section .detail span{font-size:10pt}
+ .info-grid>.detailgrid>.detail{grid-column:span 2}
+ .info-grid>.detailgrid>.detail:nth-child(n+3){grid-column:span 1}
+ .transport-list{grid-template-columns:1fr 1fr;gap:8px;padding:6px}
+ .transport-sheet{background:#fff!important;border:1px solid #555!important;border-radius:0!important;break-inside:avoid}
+ .transport-sheet h4{background:#ddd!important;color:#111!important;border-bottom:1px solid #555}
+ .transport-sheet .detailgrid{padding:0;gap:0}
+ .transport-sheet .detail{background:#fff!important;border:1px solid #aaa!important;padding:5px}
+ .transport-sheet .detail b,.transport-sheet .detail span{color:#111!important}
+ .meal-grid .detail{min-height:50px}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
@@ -104,25 +157,31 @@ function render(){
  }else if(level==='detail'){renderDetail(c)}
 }
 function addDetail(parent,label,value){if(value===undefined||value===null||String(value).trim()==='')return;const d=document.createElement('div');d.className='detail';const b=document.createElement('b');b.textContent=label;const span=document.createElement('span');span.textContent=String(value);d.append(b,span);parent.append(d)}
-function durationMinutes(n){if(!Number.isFinite(n)||n<0)return '—';const h=Math.floor(n/60),m=n%60;return h+' h '+String(m).padStart(2,'0')}
 function renderDetail(c){
  const e=allEntries[selected.day]||{};
  const head=document.createElement('div');head.className='detail-head';
- const intro=document.createElement('div');const brand=document.createElement('div');brand.className='detail-brand';brand.textContent='MY TRUCK MATE · FICHE JOURNALIÈRE';const date=document.createElement('div');date.className='detail-date';date.textContent=dateObj(selected.day).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});intro.append(brand,date);
- const actions=document.createElement('div');const print=document.createElement('button');print.type='button';print.className='print-action';print.textContent='⎙ Imprimer cette journée';print.onclick=()=>window.print();actions.append(print);head.append(intro,actions);c.append(head);
+ const brand=document.createElement('div');brand.className='detail-brand';brand.setAttribute('aria-label','MY TRUCK MATE — Fiche journalière');
+ const date=document.createElement('div');date.className='detail-date';date.textContent=dateObj(selected.day).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ const print=document.createElement('button');print.type='button';print.className='print-action';print.textContent='▣  Imprimer cette journée';print.onclick=()=>window.print();
+ head.append(brand,date);c.append(head);
  const back=document.createElement('button');back.className='back';back.textContent='← Retour aux journées';back.onclick=()=>{level='days';render()};c.append(back);
- function section(title){const box=document.createElement('section');box.className='sheet-section';const h=document.createElement('h3');h.textContent=title;box.append(h);c.append(box);const g=document.createElement('div');g.className='detailgrid';box.append(g);return {box,grid:g}}
- const vehicle=section('🚚 Véhicule et activité');
- [['Immatriculation','tractor'],['Lieu / remarque','place']].forEach(([l,k])=>addDetail(vehicle.grid,l,e[k]));
- const time=section('◷ Horaires et activité');
- let amp=null;if(e.start&&e.end){let a=e.start.split(':').map(Number),b=e.end.split(':').map(Number);if(a.length===2&&b.length===2){amp=(b[0]*60+b[1])-(a[0]*60+a[1]);if(amp<0)amp+=1440}}
- [['Début de journée','start'],['Fin de journée','end']].forEach(([l,k])=>addDetail(time.grid,l,e[k]));
- if(amp!==null)addDetail(time.grid,'Amplitude de la journée',durationMinutes(amp));addDetail(time.grid,'Temps de conduite',e.drive);
- const kms=section('⌁ Kilométrage');addDetail(kms.grid,'Kilomètres départ',e.kmstart);addDetail(kms.grid,'Kilomètres arrivée',e.kmend);
- const a=Number(e.kmstart),b=Number(e.kmend);if(String(e.kmstart??'').trim()!==''&&String(e.kmend??'').trim()!==''&&Number.isFinite(a)&&Number.isFinite(b)&&b>=a)addDetail(kms.grid,'Total parcouru',(b-a).toLocaleString('fr-FR')+' km');
- const transports=section('🚛 Transports ('+(e.transports||[]).length+')');
- (e.transports||[]).forEach((t,i)=>{const box=document.createElement('div');box.className='transport-sheet';const h=document.createElement('h4');h.textContent='Transport '+(i+1);box.append(h);const g=document.createElement('div');g.className='detailgrid';[['Donneur d’ordre',t.donor],['Client',t.client],['Châssis / remorque',t.chassis],['Lieu de chargement / déchargement',t.city??t.place],['Conteneur',t.container??t.container1],['Plomb',t.seal??t.seal1],['Taille',t.size],['Import / Export',t.io??t.movement],['Deuxième conteneur',t.container2],['Deuxième plomb',t.seal2]].forEach(([l,v])=>addDetail(g,l,v));box.append(g);transports.box.append(box)});
- const meals=section('♨ Primes et repas');[['Petit-déjeuner','breakfast'],['Déjeuner','lunch'],['Dîner','dinner'],['Nuit','night'],['Train','train']].forEach(([l,k])=>addDetail(meals.grid,l,e[k]?'Oui':'Non'));
+ function section(title,extra=''){const box=document.createElement('section');box.className='sheet-section '+extra;const h=document.createElement('h3');h.textContent=title;box.append(h);const g=document.createElement('div');g.className='detailgrid';box.append(g);c.append(box);return {box,grid:g}}
+ function field(g,label,value,highlight=false){if(value===undefined||value===null||String(value).trim()==='')return;const d=document.createElement('div');d.className='detail'+(highlight?' highlight':'');const b=document.createElement('b');b.textContent=label;const span=document.createElement('span');span.textContent=String(value);d.append(b,span);g.append(d)}
+ const info=section('◷  Informations de la journée','info-grid');
+ field(info.grid,'Immatriculation',e.tractor);field(info.grid,'Lieu / remarque',e.place);
+ field(info.grid,'Début de journée',e.start);field(info.grid,'Fin de journée',e.end);
+ let amp=null;if(e.start&&e.end){const a=e.start.split(':').map(Number),b=e.end.split(':').map(Number);if(a.length===2&&b.length===2){amp=(b[0]*60+b[1])-(a[0]*60+a[1]);if(amp<0)amp+=1440}}
+ if(amp!==null)field(info.grid,'Amplitude',Math.floor(amp/60)+' h '+String(amp%60).padStart(2,'0'),true);
+ field(info.grid,'Temps de conduite',e.drive);
+ field(info.grid,'Kilomètres départ',e.kmstart?Number(e.kmstart).toLocaleString('fr-FR')+' km':'');
+ field(info.grid,'Kilomètres arrivée',e.kmend?Number(e.kmend).toLocaleString('fr-FR')+' km':'');
+ const kmA=Number(e.kmstart),kmB=Number(e.kmend);
+ if(String(e.kmstart??'').trim()!==''&&String(e.kmend??'').trim()!==''&&Number.isFinite(kmA)&&Number.isFinite(kmB)&&kmB>=kmA)field(info.grid,'Total parcouru',(kmB-kmA).toLocaleString('fr-FR')+' km',true);
+ const transports=section('🚛  Transports ('+(e.transports||[]).length+')');const list=document.createElement('div');list.className='transport-list';transports.box.append(list);
+ (e.transports||[]).forEach((t,i)=>{const box=document.createElement('article');box.className='transport-sheet';const h=document.createElement('h4');h.textContent='Transport '+(i+1);box.append(h);const g=document.createElement('div');g.className='detailgrid';[['Donneur d’ordre',t.donor],['Conteneur',t.container??t.container1],['Client',t.client],['Plomb',t.seal??t.seal1],['Châssis',t.chassis],['Taille',t.size],['Lieu',t.city??t.place],['Import / Export',t.io??t.movement],['Deuxième conteneur',t.container2],['Deuxième plomb',t.seal2]].forEach(([l,v])=>field(g,l,v));box.append(g);list.append(box)});
+ const meals=section('♨  Primes et repas','meal-grid');
+ [['Petit-déjeuner','breakfast'],['Déjeuner','lunch'],['Dîner','dinner'],['Nuit','night'],['Train','train']].forEach(([l,k])=>field(meals.grid,l,e[k]?'Oui':'Non'));
+ c.append(print);
 }
 async function load(){
  allEntries=localEntries();let msg='Historique chargé depuis cet appareil.';
