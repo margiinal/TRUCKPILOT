@@ -1,4 +1,4 @@
-const CACHE = 'truckpilote-chauffeur-v63';
+const CACHE = 'truckpilote-chauffeur-v64';
 
 const APP_FILES = [
   './',
@@ -28,6 +28,7 @@ const APP_FILES = [
   './assets/3d/mes-frais-cadre.svg',
   './assets/3d/historique-approuve.svg',
   './assets/3d/sauvegardes-fond.svg',
+  './assets/recap-reference-sprite.jpg',
   './assets/recap-hero.svg',
   './assets/recap-kilometres.svg',
   './assets/recap-conduite.svg',
