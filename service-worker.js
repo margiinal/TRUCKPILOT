@@ -1,10 +1,11 @@
-const CACHE = 'truckpilote-chauffeur-v72';
+const CACHE = 'truckpilote-chauffeur-v73';
 
 const APP_FILES = [
   './',
   './index.html',
   './feuille.html',
   './ma_journee.html',
+  './detail_journee.html',
   './frais.html',
   './historique.html',
   './assets/fiche-entete-app.svg',
