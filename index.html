@@ -344,6 +344,23 @@ label{display:block;margin:12px 0 6px;color:#d7e8f5;font-size:12px;font-weight:7
 
 
 
+
+/* Correctif de visibilité : les cartes du tableau de bord passent au premier plan */
+@media(min-width:900px){
+ .top{z-index:1!important}
+ .wrap{position:relative!important;z-index:20!important;padding-top:0!important}
+ .dashboard-heading{display:block!important;position:relative!important;z-index:21!important;margin-top:-118px!important;margin-bottom:12px!important;visibility:visible!important}
+ .stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;position:relative!important;z-index:21!important;visibility:visible!important;opacity:1!important;margin:0 0 18px!important}
+ .stats .stat{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:22!important}
+ .stat-fees,.stat-space{transform:translateY(-18px)!important}
+}
+@media(max-width:899px){
+ .top{z-index:1!important}
+ .wrap{position:relative!important;z-index:20!important;padding-top:12px!important}
+ .dashboard-heading,.stats,.stats .stat{visibility:visible!important;opacity:1!important}
+ .stats{display:grid!important;position:relative!important;z-index:21!important;margin:8px 0 14px!important}
+}
+
 /* Fusion visuelle : les trois cartes s'intègrent dans la base du bandeau */
 @media(min-width:900px){
  .top{height:clamp(380px,33vw,590px)!important}
