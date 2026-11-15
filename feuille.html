@@ -412,6 +412,49 @@ body{background:#071522;color:#f3f8fc}
   .foot strong{color:#173f5d!important}
 }
 
+
+/* Totaux renforcés à l'impression sans agrandir toutes les cellules */
+@media print {
+  #hours td:nth-child(4),
+  #hours td:nth-child(13),
+  #hours tr.tot td:nth-child(4),
+  #hours tr.tot td:nth-child(13),
+  #hours #ampsum,
+  #hours #kmsum {
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    color: #173f5d !important;
+    -webkit-text-fill-color: #173f5d !important;
+  }
+  #hours tr.tot td:nth-child(5),
+  #hours tr.tot td:nth-child(6),
+  #hours tr.tot td:nth-child(7),
+  #hours tr.tot td:nth-child(8),
+  #hours #bsum,
+  #hours #lsum,
+  #hours #dsum,
+  #hours #nsum {
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    color: #173f5d !important;
+    -webkit-text-fill-color: #173f5d !important;
+  }
+  .foot {
+    font-size: 10px !important;
+    padding-top: 2mm !important;
+    line-height: 1.2 !important;
+  }
+  .foot label,
+  .foot strong {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #173f5d !important;
+    -webkit-text-fill-color: #173f5d !important;
+  }
+}
+
 </style></head><body>
 <header class="app-topbar"><div class="app-brand"><div class="app-brand-mark">🚛</div><div><div class="app-brand-title">MYTRUCK MATE</div><div class="app-brand-sub">DRIVER COMPANION</div></div></div><a class="app-home" href="index.html">← Retour à l’accueil</a></header>
 <div class="actions"><label for="week-picker"><strong>Semaine :</strong></label><select id="week-picker" aria-label="Choisir une semaine" style="padding:9px;border:1px solid #9bb3c8;border-radius:5px;max-width:230px"><option value="">Semaine en cours</option></select><button onclick="window.print()">Imprimer A4 paysage</button><button onclick="clearAll()">Effacer</button>
