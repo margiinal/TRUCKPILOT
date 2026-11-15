@@ -130,7 +130,7 @@ const rateFields=['breakfast','lunch','dinner','night'];
 function setRateInputs(){const r=getRates();rateFields.forEach(k=>$(k+'Rate').value=Number(r[k]??0).toFixed(2))}
 function saveRates(){const r={};rateFields.forEach(k=>r[k]=Math.max(0,Number($(k+'Rate').value)||0));localStorage.setItem(RATE_KEY,JSON.stringify(r));$('rateStatus').textContent='Tes tarifs personnalisés sont enregistrés sur cet appareil ✓';calculate()}
 function localEntries(){try{return JSON.parse(localStorage.getItem(ENTRY_KEY)||'{}')}catch{return {}}}
-function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!==''))return true;if(['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true))return true;return Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''))}
+function meaningful(e){if(!e||typeof e!=='object')return false;if(['tractor','start','end','drive','place','kmstart','kmend'].some(k=>String(e[k]??'').trim()!==''))return true;if(['breakfast','lunch','dinner','night','train'].some(k=>e[k]===true))return true;if(Object.values(e.customPrimeCounts||{}).some(v=>Number(v)>0))return true;return Array.isArray(e.transports)&&e.transports.some(t=>t&&Object.values(t).some(v=>String(v??'').trim()!==''))}
 let entries=localEntries(),legacyCount=0;
 function calculate(){
  const ym=$('month').value;if(!ym)return;
