@@ -429,6 +429,15 @@ header.top{position:relative!important}
  .banner-greeting .welcome-title{font-size:clamp(7px,2vw,10px)!important}
  .banner-greeting .sub{font-size:clamp(5px,1.35vw,7px)!important}
 }
+
+/* Alignement central des titres et du message dans la zone lumineuse */
+.banner-greeting{left:64%!important;top:15%!important;width:24%!important;height:34%!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;}
+.banner-greeting .welcome-title,.banner-greeting .sub{display:block!important;width:100%!important;text-align:center!important;margin-left:auto!important;margin-right:auto!important;}
+#appSection .dashboard-heading,#appSection .tools-heading{width:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;}
+#appSection .dashboard-heading{margin-left:auto!important;margin-right:auto!important;}
+#appSection .tools-heading{gap:7px!important;}
+#appSection .tools-heading>span,#appSection .tools-heading>i{display:none!important;}
+@media(max-width:899px){.banner-greeting{left:63%!important;top:15%!important;width:25%!important;height:34%!important}.banner-greeting .welcome-title,.banner-greeting .sub{width:100%!important;text-align:center!important}}
 </style>
 </head>
 <body>
