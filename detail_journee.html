@@ -137,4 +137,33 @@ function show(e){
   </div>`;
 }
 const params=new URLSearchParams(location.search);let date=params.get('date');let all={};try{all=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}if(!date)date=Object.keys(all).sort().pop();show(all[date]);if(params.get('autoprint')==='1')setTimeout(()=>window.print(),500);
+</script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase=createClient('https://ahgdzxgowadoehqhlmqa.supabase.co','sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P');
+(async()=>{
+ const params=new URLSearchParams(location.search);
+ const date=params.get('date');
+ const KEY='truckpilote_daily_entries_v1';
+ let local={};
+ try{local=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}
+ if(local[date]) return;
+ if(!date) return;
+ try{
+  const {data:{user},error:userError}=await supabase.auth.getUser();
+  if(userError||!user) return;
+  const {data,error}=await supabase.from('truckpilote_daily_entries').select('entry').eq('user_id',user.id).eq('work_date',date).maybeSingle();
+  if(error) throw error;
+  if(data?.entry){
+   const merged={...local,[date]:data.entry};
+   localStorage.setItem(KEY,JSON.stringify(merged));
+   show(data.entry);
+   if(params.get('autoprint')==='1') setTimeout(()=>window.print(),350);
+  }
+ }catch(error){
+  const el=document.getElementById('content');
+  if(el) el.innerHTML='<div class="empty">Impossible de charger cette journée depuis le compte en ligne. Vérifie ta connexion puis réessaie.</div>';
+  console.error('Chargement fiche journée:',error);
+ }
+})();
 </script></body></html>
