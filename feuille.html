@@ -600,4 +600,126 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
 }
 </script>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const weeklyCloud = createClient(
+  'https://ahgdzxgowadoehqhlmqa.supabase.co',
+  'sb_publishable_Oja8VvG-iIv-mTKoz3Nicw_R9EnJG9P'
+);
+const weeklyStatus = document.getElementById('save-status');
+const weeklyStart = document.querySelector('.meta input[type="date"]');
+let weeklyUser = null;
+let weeklySaveTimer = null;
+let applyingCloudWeek = false;
+
+function weeklyFields() {
+  return Array.from(document.querySelectorAll('input, select, textarea'))
+    .filter(el => !el.classList.contains('name'));
+}
+function weeklySnapshot() {
+  return weeklyFields().map(el => ({
+    value: el.type === 'file' ? '' : el.value,
+    checked: el.type === 'checkbox' ? el.checked : undefined
+  }));
+}
+function weeklySetStatus(message, isError = false) {
+  if (!weeklyStatus) return;
+  weeklyStatus.textContent = message;
+  weeklyStatus.style.color = isError ? '#b42318' : '';
+}
+function applyWeeklySnapshot(fields) {
+  const elements = weeklyFields();
+  applyingCloudWeek = true;
+  try {
+    fields.forEach((item, i) => {
+      const el = elements[i];
+      if (!el || el.type === 'file') return;
+      if (el.type === 'checkbox') el.checked = !!item.checked;
+      else el.value = item.value || '';
+    });
+    if (typeof updateTrainRows === 'function') updateTrainRows();
+    if (typeof calc === 'function') calc();
+    if (typeof saveForm === 'function') saveForm();
+  } finally {
+    applyingCloudWeek = false;
+  }
+}
+async function loadWeeklyCloud(announce = true) {
+  const weekStart = weeklyStart?.value;
+  if (!weeklyUser || !weekStart) {
+    if (announce && !weekStart) weeklySetStatus('Choisis la date de début de semaine pour activer la sauvegarde en ligne.');
+    return;
+  }
+  weeklySetStatus('Recherche de cette semaine dans le compte en ligne…');
+  const { data, error } = await weeklyCloud
+    .from('weekly_sheets')
+    .select('sheet_data, updated_at')
+    .eq('user_id', weeklyUser.id)
+    .eq('week_start', weekStart)
+    .maybeSingle();
+  if (error) {
+    weeklySetStatus('Sauvegarde locale active ; lecture en ligne impossible : ' + error.message, true);
+    return;
+  }
+  if (data?.sheet_data?.format === 'my-truck-mate-week-v1' && Array.isArray(data.sheet_data.fields)) {
+    applyWeeklySnapshot(data.sheet_data.fields);
+    weeklySetStatus('Feuille de cette semaine récupérée depuis le compte en ligne ✓');
+  } else if (announce) {
+    weeklySetStatus('Aucune feuille en ligne pour cette semaine. Les nouvelles saisies seront synchronisées automatiquement.');
+  }
+}
+async function saveWeeklyCloud() {
+  const weekStart = weeklyStart?.value;
+  if (!weeklyUser || !weekStart || applyingCloudWeek) return;
+  const payload = {
+    user_id: weeklyUser.id,
+    week_start: weekStart,
+    sheet_data: {
+      format: 'my-truck-mate-week-v1',
+      fields: weeklySnapshot()
+    },
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await weeklyCloud
+    .from('weekly_sheets')
+    .upsert(payload, { onConflict: 'user_id,week_start' });
+  if (error) {
+    weeklySetStatus('Feuille enregistrée sur ce téléphone, mais synchronisation en ligne impossible : ' + error.message, true);
+  } else {
+    weeklySetStatus('Feuille enregistrée sur ce téléphone et synchronisée en ligne ✓');
+  }
+}
+function queueWeeklyCloudSave() {
+  if (!weeklyUser || applyingCloudWeek || !weeklyStart?.value) return;
+  clearTimeout(weeklySaveTimer);
+  weeklySaveTimer = setTimeout(saveWeeklyCloud, 900);
+}
+try {
+  const { data: { user }, error } = await weeklyCloud.auth.getUser();
+  if (error) throw error;
+  weeklyUser = user;
+  if (weeklyUser) {
+    weeklyStart?.addEventListener('change', () => loadWeeklyCloud(true));
+    document.addEventListener('input', queueWeeklyCloudSave);
+    document.addEventListener('change', queueWeeklyCloudSave);
+    if (weeklyStart?.value) await loadWeeklyCloud(false);
+    else weeklySetStatus('Connecté : choisis la date de début de semaine pour sauvegarder cette feuille en ligne.');
+  } else {
+    weeklySetStatus('Sauvegarde locale active. Connecte-toi à ton compte pour retrouver cette feuille sur un autre téléphone.');
+  }
+} catch (error) {
+  weeklySetStatus('Sauvegarde locale active ; connexion au compte impossible : ' + (error.message || 'erreur'), true);
+}
+weeklyCloud.auth.onAuthStateChange((_event, session) => {
+  weeklyUser = session?.user || null;
+  if (weeklyUser) {
+    if (weeklyStart?.value) loadWeeklyCloud(true);
+    else weeklySetStatus('Connecté : choisis la date de début de semaine pour sauvegarder cette feuille en ligne.');
+  } else {
+    weeklySetStatus('Sauvegarde locale active. Connecte-toi à ton compte pour retrouver cette feuille sur un autre téléphone.');
+  }
+});
+</script>
 </body></html>
