@@ -153,7 +153,7 @@ function render(){
   const groups={};ds.forEach(d=>{const w=dateKey(weekStart(d));(groups[w]??=[]).push(d)});
   c.innerHTML='<h2>Choisis une semaine</h2><div class="list" id="list"></div>';Object.keys(groups).sort().reverse().forEach(w=>$('list').append(item(`Semaine du ${dateObj(w).toLocaleDateString('fr-FR')}`,`${groups[w].length} journée(s) renseignée(s)`,()=>{selected.week=w;level='days';render()})));
  }else if(level==='days'){
-  const ds=dates.filter(d=>dateKey(weekStart(d))===selected.week);c.innerHTML='<h2>Choisis une journée</h2><div class="list" id="list"></div>';ds.sort().forEach(d=>$('list').append(item(`${weekdays[dateObj(d).getDay()]} ${dateObj(d).toLocaleDateString('fr-FR')}`,allEntries[d].tractor?`Tracteur : ${allEntries[d].tractor}`:'Détails de la journée',()=>{selected.day=d;level='detail';render()})));
+  const ds=dates.filter(d=>dateKey(weekStart(d))===selected.week);c.innerHTML='<h2>Choisis une journée</h2><div class="list" id="list"></div>';ds.sort().forEach(d=>$('list').append(item(`${weekdays[dateObj(d).getDay()]} ${dateObj(d).toLocaleDateString('fr-FR')}`,allEntries[d].tractor?`Tracteur : ${allEntries[d].tractor}`:'Détails de la journée',()=>{location.href='ma_journee.html?date='+encodeURIComponent(d)+'&mode=history'})));
  }else if(level==='detail'){renderDetail(c)}
 }
 function addDetail(parent,label,value){if(value===undefined||value===null||String(value).trim()==='')return;const d=document.createElement('div');d.className='detail';const b=document.createElement('b');b.textContent=label;const span=document.createElement('span');span.textContent=String(value);d.append(b,span);parent.append(d)}
