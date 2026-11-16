@@ -1009,6 +1009,14 @@ try {
   const { data: { user }, error } = await weeklyCloud.auth.getUser();
   if (error) throw error;
   weeklyUser = user;
+  // Chaque feuille affiche le nom du compte connecté, jamais celui du créateur de l'application.
+  const profileNameField = document.querySelector('.meta input.name');
+  if (profileNameField) {
+    const metadata = weeklyUser?.user_metadata || {};
+    const profileName = [metadata.firstname, metadata.lastname].filter(Boolean).join(' ').trim()
+      || String(metadata.full_name || '').trim();
+    profileNameField.value = profileName || 'Profil à compléter';
+  }
   if (weeklyUser) {
     const { data: savedWeeks, error: weeksError } = await weeklyCloud
       .from('weekly_sheets')
